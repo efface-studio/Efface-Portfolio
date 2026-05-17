@@ -24,7 +24,6 @@ export type UiStrings = {
   contactAppStore: string;
   viewAppStore: string;
   // badges / meta labels
-  current: string;
   role: string;
   period: string;
   team: string;
@@ -85,7 +84,6 @@ export const ui: Record<Lang, UiStrings> = {
     contactPhone: "휴대폰",
     contactAppStore: "앱스토어",
     viewAppStore: "배포 앱 보기 ↗",
-    current: "재직 중",
     role: "역할",
     period: "기간",
     team: "팀",
@@ -102,7 +100,7 @@ export const ui: Record<Lang, UiStrings> = {
     strengthTag: "강점",
     weaknessTag: "보완점",
     studioBadge: "운영 스튜디오",
-    studioMeta: "2024 — 운영 중",
+    studioMeta: "2026 — 운영 중",
     closingLine:
       "기획부터 개발·배포까지, 팀과 협업해 문제를 해결하는 모습을 보여드리겠습니다.",
     deckAboutTitle: "불편을 서비스로 만드는 사람",
@@ -140,7 +138,6 @@ export const ui: Record<Lang, UiStrings> = {
     contactPhone: "Phone",
     contactAppStore: "App Store",
     viewAppStore: "View on App Store ↗",
-    current: "Current",
     role: "Role",
     period: "Period",
     team: "Team",
@@ -157,7 +154,7 @@ export const ui: Record<Lang, UiStrings> = {
     strengthTag: "Strength",
     weaknessTag: "Growth Area",
     studioBadge: "Studio",
-    studioMeta: "2024 — Ongoing",
+    studioMeta: "2026 — Ongoing",
     closingLine:
       "From planning to development and release, I’ll show you how I solve problems by collaborating with a team.",
     deckAboutTitle: "Turning friction into services",

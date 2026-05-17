@@ -17,7 +17,7 @@ import type {
 export const profile = {
   name: "Jiwan Seo",
   nameEn: "서지완",
-  role: "iOS Developer & PM",
+  role: "iOS · Frontend Developer & PM",
   birth: "2007.08.02",
   headline: "When I find friction, I turn it into a service.",
   summary:
@@ -34,22 +34,26 @@ export const profile = {
 
 export const career: CareerItem[] = [
   {
+    company: "efface",
+    role: "Founder · Planning · Design · Development",
+    period: "2026 — Present",
+    badge: "Ongoing",
+  },
+  {
     company: "Hivits Inc.",
     role: "iOS Developer · Frontend Developer",
     period: "2026.03 — Present",
-    current: true,
+    badge: "Current",
   },
   {
     company: "Alivebrush Inc.",
     role: "Application & Service Planning (PM)",
     period: "2025.11 — 2026.01",
-    current: false,
   },
   {
     company: "Gwangju Software Meister High School",
     role: "iOS Developer · PM",
     period: "2023.03 — 2026.02",
-    current: false,
   },
 ];
 
@@ -62,10 +66,6 @@ export const skillGroups: SkillGroup[] = [
   {
     label: "Web · Backend",
     items: ["React", "Vite", "Express", "Prisma", "SQLite"],
-  },
-  {
-    label: "Collaboration",
-    items: ["Git", "GitHub", "Xcode", "Figma", "Notion", "Photoshop", "PowerPoint"],
   },
 ];
 

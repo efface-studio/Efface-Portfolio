@@ -4,7 +4,7 @@
 export const profile = {
   name: "서지완",
   nameEn: "Jiwan Seo",
-  role: "iOS Developer & PM",
+  role: "iOS · Frontend Developer & PM",
   birth: "2007.08.02",
   headline: "불편함을 발견하면, 서비스로 만듭니다.",
   summary:
@@ -23,27 +23,31 @@ export type CareerItem = {
   company: string;
   role: string;
   period: string;
-  current: boolean;
+  badge?: string;
 };
 
 export const career: CareerItem[] = [
   {
+    company: "efface",
+    role: "대표 · 기획 · 디자인 · 개발",
+    period: "2026 — 운영 중",
+    badge: "운영 중",
+  },
+  {
     company: "(주) 하이비츠",
     role: "iOS Developer · Frontend Developer",
     period: "2026.03 — 재직 중",
-    current: true,
+    badge: "재직 중",
   },
   {
     company: "(주) 얼라이브러쉬",
     role: "어플리케이션 · 서비스 기획 (PM)",
     period: "2025.11 — 2026.01",
-    current: false,
   },
   {
     company: "광주소프트웨어마이스터고",
     role: "iOS Developer · PM",
     period: "2023.03 — 2026.02",
-    current: false,
   },
 ];
 
@@ -58,10 +62,6 @@ export const skillGroups: SkillGroup[] = [
   {
     label: "Web · Backend",
     items: ["React", "Vite", "Express", "Prisma", "SQLite"],
-  },
-  {
-    label: "Collaboration",
-    items: ["Git", "GitHub", "Xcode", "Figma", "Notion", "Photoshop", "PowerPoint"],
   },
 ];
 

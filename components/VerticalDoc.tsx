@@ -275,7 +275,7 @@ function CoverPage({ c }: { c: Content }) {
               <span className="text-[10px] text-dim">·</span>
               <span className="text-[10px] text-dim">{profile.birth}</span>
             </div>
-            <p className="mt-6 max-w-[110mm] text-[20px] font-extrabold leading-[1.4] tracking-[-0.015em]">
+            <p className="mt-5 max-w-[110mm] text-[20px] font-extrabold leading-[1.4] tracking-[-0.015em]">
               {profile.headline}
             </p>
             <p className="mt-3 max-w-[116mm] text-[11px] leading-[1.8] text-muted">
@@ -297,7 +297,7 @@ function CoverPage({ c }: { c: Content }) {
           )}
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-x-10 gap-y-3 border-t border-fg/20 pt-3">
+        <div className="mt-4 grid grid-cols-2 gap-x-10 gap-y-2 border-t border-fg/20 pt-3">
           {[
             [ui.contactEmail, profile.contact.email, ""],
             [ui.contactPhone, profile.contact.phone, ""],
@@ -332,9 +332,9 @@ function CoverPage({ c }: { c: Content }) {
             <Entry key={ci.company} meta={ci.period}>
               <h3 className="text-[12.5px] font-bold">
                 {ci.company}
-                {ci.current ? (
+                {ci.badge ? (
                   <span className="ml-2 rounded-full bg-accent-soft px-2 py-[2px] text-[8px] font-bold text-accent">
-                    {ui.current}
+                    {ci.badge}
                   </span>
                 ) : null}
               </h3>
