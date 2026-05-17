@@ -46,7 +46,7 @@ export default function ImageZoom({
             e.stopPropagation();
             setOpen(false);
           }}
-          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/85 p-10 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex cursor-zoom-out items-center justify-center bg-black/85 p-10 backdrop-blur-sm"
         >
           <img
             src={src}

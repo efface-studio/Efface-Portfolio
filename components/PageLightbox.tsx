@@ -78,7 +78,7 @@ export default function PageLightbox({
       {idx != null && pages[idx] != null && (
         <div
           onClick={() => setIdx(null)}
-          className="fixed inset-0 z-50 flex cursor-default items-center justify-center bg-black/85 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex cursor-default items-center justify-center bg-black/85 backdrop-blur-sm"
         >
           <button
             type="button"

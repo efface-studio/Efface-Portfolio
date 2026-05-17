@@ -39,14 +39,14 @@ function SegLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${
+      className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-3 ${
         active ? "bg-accent text-white" : "text-muted hover:text-fg"
       }`}
     >
       {label}
       {sub ? (
         <span
-          className={`font-mono text-[9.5px] font-medium ${
+          className={`hidden font-mono text-[9.5px] font-medium sm:inline ${
             active ? "text-white/70" : "text-dim"
           }`}
         >
@@ -70,7 +70,7 @@ export default function Controls({ lang }: { lang: Lang }) {
   const view = isPlan ? "/business-plan" : isDeck ? "/deck" : "/";
 
   const actionClass =
-    "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-fg transition-colors hover:bg-surface-2";
+    "flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-semibold text-fg transition-colors hover:bg-surface-2 sm:px-3.5";
 
   return (
     <div className="no-print fixed inset-x-0 bottom-5 z-50 flex justify-center px-4">
@@ -105,20 +105,22 @@ export default function Controls({ lang }: { lang: Lang }) {
           <a
             href={`/docs/efface-business-plan-${lang}.pdf`}
             download
+            aria-label={t.pdf}
             className={actionClass}
           >
             <DownloadIcon />
-            {t.pdf}
+            <span className="hidden sm:inline">{t.pdf}</span>
           </a>
         ) : (
           <button
             type="button"
             onClick={() => window.print()}
             title={t.printHint}
+            aria-label={t.pdf}
             className={actionClass}
           >
             <DownloadIcon />
-            {t.pdf}
+            <span className="hidden sm:inline">{t.pdf}</span>
           </button>
         )}
       </div>
