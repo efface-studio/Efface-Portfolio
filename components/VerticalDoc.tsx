@@ -508,10 +508,10 @@ function HiNestOverviewPage({ c }: { c: Content }) {
       <ProjectHead project={hinest} kind="Project — Flagship · Web Platform" />
 
       <div className="mt-5 grid grid-cols-[1fr_82mm] gap-7">
-        <div>
+        <div className="flex flex-col">
           <p className="text-[11px] leading-[1.8]">{hinest.summary}</p>
 
-          <div className="mt-4">
+          <div className="mt-auto pt-6">
             {[
               [ui.role, hinest.role],
               [ui.period, hinest.period],
@@ -529,19 +529,19 @@ function HiNestOverviewPage({ c }: { c: Content }) {
                 </span>
               </div>
             ))}
-          </div>
 
-          {hinest.links.map((l) => (
-            <a
-              key={l.url}
-              href={l.url}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 inline-block text-[10px] font-bold text-accent"
-            >
-              {l.label} ↗
-            </a>
-          ))}
+            {hinest.links.map((l) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-block text-[10px] font-bold text-accent"
+              >
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
