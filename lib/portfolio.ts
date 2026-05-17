@@ -297,10 +297,9 @@ export const hinestFeatures: FeatureGroup[] = [
     shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
   },
   {
-    title: "계정 보안 — 잠금 · 비밀번호 재설정",
-    desc: "로그인 5회 실패 시 자동 잠금과 관리자 잠금 해제, 이메일 인증 기반 셀프 비밀번호 재설정(토큰 SHA-256 해시 저장 · 30분 단일 사용 · 전 세션 강제 로그아웃)을 구현했습니다.",
-    refs: "PR #116 · 8a28fdd",
-    shots: ["/hinest/demo-password-reset.png"],
+    title: "프로젝트 — 팀 단위 협업 공간",
+    desc: "팀 단위 협업을 ‘프로젝트’ 공간으로 묶어 관리하는 기능입니다. ADMIN이 프로젝트를 생성하고 OWNER·MANAGER·MEMBER 3단계 권한 아래, 프로젝트별 전용 캘린더·QA 체크리스트·GitHub·Datadog·Vercel 웹훅 채널·멤버 관리를 제공합니다.",
+    refs: "65f78f7 · 265b594 · 38da517",
   },
   {
     title: "미리보기 모드",

@@ -254,10 +254,9 @@ export const hinestFeatures: FeatureGroup[] = [
     shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
   },
   {
-    title: "Account security — lockout & password reset",
-    desc: "Built automatic lockout after 5 failed logins with admin unlock, and email-verified self-service password reset (reset token stored as a SHA-256 hash, single-use for 30 minutes, forced logout of all sessions).",
-    refs: "PR #116 · 8a28fdd",
-    shots: ["/hinest/demo-password-reset.png"],
+    title: "Projects — a team-level collaboration space",
+    desc: "Groups team-level collaboration into dedicated ‘Project’ spaces. An ADMIN creates a project, and under three roles — OWNER, MANAGER, MEMBER — each project offers its own calendar, a QA checklist, GitHub/Datadog/Vercel webhook channels, and member management.",
+    refs: "65f78f7 · 265b594 · 38da517",
   },
   {
     title: "Preview mode",
