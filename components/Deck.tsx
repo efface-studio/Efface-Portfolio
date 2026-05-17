@@ -42,8 +42,8 @@ function Slide({
       </header>
       <div className="flex min-h-0 flex-1 flex-col py-6">{children}</div>
       <footer className="flex items-center justify-between border-t border-line pt-2.5">
-        <Meta className="text-[8.5px] uppercase tracking-[0.1em] text-dim">
-          {c.profile.name} · {c.profile.role}
+        <Meta className="text-[8.5px] tracking-[0.1em] text-dim">
+          {c.profile.footer}
         </Meta>
         <Meta className="text-[8.5px] text-dim">{c.profile.contact.github}</Meta>
       </footer>

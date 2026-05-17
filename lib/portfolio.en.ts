@@ -18,6 +18,7 @@ export const profile = {
   name: "Jiwan Seo",
   nameEn: "서지완",
   role: "iOS · Frontend Developer & PM",
+  footer: "Jiwan SEO — efface Founder / Engineer",
   birth: "2007.08.02",
   headline: "When I find friction, I turn it into a service.",
   summary:
@@ -534,7 +535,7 @@ export const showcases: Showcase[] = [
     role: "Completed an information-security education program",
     date: "2023",
     place: "",
-    desc: "Completed a specialized program spanning information security from fundamentals to network security, vulnerability analysis, and penetration testing.",
+    desc: "Completed an information-security program hosted by the Korea Internet & Security Agency (KISA), spanning fundamentals to network security, vulnerability analysis, and penetration testing.",
   },
 ];
 

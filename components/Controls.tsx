@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ui, type Lang } from "@/lib/ui";
 
 function DownloadIcon() {
@@ -69,8 +70,22 @@ export default function Controls({ lang }: { lang: Lang }) {
   const langQuery = lang === "en" ? "?lang=en" : "";
   const view = isPlan ? "/business-plan" : isDeck ? "/deck" : "/";
 
+  // Hide the bar while a lightbox is open — the lightboxes mark this by
+  // adding a `lightbox-open` class to <html>.
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  useEffect(() => {
+    const root = document.documentElement;
+    const sync = () => setLightboxOpen(root.classList.contains("lightbox-open"));
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   const actionClass =
     "flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-semibold text-fg transition-colors hover:bg-surface-2 sm:px-3.5";
+
+  if (lightboxOpen) return null;
 
   return (
     <div className="no-print fixed inset-x-0 bottom-5 z-50 flex justify-center px-4">

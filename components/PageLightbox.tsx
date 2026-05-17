@@ -41,9 +41,11 @@ export default function PageLightbox({
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    document.documentElement.classList.add("lightbox-open");
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.documentElement.classList.remove("lightbox-open");
     };
   }, [idx, pages.length]);
 

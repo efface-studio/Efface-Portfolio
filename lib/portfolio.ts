@@ -5,6 +5,7 @@ export const profile = {
   name: "서지완",
   nameEn: "Jiwan Seo",
   role: "iOS · Frontend Developer & PM",
+  footer: "서지완 (Jiwan SEO) — efface Founder / Engineer",
   birth: "2007.08.02",
   headline: "불편함을 발견하면, 서비스로 만듭니다.",
   summary:
@@ -603,7 +604,7 @@ export const showcases: Showcase[] = [
     role: "정보보안 교육 프로그램 이수",
     date: "2023",
     place: "",
-    desc: "정보보안 기본 개념부터 네트워크 보안·시스템 취약점 분석·모의 해킹까지 다루는 전문 교육 프로그램을 이수했습니다.",
+    desc: "한국인터넷진흥원(KISA)이 주관한 정보보안 교육 프로그램으로, 기본 개념부터 네트워크 보안·시스템 취약점 분석·모의 해킹까지 다루는 과정을 이수했습니다.",
   },
 ];
 
