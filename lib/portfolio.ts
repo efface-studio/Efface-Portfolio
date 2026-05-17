@@ -104,9 +104,7 @@ export type TroubleCase = {
   category: string;
   title: string;
   ref?: { label: string; url: string };
-  refs?: string;
   file?: string;
-  desc?: string;
   problem: string;
   solution: string;
   result: string;
@@ -299,6 +297,11 @@ export const hinestFeatures: FeatureGroup[] = [
     shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
   },
   {
+    title: "프로젝트 — 팀 단위 협업 공간",
+    desc: "팀 단위 협업을 ‘프로젝트’ 공간으로 묶어 관리하는 기능입니다. ADMIN이 프로젝트를 생성하고 OWNER·MANAGER·MEMBER 3단계 권한 아래, 프로젝트별 전용 캘린더·QA 체크리스트·GitHub·Datadog·Vercel 웹훅 채널·멤버 관리를 제공합니다.",
+    refs: "65f78f7 · 265b594 · 38da517",
+  },
+  {
     title: "미리보기 모드",
     desc: "로그인 없이 데모 조직 데이터로 전 기능을 둘러보는 미리보기 모드를 도입했습니다. 플래그로 API 호출을 mock으로 단락하고 모든 페이지에 시드 데이터를 채웠습니다.",
     refs: "PR #119–#134",
@@ -455,20 +458,6 @@ const candidates = await prisma.approval.findMany({
 const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
       },
     ],
-  },
-  {
-    no: "05",
-    category: "협업 · 프로젝트 관리",
-    title: "프로젝트 — 팀 단위 협업 공간",
-    refs: "65f78f7 · 265b594 · 38da517 · 2996217 · 84736e7 · PR #41 · #30 · #38",
-    desc: "HiNest 안에서 팀 단위 협업을 ‘프로젝트’라는 공간으로 묶어 관리하는 기능입니다.",
-    problem:
-      "전사 워크플레이스에는 팀 단위로 일정·QA·외부 알림을 묶을 공간이 없어, 팀별 협업 맥락이 개인 일정과 전사 채널에 흩어졌습니다.",
-    solution:
-      "팀 협업을 ‘프로젝트’ 공간으로 분리했습니다. ADMIN이 프로젝트를 생성하고 일반 유저는 초대로 참여하며, OWNER·MANAGER·MEMBER 3단계 권한으로 운영됩니다. 각 프로젝트에는 전용 캘린더, 상태·담당자·플랫폼·마감일 QA 체크리스트, GitHub·Datadog·Vercel 웹훅 채널, 멤버 관리, 설정 모달을 담았습니다.",
-    result:
-      "팀별 일정·QA·알림·멤버가 프로젝트 단위로 모여, 협업 맥락이 명확히 분리·관리됩니다.",
-    code: [],
   },
 ];
 

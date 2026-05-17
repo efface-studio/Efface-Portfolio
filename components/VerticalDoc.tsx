@@ -206,16 +206,6 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
       {tc.file && (
         <p className="mt-1 font-mono text-[7.5px] text-dim">{tc.file}</p>
       )}
-      {tc.refs && (
-        <p className="mt-1 font-mono text-[7.5px] leading-[1.6] text-dim">
-          {linkifyRefs(tc.refs)}
-        </p>
-      )}
-      {tc.desc && (
-        <p className="mt-1.5 text-[9.5px] leading-[1.6] text-muted">
-          {tc.desc}
-        </p>
-      )}
 
       <div className="mt-2 space-y-1 border-t border-line pt-2">
         <CaseRow label={c.ui.problem} text={tc.problem} />
@@ -223,13 +213,11 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
         <CaseRow label={c.ui.result} text={tc.result} accent />
       </div>
 
-      {tc.code.length > 0 && (
-        <div className="mt-2.5 space-y-2">
-          {tc.code.map((s) => (
-            <CodeBlock key={s.caption} snippet={s} />
-          ))}
-        </div>
-      )}
+      <div className="mt-2.5 space-y-2">
+        {tc.code.map((s) => (
+          <CodeBlock key={s.caption} snippet={s} />
+        ))}
+      </div>
     </article>
   );
 }
@@ -627,7 +615,7 @@ function HiNestTroublePageA({ c }: { c: Content }) {
   );
 }
 
-/* --- HiNest — troubleshooting 03·04 + project deep-dive --- */
+/* --- HiNest — troubleshooting 03·04 --- */
 function HiNestTroublePageB({ c }: { c: Content }) {
   const { hinestCases, ui } = c;
   return (
@@ -640,16 +628,13 @@ function HiNestTroublePageB({ c }: { c: Content }) {
           {ui.troubleshooting}
         </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
-          Case 03 — 05
+          Case 03 — 04
         </span>
       </div>
-      <div className="mt-3">
-        {hinestCases.slice(2).map((tc, i) => (
-          <div key={tc.no}>
-            {i > 0 && <div className="my-2 border-t border-line-2" />}
-            <TroubleCaseBlock tc={tc} c={c} />
-          </div>
-        ))}
+      <div className="mt-4">
+        <TroubleCaseBlock tc={hinestCases[2]} c={c} />
+        <div className="my-4 border-t border-line-2" />
+        <TroubleCaseBlock tc={hinestCases[3]} c={c} />
       </div>
     </DocPage>
   );

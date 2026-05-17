@@ -254,6 +254,11 @@ export const hinestFeatures: FeatureGroup[] = [
     shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
   },
   {
+    title: "Projects — a team-level collaboration space",
+    desc: "Groups team-level collaboration into dedicated ‘Project’ spaces. An ADMIN creates a project, and under three roles — OWNER, MANAGER, MEMBER — each project offers its own calendar, a QA checklist, GitHub/Datadog/Vercel webhook channels, and member management.",
+    refs: "65f78f7 · 265b594 · 38da517",
+  },
+  {
     title: "Preview mode",
     desc: "Added a preview mode that tours every feature with demo-org data and no login. A flag short-circuits API calls to mocks, and every page is filled with seed data.",
     refs: "PR #119–#134",
@@ -410,20 +415,6 @@ const candidates = await prisma.approval.findMany({
 const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
       },
     ],
-  },
-  {
-    no: "05",
-    category: "Collaboration · Project Management",
-    title: "Projects — a team-level collaboration space",
-    refs: "65f78f7 · 265b594 · 38da517 · 2996217 · 84736e7 · PR #41 · #30 · #38",
-    desc: "A feature that groups team-level collaboration into dedicated ‘Project’ spaces inside HiNest.",
-    problem:
-      "The company-wide workplace had no place to group a team's schedule, QA, and external alerts, so each team's collaboration context was scattered across personal calendars and company channels.",
-    solution:
-      "Team collaboration was split into ‘Project’ spaces. An ADMIN creates a project while regular users join by invitation, with three roles — OWNER, MANAGER, MEMBER. Each project holds a dedicated calendar, a QA checklist (status, assignee, platform, due date), GitHub/Datadog/Vercel webhook channels, member management, and a settings modal.",
-    result:
-      "A team's schedule, QA, alerts, and members live together per project, keeping each team's collaboration context cleanly separated.",
-    code: [],
   },
 ];
 
