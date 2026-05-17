@@ -25,9 +25,9 @@ export const profile = {
   contact: {
     email: "xixn2@efface.dev",
     phone: "010-6286-0063",
-    github: "github.com/xixn2",
+    github: "xixn2",
     githubUrl: "https://github.com/xixn2",
-    linkedin: "linkedin.com/in/xixn2",
+    linkedin: "xixn2",
     linkedinUrl: "https://www.linkedin.com/in/xixn2",
     appStore: "https://apps.apple.com/kr/app/goms/id6502936560",
   },
