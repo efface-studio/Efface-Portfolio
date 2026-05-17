@@ -401,17 +401,19 @@ function GomsOverviewPage({ c }: { c: Content }) {
             ))}
           </div>
 
-          {goms.links.map((l) => (
-            <a
-              key={l.url}
-              href={l.url}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 inline-block text-[10px] font-bold text-accent"
-            >
-              {l.label} ↗
-            </a>
-          ))}
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+            {goms.links.map((l) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[10px] font-bold text-accent"
+              >
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
@@ -549,17 +551,19 @@ function HiNestOverviewPage({ c }: { c: Content }) {
             ))}
           </div>
 
-          {hinest.links.map((l) => (
-            <a
-              key={l.url}
-              href={l.url}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 inline-block text-[10px] font-bold text-accent"
-            >
-              {l.label} ↗
-            </a>
-          ))}
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+            {hinest.links.map((l) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[10px] font-bold text-accent"
+              >
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>

@@ -165,7 +165,11 @@ export const featuredProjects: Project[] = [
       "Fastlane",
       "Firebase Cloud Messaging",
     ],
-    links: [{ label: "App Store", url: "https://apps.apple.com/kr/app/goms/id6502936560" }],
+    links: [
+      { label: "App Store", url: "https://apps.apple.com/kr/app/goms/id6502936560" },
+      { label: "GitHub", url: "https://github.com/team-haribo/GOMS-iOS-V2" },
+      { label: "Team Haribo", url: "http://team-haribo.vercel.app/" },
+    ],
     metrics: [
       { value: "400+", label: "주간 사용자" },
       { value: "v1.5.0", label: "App Store 배포" },
@@ -194,6 +198,8 @@ export const featuredProjects: Project[] = [
     stack: ["React", "Vite", "TypeScript", "Express", "Prisma", "SQLite"],
     links: [
       { label: "GitHub", url: "https://github.com/efface-studio/HiNest-Client" },
+      { label: "서비스", url: "https://nest.hi-vits.com/" },
+      { label: "다운로드", url: "https://nest.hi-vits.com/download" },
     ],
     contributions: [
       "기획·디자인부터 프론트엔드·백엔드 개발과 운영까지 전 과정을 1인으로 담당",

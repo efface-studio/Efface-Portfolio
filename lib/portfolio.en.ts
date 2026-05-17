@@ -122,7 +122,11 @@ export const featuredProjects: Project[] = [
       "Fastlane",
       "Firebase Cloud Messaging",
     ],
-    links: [{ label: "App Store", url: "https://apps.apple.com/kr/app/goms/id6502936560" }],
+    links: [
+      { label: "App Store", url: "https://apps.apple.com/kr/app/goms/id6502936560" },
+      { label: "GitHub", url: "https://github.com/team-haribo/GOMS-iOS-V2" },
+      { label: "Team Haribo", url: "http://team-haribo.vercel.app/" },
+    ],
     metrics: [
       { value: "400+", label: "Weekly users" },
       { value: "v1.5.0", label: "App Store release" },
@@ -151,6 +155,8 @@ export const featuredProjects: Project[] = [
     stack: ["React", "Vite", "TypeScript", "Express", "Prisma", "SQLite"],
     links: [
       { label: "GitHub", url: "https://github.com/efface-studio/HiNest-Client" },
+      { label: "Service", url: "https://nest.hi-vits.com/" },
+      { label: "Download", url: "https://nest.hi-vits.com/download" },
     ],
     contributions: [
       "Handled the entire process solo — from planning and design to frontend, backend, and operations.",
