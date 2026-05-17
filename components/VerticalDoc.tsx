@@ -375,13 +375,13 @@ function GomsOverviewPage({ c }: { c: Content }) {
   const goms = c.featuredProjects[0];
   return (
     <DocPage n={5} c={c}>
-      <ProjectHead project={goms} kind="Project — iOS App" />
+      <div className="grid grid-cols-[1fr_82mm] gap-7">
+        <div>
+          <ProjectHead project={goms} kind="Project — iOS App" />
 
-      <div className="mt-5 grid grid-cols-[1fr_82mm] gap-7">
-        <div className="flex flex-col">
-          <p className="text-[11px] leading-[1.8]">{goms.summary}</p>
+          <p className="mt-5 text-[11px] leading-[1.8]">{goms.summary}</p>
 
-          <div className="mt-auto pt-6">
+          <div className="mt-4">
             {[
               [ui.role, goms.role],
               [ui.period, goms.period],
@@ -399,19 +399,19 @@ function GomsOverviewPage({ c }: { c: Content }) {
                 </span>
               </div>
             ))}
-
-            {goms.links.map((l) => (
-              <a
-                key={l.url}
-                href={l.url}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-3 inline-block text-[10px] font-bold text-accent"
-              >
-                {l.label} ↗
-              </a>
-            ))}
           </div>
+
+          {goms.links.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-block text-[10px] font-bold text-accent"
+            >
+              {l.label} ↗
+            </a>
+          ))}
         </div>
 
         <div>
