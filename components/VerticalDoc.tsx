@@ -475,7 +475,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
               Key Contributions
             </span>
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             {goms.contributions.map((co) => (
               <div key={co} className="flex gap-2.5">
                 <span className="mt-[7px] h-px w-2.5 shrink-0 bg-accent" />
