@@ -73,27 +73,6 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
-export type SkillFocus = { name: string; desc: string };
-
-export const skillFocus: SkillFocus[] = [
-  {
-    name: "Swift",
-    desc: "객체지향·프로토콜 지향 패러다임을 적용해 요구사항에 맞는 iOS 앱을 설계·개발합니다.",
-  },
-  {
-    name: "Architecture",
-    desc: "MVVM·TCA 등 아키텍처 패턴을 이해하고 실제 프로젝트에 적용한 경험이 있습니다.",
-  },
-  {
-    name: "SwiftUI · UIKit",
-    desc: "선언형·명령형 UI 모두로 화면 전환, 뷰 계층 관리, 커스텀 컴포넌트를 구현합니다.",
-  },
-  {
-    name: "Tuist",
-    desc: "프로젝트 모듈화와 설정 자동화로 빌드·협업 효율을 끌어올립니다.",
-  },
-];
-
 export type Trouble = { problem: string; solution: string; result: string };
 
 export type CodeSnippet = {
@@ -623,15 +602,15 @@ export type Highlight = { k: string; v: string };
 export const aboutHighlights: Highlight[] = [
   {
     k: "팀을 이끄는 사람",
-    v: "USLASH 비영리 법인을 공동 설립하고, 전공 동아리 부장으로 팀 규모를 200% 확대했습니다.",
+    v: "USLASH 비영리 법인을 공동 설립해 컨퍼런스·해커톤을 운영했고, 전공 동아리를 부장으로 이끌며 팀 규모를 200% 확대했습니다. 사람을 모으고 역할을 나눠 함께 끝까지 가는 과정을 즐깁니다.",
   },
   {
     k: "끝까지 책임지는 PM",
-    v: "GOMS를 기획·개발해 매주 400명 이상이 사용하는 교내 공식 서비스로 운영하고 있습니다.",
+    v: "GOMS를 직접 기획·개발해 매주 400명 이상이 쓰는 교내 공식 서비스로 2년 넘게 운영하고 있으며, App Store 심사·배포와 버전 관리까지 직접 책임집니다.",
   },
   {
     k: "매일 성장하는 개발자",
-    v: "남들이 주저하는 도전을 택하고, 어제보다 한 걸음 더 나아가기 위해 노력합니다.",
+    v: "남들이 주저하는 도전을 먼저 택하고, 낯선 기술 앞에서도 망설이기보다 부딪혀 봅니다. 어제보다 한 걸음 더 나아가는 과정 자체를 즐깁니다.",
   },
 ];
 

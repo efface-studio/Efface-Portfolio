@@ -203,7 +203,7 @@ function CoverSlide({ c }: { c: Content }) {
 }
 
 function AboutCareerSlide({ c }: { c: Content }) {
-  const { career, skillGroups, skillFocus, aboutHighlights, ui } = c;
+  const { career, skillGroups, aboutHighlights, ui } = c;
   return (
     <Slide n={2} label="About · Career" title={ui.deckAboutTitle} c={c}>
       <div className="flex min-h-0 flex-1 flex-col">
@@ -226,7 +226,7 @@ function AboutCareerSlide({ c }: { c: Content }) {
 
         {/* career + stack */}
         <div className="grid flex-1 grid-cols-[1fr_1fr] gap-10 pt-6">
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col">
             <div>
               <ColLabel>{ui.careerTitle}</ColLabel>
               <div className="mt-3.5">
@@ -252,21 +252,6 @@ function AboutCareerSlide({ c }: { c: Content }) {
                       {ci.period}
                     </Meta>
                   </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <ColLabel>{ui.coreStrengths}</ColLabel>
-              <div className="mt-3 space-y-2">
-                {skillFocus.map((s) => (
-                  <p
-                    key={s.name}
-                    className="text-[10px] leading-[1.6] text-muted"
-                  >
-                    <span className="font-bold text-fg">{s.name}</span>
-                    {" — "}
-                    {s.desc}
-                  </p>
                 ))}
               </div>
             </div>
