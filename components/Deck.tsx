@@ -7,7 +7,7 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { linkifyDesc, linkifyRefs } from "@/components/refs";
 import type { ReactNode } from "react";
 
-const TOTAL = 11;
+const TOTAL = 10;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /* -------------------------------------------------------------- */
@@ -497,17 +497,43 @@ function AwardsSlide({ c }: { c: Content }) {
 }
 
 function ActivitySlide({ c }: { c: Content }) {
-  const { activities, showcases, ui } = c;
+  const { activities, showcases, studio, ui } = c;
   return (
     <Slide n={9} label="Activity" title={ui.deckActivityTitle} c={c}>
       <div className="flex flex-1 flex-col gap-6">
         <div className="flex flex-1 flex-col">
-          {activities.map((act, i) => (
+          <div className="flex flex-1 flex-col justify-center">
+            <div className="grid grid-cols-[36mm_1fr] gap-7">
+              <div className="pt-0.5">
+                <Meta className="text-[8.5px] font-bold uppercase tracking-[0.14em] text-accent">
+                  {ui.studioMeta}
+                </Meta>
+              </div>
+              <div>
+                <h3 className="text-[13.5px] font-bold">
+                  {studio.name}
+                  <span className="ml-2 rounded-full bg-accent-soft px-2 py-[2px] text-[8.5px] font-bold text-accent">
+                    {ui.studioBadge}
+                  </span>
+                  <a
+                    href={studio.fullUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ml-2 text-[9px] font-bold text-accent"
+                  >
+                    {studio.url} ↗
+                  </a>
+                </h3>
+                <p className="mt-1 text-[10px] leading-[1.6] text-muted">
+                  {studio.desc}
+                </p>
+              </div>
+            </div>
+          </div>
+          {activities.map((act) => (
             <div
               key={act.name}
-              className={`flex flex-1 flex-col justify-center ${
-                i > 0 ? "border-t border-line" : ""
-              }`}
+              className="flex flex-1 flex-col justify-center border-t border-line"
             >
               <div className="grid grid-cols-[36mm_1fr] gap-7">
                 <div className="pt-0.5">
@@ -566,52 +592,10 @@ function ActivitySlide({ c }: { c: Content }) {
   );
 }
 
-function StudioSlide({ c }: { c: Content }) {
-  const { studio, ui } = c;
-  return (
-    <Slide n={10} label="Venture" title={ui.deckStudioTitle} c={c}>
-      <div className="flex flex-1 flex-col justify-center">
-        <div className="flex items-end gap-4">
-          <h3 className="text-[56px] font-extrabold leading-[0.9] tracking-[-0.03em]">
-            {studio.name}
-          </h3>
-          <a
-            href={studio.fullUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mb-1.5 font-mono text-[11px] font-bold text-accent"
-          >
-            {studio.url} ↗
-          </a>
-        </div>
-        <p className="mt-3 text-[14px] font-bold text-accent">
-          {studio.tagline}
-        </p>
-        <p className="mt-3 max-w-[200mm] text-[12px] leading-[1.8] text-muted">
-          {studio.desc}
-        </p>
-
-        <div className="mt-7 grid grid-cols-[24mm_1fr] items-baseline gap-4">
-          <Meta className="text-[9px] font-bold uppercase tracking-[0.14em] text-dim">
-            Services
-          </Meta>
-          <ChipRow items={studio.services} size="md" />
-        </div>
-        <div className="mt-3 grid grid-cols-[24mm_1fr] items-baseline gap-4">
-          <Meta className="text-[9px] font-bold uppercase tracking-[0.14em] text-dim">
-            Stack
-          </Meta>
-          <ChipRow items={studio.stack} size="md" />
-        </div>
-      </div>
-    </Slide>
-  );
-}
-
 function ContactSlide({ c }: { c: Content }) {
   const { profile, ui } = c;
   return (
-    <Slide n={11} label="Contact" title={ui.deckContactTitle} c={c}>
+    <Slide n={10} label="Contact" title={ui.deckContactTitle} c={c}>
       <div className="flex flex-1 flex-col justify-center">
         <p className="max-w-[212mm] text-[22px] font-extrabold leading-[1.5] tracking-tight">
           {ui.closingLine}
@@ -666,7 +650,6 @@ export default function Deck({ lang }: { lang: Lang }) {
       <GomsTroubleSlide c={c} />
       <AwardsSlide c={c} />
       <ActivitySlide c={c} />
-      <StudioSlide c={c} />
       <ContactSlide c={c} />
     </div>
   );
