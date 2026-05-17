@@ -429,7 +429,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
       </div>
 
       {goms.screenshots && (
-        <div className="mt-6 flex justify-center gap-3">
+        <div className="mt-6 flex gap-3">
           {goms.screenshots.map((src) => (
             <ImageZoom
               key={src}
