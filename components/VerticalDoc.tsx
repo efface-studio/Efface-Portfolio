@@ -491,7 +491,7 @@ function GomsTroublePage({ c }: { c: Content }) {
 
 /* --- HiNest — overview + key features --- */
 function HiNestOverviewPage({ c }: { c: Content }) {
-  const { hinestFeatures, ui } = c;
+  const { hinestFeatures, hinestDemos, ui } = c;
   const hinest = c.featuredProjects[1];
   return (
     <DocPage n={2} c={c}>
@@ -535,13 +535,22 @@ function HiNestOverviewPage({ c }: { c: Content }) {
         </div>
 
         <div>
-          {hinest.banner && (
-            <img
-              src={hinest.banner}
-              alt=""
-              className="w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
-            />
-          )}
+          <div className="grid grid-cols-2 gap-1.5">
+            {hinestDemos.map((d) => (
+              <figure key={d.src}>
+                <div className="overflow-hidden rounded-md border border-line shadow-[0_8px_20px_-14px_rgba(16,16,24,0.4)]">
+                  <img
+                    src={d.src}
+                    alt=""
+                    className="aspect-[16/10] w-full object-cover object-top"
+                  />
+                </div>
+                <figcaption className="mt-[3px] text-[6.5px] font-medium leading-none text-dim">
+                  {d.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
           <div className="mt-3">
             <TagRow items={hinest.stack} />
           </div>
