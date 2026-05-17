@@ -293,7 +293,11 @@ function CoverPage({ c }: { c: Content }) {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[12.5px] font-semibold text-fg"
+                  className={`text-[12.5px] font-semibold ${
+                    href === profile.contact.appStore
+                      ? "text-accent"
+                      : "text-fg"
+                  }`}
                 >
                   {v}
                 </a>
