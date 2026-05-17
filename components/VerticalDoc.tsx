@@ -4,6 +4,7 @@ import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { CodeBlock } from "@/components/CodeBlock";
 import { linkifyDesc, linkifyRefs } from "@/components/refs";
+import ImageZoom from "@/components/ImageZoom";
 import type { ReactNode } from "react";
 
 const TOTAL = 7;
@@ -135,11 +136,10 @@ function FeatureRow({ f }: { f: FeatureGroup }) {
       {f.shots && (
         <div className="flex shrink-0 gap-1.5">
           {f.shots.map((src) => (
-            <img
+            <ImageZoom
               key={src}
               src={src}
-              alt=""
-              className="h-[18mm] w-auto rounded-md border border-line"
+              className="h-[21mm] w-auto rounded-md border border-line"
             />
           ))}
         </div>
