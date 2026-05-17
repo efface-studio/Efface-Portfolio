@@ -230,9 +230,8 @@ function CoverPage({ c }: { c: Content }) {
   return (
     <DocPage n={1} c={c}>
       <header>
-        <div className="flex items-baseline justify-between text-[8.5px] font-bold uppercase tracking-[0.22em] text-dim">
+        <div className="text-[8.5px] font-bold uppercase tracking-[0.22em] text-dim">
           <span>Portfolio</span>
-          <span>2026</span>
         </div>
 
         <div className="mt-5 flex items-start justify-between gap-8">
@@ -263,10 +262,10 @@ function CoverPage({ c }: { c: Content }) {
             <img
               src={photo}
               alt={profile.name}
-              className="h-[52mm] w-[40mm] shrink-0 rounded-lg object-cover"
+              className="-mt-4 h-[52mm] w-[40mm] shrink-0 rounded-lg object-cover"
             />
           ) : (
-            <div className="flex h-[52mm] w-[40mm] shrink-0 items-center justify-center rounded-lg bg-fg">
+            <div className="-mt-4 flex h-[52mm] w-[40mm] shrink-0 items-center justify-center rounded-lg bg-fg">
               <span className="text-[40px] font-extrabold text-bg">
                 {profile.name.charAt(0)}
               </span>
