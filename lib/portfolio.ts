@@ -14,6 +14,8 @@ export const profile = {
     phone: "010-6286-0063",
     github: "github.com/xixn2",
     githubUrl: "https://github.com/xixn2",
+    linkedin: "linkedin.com/in/xixn2",
+    linkedinUrl: "https://www.linkedin.com/in/xixn2",
     appStore: "https://apps.apple.com/kr/app/goms/id6502936560",
   },
   note: "병역특례(산업기능요원)를 희망하고 있습니다.",

@@ -27,6 +27,8 @@ export const profile = {
     phone: "010-6286-0063",
     github: "github.com/xixn2",
     githubUrl: "https://github.com/xixn2",
+    linkedin: "linkedin.com/in/xixn2",
+    linkedinUrl: "https://www.linkedin.com/in/xixn2",
     appStore: "https://apps.apple.com/kr/app/goms/id6502936560",
   },
   note: "Seeking alternative military service as an Industrial Technical Personnel.",
