@@ -259,16 +259,16 @@ export const hinestFeatures: FeatureGroup[] = [
     refs: "65f78f7 · 265b594 · 38da517",
   },
   {
-    title: "Preview mode",
-    desc: "Added a preview mode that tours every feature with demo-org data and no login. A flag short-circuits API calls to mocks, and every page is filled with seed data.",
-    refs: "PR #119–#134",
-    shots: ["/hinest/demo-home.png"],
-  },
-  {
     title: "Meeting-note file & link attachments",
     desc: "Added a MeetingAttachment table separate from the meeting-note body JSON, with CRUD routes and UI for file and link attachments.",
     refs: "commit 7544231",
     shots: ["/hinest/demo-docs.png"],
+  },
+  {
+    title: "Preview mode",
+    desc: "Added a preview mode that tours every feature with demo-org data and no login. A flag short-circuits API calls to mocks, and every page is filled with seed data.",
+    refs: "PR #119–#134",
+    shots: ["/hinest/demo-home.png"],
   },
 ];
 
