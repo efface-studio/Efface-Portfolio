@@ -30,7 +30,7 @@ export const profile = {
     githubUrl: "https://github.com/xixn2",
     linkedin: "xixn2",
     linkedinUrl: "https://www.linkedin.com/in/xixn2",
-    appStore: "https://apps.apple.com/kr/app/goms/id6502936560",
+    appStore: "https://apps.apple.com/kr/developer/jiwan-seo/id1778994453",
   },
   note: "Seeking alternative military service as an Industrial Technical Personnel.",
 };
