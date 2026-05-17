@@ -118,9 +118,12 @@ export const featuredProjects: Project[] = [
     contributions: [
       "Took part in every stage from planning to maintenance, handling over 40% of the iOS development (of 3 developers).",
       "Designed an MVVM architecture where one View maps one-to-one to one ViewModel.",
+      "Built the profile screen end to end on my own — from publishing to password reset and account deletion — then refactored it and improved its performance.",
+      "Implemented the email-verified login and sign-up flow, hardening it with input validation and exception handling.",
+      "Implemented QR-code scanning and generation, plus a quick-launch shortcut for the camera.",
+      "Built server-driven push notifications with FCM and linked a Discord bot to automate pass announcements.",
       "Introduced Tuist to resolve .xcodeproj conflicts and modularize the project, migrating it from 3.x to 4.13.0.",
       "Personally handled App Store release, review responses, and version management from v1.0.0 to v1.5.0.",
-      "Built server-driven push notifications with FCM and linked a Discord bot to automate pass announcements.",
     ],
     troubleshooting: [],
   },
