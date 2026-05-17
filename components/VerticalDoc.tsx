@@ -273,7 +273,7 @@ function CoverPage({ c }: { c: Content }) {
           )}
         </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-x-10 gap-y-2 border-t border-fg/20 pt-3">
+        <div className="mt-3 grid grid-cols-3 gap-x-6 gap-y-1 border-t border-fg/20 pt-2">
           {[
             [ui.contactEmail, profile.contact.email, `mailto:${profile.contact.email}`],
             [
@@ -282,10 +282,11 @@ function CoverPage({ c }: { c: Content }) {
               `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
             ],
             ["GitHub", profile.contact.github, profile.contact.githubUrl],
+            ["LinkedIn", profile.contact.linkedin, profile.contact.linkedinUrl],
             [ui.contactAppStore, ui.viewAppStore, profile.contact.appStore],
           ].map(([k, v, href]) => (
-            <span key={k} className="flex items-baseline gap-2.5">
-              <span className="w-[15mm] shrink-0 text-[9px] font-bold uppercase tracking-wide text-dim">
+            <span key={k} className="flex items-baseline gap-2">
+              <span className="w-[13mm] shrink-0 text-[9px] font-bold uppercase tracking-wide text-dim">
                 {k}
               </span>
               {href ? (

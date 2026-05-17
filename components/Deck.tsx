@@ -188,7 +188,13 @@ function CoverSlide({ c }: { c: Content }) {
             {profile.contact.phone}
           </a>
           <span className="text-line-2">·</span>
-          <span>{profile.contact.github}</span>
+          <a href={profile.contact.githubUrl} target="_blank" rel="noreferrer">
+            {profile.contact.github}
+          </a>
+          <span className="text-line-2">·</span>
+          <a href={profile.contact.linkedinUrl} target="_blank" rel="noreferrer">
+            {profile.contact.linkedin}
+          </a>
         </div>
         <Meta className="text-[9px] text-dim">{ui.deckCoverNote}</Meta>
       </div>
@@ -616,7 +622,16 @@ function ContactSlide({ c }: { c: Content }) {
               v: profile.contact.phone,
               href: `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
             },
-            { k: "GitHub", v: profile.contact.github, href: undefined },
+            {
+              k: "GitHub",
+              v: profile.contact.github,
+              href: profile.contact.githubUrl,
+            },
+            {
+              k: "LinkedIn",
+              v: profile.contact.linkedin,
+              href: profile.contact.linkedinUrl,
+            },
           ].map((ct) => (
             <div key={ct.k}>
               <Meta className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-dim">
