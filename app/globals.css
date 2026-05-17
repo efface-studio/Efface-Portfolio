@@ -87,10 +87,6 @@ body {
   overflow: hidden;
 }
 
-.scaler {
-  zoom: var(--zoom, 1);
-}
-
 .stage {
   min-height: 100vh;
   background: var(--backdrop);
@@ -134,8 +130,13 @@ body {
     display: none !important;
   }
 
-  .scaler {
-    zoom: 1 !important;
+  .scaler-frame {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .scaler-page {
+    width: auto !important;
+    transform: none !important;
   }
 
   .stage {
