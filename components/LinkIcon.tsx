@@ -27,6 +27,17 @@ function WindowsMark() {
   );
 }
 
+function AppStoreMark() {
+  return (
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true">
+      <path
+        fillRule="evenodd"
+        d="M6.5 2H17.5A4.5 4.5 0 0 1 22 6.5V17.5A4.5 4.5 0 0 1 17.5 22H6.5A4.5 4.5 0 0 1 2 17.5V6.5A4.5 4.5 0 0 1 6.5 2ZM12 5.8L17 18.2H13.9L12 13.5L10.1 18.2H7L12 5.8Z"
+      />
+    </svg>
+  );
+}
+
 /**
  * Renders the icon(s) for a project link, chosen by its label:
  * GitHub → GitHub mark · 다운로드/Download → Apple + Windows ·
@@ -40,6 +51,8 @@ export default function LinkIcon({
   projectIcon?: string;
 }) {
   if (label === "GitHub") return <GithubMark />;
+
+  if (label === "App Store") return <AppStoreMark />;
 
   if (label === "다운로드" || label === "Download") {
     return (
