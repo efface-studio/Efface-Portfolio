@@ -38,7 +38,7 @@ function DocPage({
 /** Section header — title left, English label right, hairline under. */
 function SectionHead({ title, label }: { title: string; label: string }) {
   return (
-    <div className="mb-4 flex items-baseline justify-between border-b border-fg/20 pb-2">
+    <div className="mb-2.5 flex items-baseline justify-between border-b border-fg/20 pb-2">
       <h2 className="text-[15px] font-bold tracking-tight">{title}</h2>
       <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
         {label}
@@ -301,7 +301,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </header>
 
-      <section className="mt-3.5">
+      <section className="mt-5">
         <SectionHead title={ui.careerTitle} label="Career" />
         <div className="space-y-2">
           {career.map((ci) => (
@@ -320,7 +320,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-3">
+      <section className="mt-5">
         <SectionHead title={ui.stackTitle} label="Stack" />
         <div className="space-y-2">
           {skillGroups.map((g) => (
@@ -338,7 +338,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-3">
+      <section className="mt-5">
         <SectionHead title={ui.awardsTitle} label="Awards" />
         <div className="space-y-1.5">
           {awards.map((a) => (
