@@ -88,30 +88,69 @@ function DeckFeature({ f }: { f: FeatureGroup }) {
 }
 
 /** Wide troubleshooting row — narrative left, code right. */
+function TroubleHead({ tc }: { tc: TroubleCase }) {
+  return (
+    <div className="flex items-baseline justify-between gap-2">
+      <div className="flex items-baseline gap-2">
+        <span className="text-[14px] font-extrabold tracking-tight text-accent">
+          {tc.no}
+        </span>
+        <span className="text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
+          {tc.category}
+        </span>
+      </div>
+      {tc.refs ? (
+        <span className="shrink-0 font-mono text-[8px] font-bold text-accent">
+          {linkifyRefs(tc.refs)}
+        </span>
+      ) : (
+        tc.ref && (
+          <a
+            href={tc.ref.url}
+            target="_blank"
+            rel="noreferrer"
+            className="shrink-0 font-mono text-[8px] font-bold text-accent"
+          >
+            {tc.ref.label} ↗
+          </a>
+        )
+      )}
+    </div>
+  );
+}
+
 function TroubleRow({ tc, c }: { tc: TroubleCase; c: Content }) {
+  if (tc.code.length === 0) {
+    return (
+      <div>
+        <TroubleHead tc={tc} />
+        <h3 className="mt-1.5 text-[14px] font-bold leading-snug tracking-tight">
+          {tc.title}
+        </h3>
+        {tc.desc && (
+          <p className="mt-1 text-[10px] leading-[1.6] text-muted">{tc.desc}</p>
+        )}
+        <div className="mt-2.5 grid grid-cols-3 gap-6">
+          {(
+            [
+              [c.ui.problem, tc.problem, "text-dim"],
+              [c.ui.solution, tc.solution, "text-dim"],
+              [c.ui.result, tc.result, "text-accent"],
+            ] as const
+          ).map(([label, text, color]) => (
+            <div key={label}>
+              <Meta className={`font-bold ${color}`}>{label}</Meta>
+              <p className="mt-1 text-[9px] leading-[1.55] text-muted">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-[1fr_1.5fr] items-center gap-6">
       <div>
-        <div className="flex items-baseline justify-between gap-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-[14px] font-extrabold tracking-tight text-accent">
-              {tc.no}
-            </span>
-            <span className="text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
-              {tc.category}
-            </span>
-          </div>
-          {tc.ref && (
-            <a
-              href={tc.ref.url}
-              target="_blank"
-              rel="noreferrer"
-              className="shrink-0 font-mono text-[8px] font-bold text-accent"
-            >
-              {tc.ref.label} ↗
-            </a>
-          )}
-        </div>
+        <TroubleHead tc={tc} />
         <h3 className="mt-1.5 text-[14px] font-bold leading-snug tracking-tight">
           {tc.title}
         </h3>
@@ -661,7 +700,7 @@ export default function Deck({ lang }: { lang: Lang }) {
       <AboutCareerSlide c={c} />
       <HiNestOverviewSlide c={c} />
       <HiNestTroubleSlide n={4} cases={c.hinestCases.slice(0, 2)} range="01–02" c={c} />
-      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2)} range="03–04" c={c} />
+      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2)} range="03–05" c={c} />
       <GomsOverviewSlide c={c} />
       <GomsTroubleSlide c={c} />
       <AwardsSlide c={c} />
