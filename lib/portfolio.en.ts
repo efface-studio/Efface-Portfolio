@@ -7,7 +7,6 @@ import type {
   SkillFocus,
   TroubleCase,
   FeatureGroup,
-  DemoShot,
   Project,
   Award,
   Activity,
@@ -245,36 +244,32 @@ export const hinestFeatures: FeatureGroup[] = [
     title: "11 operator tools — developer page",
     desc: "Split impersonation, server-side sessions, an error dashboard, health checks, a trash bin, audit trails, feature flags, API tokens, rate-limiting, a 2FA policy, and a terminal console into feature-level PRs for incremental rollout.",
     refs: "PR #93–#102 · #66 · #65",
+    shots: ["/hinest/demo-dev-console.png"],
   },
   {
     title: "In-house chat — real-time group messaging",
     desc: "A Toss-style floating popup for group and 1:1 chat — with automatic code-block detection and syntax highlighting, URL OG previews, markdown, and message pins and reactions, plus a move from polling to real-time SSE push.",
     refs: "PR #51–#64 · 7580f5f7",
+    shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
   },
   {
     title: "Account security — lockout & password reset",
     desc: "Built automatic lockout after 5 failed logins with admin unlock, and email-verified self-service password reset (reset token stored as a SHA-256 hash, single-use for 30 minutes, forced logout of all sessions).",
     refs: "PR #116 · 8a28fdd",
+    shots: ["/hinest/demo-password-reset.png"],
   },
   {
     title: "Preview mode",
     desc: "Added a preview mode that tours every feature with demo-org data and no login. A flag short-circuits API calls to mocks, and every page is filled with seed data.",
     refs: "PR #119–#134",
+    shots: ["/hinest/demo-home.png"],
   },
   {
     title: "Meeting-note file & link attachments",
     desc: "Added a MeetingAttachment table separate from the meeting-note body JSON, with CRUD routes and UI for file and link attachments.",
     refs: "commit 7544231",
+    shots: ["/hinest/demo-docs.png"],
   },
-];
-
-export const hinestDemos: DemoShot[] = [
-  { src: "/hinest/demo-home.png", caption: "Dashboard home" },
-  { src: "/hinest/demo-dev-console.png", caption: "Developer console" },
-  { src: "/hinest/demo-docs.png", caption: "Document hub" },
-  { src: "/hinest/demo-chat-list.png", caption: "Team Chat — chat list" },
-  { src: "/hinest/demo-chat-room.png", caption: "Team Chat — 1:1 chat" },
-  { src: "/hinest/demo-password-reset.png", caption: "Password reset" },
 ];
 
 export const hinestCases: TroubleCase[] = [
