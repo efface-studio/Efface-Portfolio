@@ -504,13 +504,16 @@ function HiNestOverviewPage({ c }: { c: Content }) {
   const hinest = c.featuredProjects[1];
   return (
     <DocPage n={2} c={c}>
-      <ProjectHead project={hinest} kind="Project — Flagship · Web Platform" />
+      <div className="grid grid-cols-[1fr_82mm] gap-7">
+        <div>
+          <ProjectHead
+            project={hinest}
+            kind="Project — Flagship · Web Platform"
+          />
 
-      <div className="mt-5 grid grid-cols-[1fr_82mm] gap-7">
-        <div className="flex flex-col">
-          <p className="text-[11px] leading-[1.8]">{hinest.summary}</p>
+          <p className="mt-5 text-[11px] leading-[1.8]">{hinest.summary}</p>
 
-          <div className="mt-auto pt-6">
+          <div className="mt-4">
             {[
               [ui.role, hinest.role],
               [ui.period, hinest.period],
@@ -528,19 +531,19 @@ function HiNestOverviewPage({ c }: { c: Content }) {
                 </span>
               </div>
             ))}
-
-            {hinest.links.map((l) => (
-              <a
-                key={l.url}
-                href={l.url}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-3 inline-block text-[10px] font-bold text-accent"
-              >
-                {l.label} ↗
-              </a>
-            ))}
           </div>
+
+          {hinest.links.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-block text-[10px] font-bold text-accent"
+            >
+              {l.label} ↗
+            </a>
+          ))}
         </div>
 
         <div>
@@ -548,7 +551,7 @@ function HiNestOverviewPage({ c }: { c: Content }) {
             <img
               src={hinest.banner}
               alt=""
-              className="-mt-4 w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
+              className="w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
             />
           )}
           <div className="mt-3">
