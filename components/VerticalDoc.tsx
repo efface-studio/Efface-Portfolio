@@ -275,8 +275,12 @@ function CoverPage({ c }: { c: Content }) {
 
         <div className="mt-3 grid grid-cols-2 gap-x-10 gap-y-2 border-t border-fg/20 pt-3">
           {[
-            [ui.contactEmail, profile.contact.email, ""],
-            [ui.contactPhone, profile.contact.phone, ""],
+            [ui.contactEmail, profile.contact.email, `mailto:${profile.contact.email}`],
+            [
+              ui.contactPhone,
+              profile.contact.phone,
+              `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
+            ],
             ["GitHub", profile.contact.github, profile.contact.githubUrl],
             [ui.contactAppStore, ui.viewAppStore, profile.contact.appStore],
           ].map(([k, v, href]) => (
@@ -735,7 +739,12 @@ function AboutVenturePage({ c }: { c: Content }) {
           <span className="text-[11px] font-bold text-accent">
             {profile.note}
           </span>
-          <span className="text-[10px] text-dim">{profile.contact.email}</span>
+          <a
+            href={`mailto:${profile.contact.email}`}
+            className="text-[10px] text-dim"
+          >
+            {profile.contact.email}
+          </a>
         </div>
       </div>
     </DocPage>
