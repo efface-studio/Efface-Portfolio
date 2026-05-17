@@ -48,7 +48,7 @@ function SectionHead({ title, label }: { title: string; label: string }) {
 
 function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full bg-accent-soft px-2.5 py-[3px] text-[9.5px] font-medium text-accent">
+    <span className="inline-flex items-center rounded-full bg-accent-soft px-2 py-[3px] text-[9.5px] font-medium text-accent">
       {children}
     </span>
   );
@@ -56,7 +56,7 @@ function Tag({ children }: { children: ReactNode }) {
 
 function TagRow({ items }: { items: string[] }) {
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="flex flex-wrap gap-1">
       {items.map((t) => (
         <Tag key={t}>{t}</Tag>
       ))}
