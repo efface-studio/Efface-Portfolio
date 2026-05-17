@@ -51,6 +51,11 @@ export const career: CareerItem[] = [
     period: "2025.11 — 2026.01",
   },
   {
+    company: "USLASH",
+    role: "Co-founder · Operator",
+    period: "2024.08 — 2025.06",
+  },
+  {
     company: "Gwangju Software Meister High School",
     role: "iOS Developer · PM",
     period: "2023.03 — 2026.02",

@@ -259,7 +259,7 @@ function CoverPage({ c }: { c: Content }) {
           <span>2026</span>
         </div>
 
-        <div className="mt-6 flex items-start justify-between gap-8">
+        <div className="mt-5 flex items-start justify-between gap-8">
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-3">
               <h1 className="text-[36px] font-extrabold leading-[1] tracking-[-0.04em]">
@@ -276,10 +276,10 @@ function CoverPage({ c }: { c: Content }) {
               <span className="text-[10px] text-dim">·</span>
               <span className="text-[10px] text-dim">{profile.birth}</span>
             </div>
-            <p className="mt-5 max-w-[110mm] text-[20px] font-extrabold leading-[1.4] tracking-[-0.015em]">
+            <p className="mt-3 max-w-[110mm] text-[20px] font-extrabold leading-[1.4] tracking-[-0.015em]">
               {profile.headline}
             </p>
-            <p className="mt-3 max-w-[116mm] text-[11px] leading-[1.8] text-muted">
+            <p className="mt-2 max-w-[116mm] text-[11px] leading-[1.6] text-muted">
               {profile.summary}
             </p>
           </div>
@@ -298,7 +298,7 @@ function CoverPage({ c }: { c: Content }) {
           )}
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-x-10 gap-y-2 border-t border-fg/20 pt-3">
+        <div className="mt-3 grid grid-cols-2 gap-x-10 gap-y-2 border-t border-fg/20 pt-3">
           {[
             [ui.contactEmail, profile.contact.email, ""],
             [ui.contactPhone, profile.contact.phone, ""],
@@ -326,9 +326,9 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </header>
 
-      <section className="mt-5">
+      <section className="mt-3.5">
         <SectionHead title={ui.careerTitle} label="Career" />
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           {career.map((ci) => (
             <Entry key={ci.company} meta={ci.period}>
               <h3 className="text-[12.5px] font-bold">
@@ -345,7 +345,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-4">
+      <section className="mt-3">
         <SectionHead title={ui.stackTitle} label="Stack" />
         <div className="space-y-2">
           {skillGroups.map((g) => (
@@ -363,7 +363,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-4">
+      <section className="mt-3">
         <SectionHead title={ui.awardsTitle} label="Awards" />
         <div className="space-y-1.5">
           {awards.map((a) => (
