@@ -16,7 +16,6 @@ export function getContent(lang: Lang) {
     profile: d.profile,
     career: d.career,
     skillGroups: d.skillGroups,
-    skillFocus: d.skillFocus,
     featuredProjects: d.featuredProjects,
     gomsCases: d.gomsCases,
     hinestCases: d.hinestCases,

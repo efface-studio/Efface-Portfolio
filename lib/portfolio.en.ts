@@ -4,7 +4,6 @@
 import type {
   CareerItem,
   SkillGroup,
-  SkillFocus,
   TroubleCase,
   FeatureGroup,
   Project,
@@ -74,25 +73,6 @@ export const skillGroups: SkillGroup[] = [
   {
     label: "Web · Backend",
     items: ["React", "Vite", "Express", "Prisma", "SQLite"],
-  },
-];
-
-export const skillFocus: SkillFocus[] = [
-  {
-    name: "Swift",
-    desc: "Designs and builds iOS apps that fit the requirements, applying object-oriented and protocol-oriented paradigms.",
-  },
-  {
-    name: "Architecture",
-    desc: "Understands architecture patterns such as MVVM and TCA, with experience applying them in real projects.",
-  },
-  {
-    name: "SwiftUI · UIKit",
-    desc: "Implements screen transitions, view-hierarchy management, and custom components in both declarative and imperative UI.",
-  },
-  {
-    name: "Tuist",
-    desc: "Raises build and collaboration efficiency through project modularization and configuration automation.",
   },
 ];
 
@@ -552,15 +532,15 @@ export const studio = {
 export const aboutHighlights: Highlight[] = [
   {
     k: "Someone who leads teams",
-    v: "Co-founded the USLASH nonprofit and, as a major-club president, grew the team by 200%.",
+    v: "Co-founded the USLASH nonprofit — running its conferences and hackathons — and as a major-club president grew the team by 200%. I enjoy gathering people, dividing up roles, and seeing things through together.",
   },
   {
     k: "A PM who sees things through",
-    v: "Planned and built GOMS, now an official school service used by 400+ students every week.",
+    v: "Planned and built GOMS, now an official campus service used by 400+ students every week for over two years, and personally own its App Store review, release, and version management.",
   },
   {
     k: "A developer who grows every day",
-    v: "Chooses the challenges others hesitate to take, striving to get one step further than yesterday.",
+    v: "Chooses the challenges others hesitate to take and, rather than hesitating before unfamiliar technology, dives in — enjoying the very process of getting one step further than yesterday.",
   },
 ];
 
