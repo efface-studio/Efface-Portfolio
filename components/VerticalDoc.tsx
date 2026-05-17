@@ -293,7 +293,7 @@ function CoverPage({ c }: { c: Content }) {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[12.5px] font-semibold text-accent"
+                  className="text-[12.5px] font-semibold text-fg"
                 >
                   {v}
                 </a>

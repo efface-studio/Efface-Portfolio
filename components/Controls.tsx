@@ -41,7 +41,7 @@ function SegLink({
       href={href}
       aria-current={active ? "page" : undefined}
       className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-3 ${
-        active ? "bg-[#2440ff] text-white" : "text-muted hover:text-fg"
+        active ? "bg-accent text-white" : "text-muted hover:text-fg"
       }`}
     >
       {label}
