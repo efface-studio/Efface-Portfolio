@@ -231,9 +231,9 @@ function AboutCareerSlide({ c }: { c: Content }) {
                     <div>
                       <h4 className="text-[13px] font-bold">
                         {ci.company}
-                        {ci.current ? (
+                        {ci.badge ? (
                           <span className="ml-2 text-[9px] font-bold text-accent">
-                            {ui.current}
+                            {ci.badge}
                           </span>
                         ) : null}
                       </h4>

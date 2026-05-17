@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "서지완 · iOS Developer & PM",
+  title: "서지완 · iOS · Frontend Developer & PM",
   description:
     "불편함을 발견하면 서비스로 만드는 iOS 개발자 & PM, 서지완의 포트폴리오. 세로(문서)·가로(덱) 두 버전과 PDF 다운로드를 지원합니다.",
   // Password-gated private portfolio — keep it out of search results.

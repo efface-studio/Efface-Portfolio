@@ -74,6 +74,8 @@ export default function PdfViewerInner({
 
   const zoom = ZOOMS[zoomIdx];
   const pageWidth = Math.round(baseWidth * zoom);
+  // Render the canvas at >=2x so the PDF stays crisp on low-DPI displays.
+  const pixelRatio = Math.max(2, window.devicePixelRatio || 1);
 
   const zoomBtn =
     "flex h-6 w-6 items-center justify-center rounded-full text-[15px] font-bold leading-none text-fg transition-colors hover:bg-surface-2 disabled:opacity-30 disabled:hover:bg-transparent";
@@ -149,7 +151,11 @@ export default function PdfViewerInner({
                 }}
                 className="overflow-hidden rounded-lg border border-line bg-white shadow-[0_14px_36px_-20px_rgba(16,16,24,0.45)]"
               >
-                <Page pageNumber={i + 1} width={pageWidth} />
+                <Page
+                  pageNumber={i + 1}
+                  width={pageWidth}
+                  devicePixelRatio={pixelRatio}
+                />
               </div>
             ))}
           </div>
