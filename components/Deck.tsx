@@ -268,7 +268,7 @@ function AboutCareerSlide({ c }: { c: Content }) {
 
           <div className="flex flex-col border-l border-line pl-10">
             <ColLabel>{ui.stackTitle}</ColLabel>
-            <div className="mt-4 flex flex-1 flex-col justify-around">
+            <div className="mt-4 flex flex-1 flex-col gap-7">
               {skillGroups.map((g) => (
                 <div key={g.label}>
                   <Meta className="mb-2 block text-[9px] font-bold uppercase tracking-wide text-dim">
@@ -291,7 +291,7 @@ function GomsOverviewSlide({ c }: { c: Content }) {
   return (
     <Slide n={6} label="Project 02 · iOS App" title={ui.deckGomsTitle} c={c}>
       <div className="grid flex-1 grid-cols-[1fr_1.08fr] gap-9">
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col">
           {goms.links[0] && (
             <a
               href={goms.links[0].url}
