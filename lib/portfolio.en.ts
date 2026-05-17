@@ -259,6 +259,7 @@ export const hinestFeatures: FeatureGroup[] = [
     title: "Projects — a team-level collaboration space",
     desc: "Groups team-level collaboration into dedicated ‘Project’ spaces. An ADMIN creates a project, and under three roles — OWNER, MANAGER, MEMBER — each project offers its own calendar, a QA checklist, GitHub/Datadog/Vercel webhook channels, and member management.",
     refs: "65f78f7 · 265b594 · 38da517",
+    shots: ["/hinest/demo-projects.png"],
   },
   {
     title: "Meeting-note file & link attachments",
