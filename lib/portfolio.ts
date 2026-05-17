@@ -302,6 +302,7 @@ export const hinestFeatures: FeatureGroup[] = [
     title: "프로젝트 — 팀 단위 협업 공간",
     desc: "팀 단위 협업을 ‘프로젝트’ 공간으로 묶어 관리하는 기능입니다. ADMIN이 프로젝트를 생성하고 OWNER·MANAGER·MEMBER 3단계 권한 아래, 프로젝트별 전용 캘린더·QA 체크리스트·GitHub·Datadog·Vercel 웹훅 채널·멤버 관리를 제공합니다.",
     refs: "65f78f7 · 265b594 · 38da517",
+    shots: ["/hinest/demo-projects.png"],
   },
   {
     title: "회의록 파일 · 링크 첨부",
