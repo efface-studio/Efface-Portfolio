@@ -398,17 +398,12 @@ function GomsOverviewPage({ c }: { c: Content }) {
     <DocPage n={5} c={c}>
       <ProjectHead project={goms} kind="Project — iOS App" />
 
-      {goms.screenshots && (
-        <div className="mt-5 flex gap-3">
-          {goms.screenshots.map((src) => (
-            <div
-              key={src}
-              className="overflow-hidden rounded-lg border border-line shadow-[0_12px_30px_-16px_rgba(16,16,24,0.34)]"
-            >
-              <img src={src} alt="" className="h-[68mm] w-auto object-cover" />
-            </div>
-          ))}
-        </div>
+      {goms.banner && (
+        <img
+          src={goms.banner}
+          alt=""
+          className="mx-auto mt-5 w-[67%] rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
+        />
       )}
 
       <p className="mt-5 text-[12px] leading-[1.85]">{goms.summary}</p>

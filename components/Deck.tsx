@@ -340,15 +340,26 @@ function GomsOverviewSlide({ c }: { c: Content }) {
             <ChipRow items={goms.stack} />
           </div>
         </div>
-        <div className="flex items-center justify-center gap-3">
-          {goms.screenshots?.map((src) => (
+        <div className="flex flex-col justify-center gap-4">
+          {goms.banner && (
             <img
-              key={src}
-              src={src}
+              src={goms.banner}
               alt={goms.name}
-              className="h-[82mm] w-auto rounded-xl border border-line"
+              className="w-full rounded-lg border border-line object-cover"
             />
-          ))}
+          )}
+          {goms.screenshots && (
+            <div className="flex items-center justify-center gap-3">
+              {goms.screenshots.map((src) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt={goms.name}
+                  className="h-[52mm] w-auto rounded-xl border border-line"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Slide>
