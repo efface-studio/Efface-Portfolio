@@ -548,7 +548,7 @@ function HiNestOverviewPage({ c }: { c: Content }) {
             <img
               src={hinest.banner}
               alt=""
-              className="w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
+              className="-mt-4 w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
             />
           )}
           <div className="mt-3">
