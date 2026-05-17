@@ -362,33 +362,35 @@ const ok = await bcrypt.compare(
   },
   {
     no: "02",
-    category: "데이터 정합성",
-    title: "다단계 결재의 알림 배지 과다 카운트",
+    category: "성능",
+    title: "전체 메시지를 매번 다시 받던 사내톡 폴링",
     ref: {
-      label: "commit 98a006d",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
+      label: "commit 65be580",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/65be580",
     },
-    file: "server/src/routes/approval.ts",
+    file: "client/src/components/ChatMiniApp.tsx",
     problem:
-      "다단계 결재에서 내 앞 순번 리뷰어가 결재 전이어도 배지에 집계돼, ‘내 차례’ 화면은 0건인데 사이드바에는 빨간 숫자가 떴습니다.",
+      "사내톡이 1.5초마다 방의 전체 메시지(~300건)를 다시 받았고, 새 메시지 하나가 붙을 때마다 리스트의 모든 버블이 다시 렌더링됐습니다. 메시지 조회도 방·멤버십·커서를 각각 따로 DB에 물었습니다.",
     solution:
-      "PENDING 스텝을 order 오름차순으로 가져와, 첫 스텝(= 현재 차례)의 리뷰어가 나인 결재만 카운트하도록 바꿨습니다.",
+      "마지막 메시지 id 이후만 받는 ?after 증분 폴링으로 바꿔 유휴 폴링이 빈 응답이 되게 했고, 버블을 React.memo로 감싸 새로 붙은 것만 렌더했습니다. 서버는 세 조회를 한 번의 왕복으로 병합하고 (roomId, createdAt) 인덱스를 더했습니다. 편집·리액션은 15초 주기·포커스 복귀 시 전체 동기화로 보정합니다.",
     result:
-      "배지 숫자를 화면의 ‘내 차례’ 기준과 정확히 일치시켜 카운트 불일치를 제거했습니다.",
+      "유휴 폴링 1회 전송량을 ~300건에서 0건으로, 새 메시지당 렌더를 리스트 전체에서 버블 1개로, 메시지 조회 DB 왕복을 3회에서 1회로 줄였습니다.",
     code: [
       {
         lang: "ts",
-        caption: "현재 차례인 결재만 집계 — 화면 기준과 일치",
-        lines: `// 후보 결재의 첫 PENDING 스텝만 — order ASC로 '현재 차례' 한 건
-const candidates = await prisma.approval.findMany({
-  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
-  select: { steps: {
-    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
-    select: { reviewerId: true },
-  } },
-});
-// 첫 스텝 리뷰어가 나인 건만 = 화면의 '내 차례'와 동일 기준
-const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
+        caption: "마지막 id 이후만 받는 증분 폴링",
+        lines: `// full=false 면 마지막 메시지 이후만 — 유휴 폴링은 대부분 빈 응답
+const after = full ? null : latestIdRef.current;
+const url = \`/api/chat/rooms/\${roomId}/messages\`;
+const res = await api<{ messages: Message[] }>(
+  after ? \`\${url}?after=\${after}\` : url,
+);
+if (!after) return setMessages(res.messages);
+// 증분 응답 — 새 메시지만 이어붙이고 중복은 id로 방어
+setMessages((prev) => {
+  const seen = new Set(prev.map((m) => m.id));
+  return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
+});`,
       },
     ],
   },
@@ -427,45 +429,33 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
   },
   {
     no: "04",
-    category: "성능",
-    title: "전체 메시지를 매번 다시 받던 사내톡 폴링",
+    category: "데이터 정합성",
+    title: "다단계 결재의 알림 배지 과다 카운트",
     ref: {
-      label: "commit 65be580",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/65be580",
+      label: "commit 98a006d",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
     },
-    file: "client/src/components/ChatMiniApp.tsx",
+    file: "server/src/routes/approval.ts",
     problem:
-      "사내톡이 1.5초마다 방의 전체 메시지(~300건)를 다시 받았고, 새 메시지 하나가 붙을 때마다 리스트의 모든 버블이 다시 렌더링됐습니다. 메시지 조회도 방·멤버십·커서를 각각 따로 DB에 물었습니다.",
+      "다단계 결재에서 내 앞 순번 리뷰어가 결재 전이어도 배지에 집계돼, ‘내 차례’ 화면은 0건인데 사이드바에는 빨간 숫자가 떴습니다.",
     solution:
-      "마지막 메시지 id 이후만 받는 ?after 증분 폴링으로 바꿔 유휴 폴링이 빈 응답이 되게 했고, 버블을 React.memo로 감싸 새로 붙은 것만 렌더했습니다. 서버는 세 조회를 한 번의 왕복으로 병합하고 (roomId, createdAt) 인덱스를 더했습니다. 편집·리액션은 15초 주기·포커스 복귀 시 전체 동기화로 보정합니다.",
+      "PENDING 스텝을 order 오름차순으로 가져와, 첫 스텝(= 현재 차례)의 리뷰어가 나인 결재만 카운트하도록 바꿨습니다.",
     result:
-      "유휴 폴링 1회 전송량을 ~300건에서 0건으로, 새 메시지당 렌더를 리스트 전체에서 버블 1개로, 메시지 조회 DB 왕복을 3회에서 1회로 줄였습니다.",
+      "배지 숫자를 화면의 ‘내 차례’ 기준과 정확히 일치시켜 카운트 불일치를 제거했습니다.",
     code: [
       {
         lang: "ts",
-        caption: "마지막 id 이후만 받는 증분 폴링",
-        lines: `// full=false 면 마지막 메시지 이후만 — 유휴 폴링은 대부분 빈 응답
-const after = full ? null : latestIdRef.current;
-const url = \`/api/chat/rooms/\${roomId}/messages\`;
-const res = await api<{ messages: Message[] }>(
-  after ? \`\${url}?after=\${after}\` : url,
-);
-if (!after) return setMessages(res.messages);
-// 증분 응답 — 새 메시지만 이어붙이고 중복은 id로 방어
-setMessages((prev) => {
-  const seen = new Set(prev.map((m) => m.id));
-  return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
-});`,
-      },
-      {
-        lang: "ts",
-        caption: "React.memo — 새로 붙은 버블만 다시 그린다",
-        lines: `// 리스트는 거의 append-only — 기존 버블의 msg 참조는 그대로다.
-// memo로 재렌더를 끊으면 폴링마다 새 버블만 렌더된다.
-export const MessageBubble = memo(
-  MessageBubbleInner,
-  (a, b) => a.mine === b.mine && a.msg === b.msg,
-);`,
+        caption: "현재 차례인 결재만 집계 — 화면 기준과 일치",
+        lines: `// 후보 결재의 첫 PENDING 스텝만 — order ASC로 '현재 차례' 한 건
+const candidates = await prisma.approval.findMany({
+  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
+  select: { steps: {
+    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
+    select: { reviewerId: true },
+  } },
+});
+// 첫 스텝 리뷰어가 나인 건만 = 화면의 '내 차례'와 동일 기준
+const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
       },
     ],
   },

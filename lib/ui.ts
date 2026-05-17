@@ -36,7 +36,6 @@ export type UiStrings = {
   result: string;
   // engineering deep-dive
   gomsTroubleIntro: string;
-  hinestTroubleIntro: string;
   // about
   strengthTag: string;
   weaknessTag: string;
@@ -95,8 +94,6 @@ export const ui: Record<Lang, UiStrings> = {
     result: "결과",
     gomsTroubleIntro:
       "운영 중인 iOS 앱에서 마주친 성능·인증·예외 처리 문제를 직접 진단하고 리팩토링한 기록입니다.",
-    hinestTroubleIntro:
-      "운영 중 마주친 동시성·정합성·보안·성능 문제를 실제 PR·커밋으로 해결한 기록입니다. 코드는 핵심 부분만 발췌했습니다.",
     strengthTag: "강점",
     weaknessTag: "보완점",
     studioBadge: "운영 스튜디오",
@@ -149,8 +146,6 @@ export const ui: Record<Lang, UiStrings> = {
     result: "Result",
     gomsTroubleIntro:
       "A record of the performance, authentication, and exception-handling issues I diagnosed and refactored myself in a live iOS app.",
-    hinestTroubleIntro:
-      "A record of concurrency, data-integrity, security, and performance issues resolved through real PRs and commits. Only the essential parts of the code are excerpted.",
     strengthTag: "Strength",
     weaknessTag: "Growth Area",
     studioBadge: "Studio",

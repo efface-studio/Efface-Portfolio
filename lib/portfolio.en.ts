@@ -319,33 +319,35 @@ const ok = await bcrypt.compare(
   },
   {
     no: "02",
-    category: "Data Integrity",
-    title: "An over-counted notification badge in multi-step approvals",
+    category: "Performance",
+    title: "Chat polling that re-fetched every message each cycle",
     ref: {
-      label: "commit 98a006d",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
+      label: "commit 65be580",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/65be580",
     },
-    file: "server/src/routes/approval.ts",
+    file: "client/src/components/ChatMiniApp.tsx",
     problem:
-      "In multi-step approvals, an approval was counted in the badge even when a reviewer ahead of me had not acted yet, so the ‘my turn’ screen showed 0 while the sidebar showed a red number.",
+      "The chat re-fetched the room’s entire ~300-message list every 1.5s, re-rendered all bubbles on each new message, and queried the room, membership, and cursor as three separate DB round-trips.",
     solution:
-      "Fetched PENDING steps in ascending order and counted only approvals whose first step (= the current turn) has me as the reviewer.",
+      "Switched to ?after incremental polling so idle polls return empty, memoized the bubbles so only the new one renders, and merged the server’s three lookups into one round-trip with a (roomId, createdAt) index.",
     result:
-      "Aligned the badge number exactly with the screen’s ‘my turn’ criterion, removing the count mismatch.",
+      "Cut an idle poll’s payload from ~300 messages to 0, the render per new message from the whole list to a single bubble, and the message-fetch DB round-trips from 3 to 1.",
     code: [
       {
         lang: "ts",
-        caption: "Count only approvals on the current turn — matching the screen",
-        lines: `// Only the first PENDING step of each candidate — order ASC gives the one 'current turn'
-const candidates = await prisma.approval.findMany({
-  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
-  select: { steps: {
-    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
-    select: { reviewerId: true },
-  } },
-});
-// Only ones where I am the first-step reviewer = same criterion as the screen's 'my turn'
-const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
+        caption: "Incremental polling — only messages past the last id",
+        lines: `// full=false → only messages after the last one; idle polls return empty
+const after = full ? null : latestIdRef.current;
+const url = \`/api/chat/rooms/\${roomId}/messages\`;
+const res = await api<{ messages: Message[] }>(
+  after ? \`\${url}?after=\${after}\` : url,
+);
+if (!after) return setMessages(res.messages);
+// Incremental response — append only new messages, dedupe by id
+setMessages((prev) => {
+  const seen = new Set(prev.map((m) => m.id));
+  return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
+});`,
       },
     ],
   },
@@ -384,45 +386,33 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
   },
   {
     no: "04",
-    category: "Performance",
-    title: "Chat polling that re-fetched every message each cycle",
+    category: "Data Integrity",
+    title: "An over-counted notification badge in multi-step approvals",
     ref: {
-      label: "commit 65be580",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/65be580",
+      label: "commit 98a006d",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
     },
-    file: "client/src/components/ChatMiniApp.tsx",
+    file: "server/src/routes/approval.ts",
     problem:
-      "The chat re-fetched the room’s entire message list (~300 messages) every 1.5s, and every appended message re-rendered all bubbles. Each fetch also queried the room, membership, and cursor as three separate DB round-trips.",
+      "In multi-step approvals, an approval was counted in the badge even when a reviewer ahead of me had not acted yet, so the ‘my turn’ screen showed 0 while the sidebar showed a red number.",
     solution:
-      "I switched to ?after incremental polling that returns only messages past the last id — so idle polls come back empty — and wrapped bubbles in React.memo so only the new one renders. The server merged the three lookups into one round-trip and gained a (roomId, createdAt) index. Edits and reactions are reconciled by a full sync every 15s and on focus.",
+      "Fetched PENDING steps in ascending order and counted only approvals whose first step (= the current turn) has me as the reviewer.",
     result:
-      "Cut an idle poll’s payload from ~300 messages to 0, the render per new message from the whole list to a single bubble, and the message-fetch DB round-trips from 3 to 1.",
+      "Aligned the badge number exactly with the screen’s ‘my turn’ criterion, removing the count mismatch.",
     code: [
       {
         lang: "ts",
-        caption: "Incremental polling — only messages past the last id",
-        lines: `// full=false → only messages after the last one; idle polls return empty
-const after = full ? null : latestIdRef.current;
-const url = \`/api/chat/rooms/\${roomId}/messages\`;
-const res = await api<{ messages: Message[] }>(
-  after ? \`\${url}?after=\${after}\` : url,
-);
-if (!after) return setMessages(res.messages);
-// Incremental response — append only new messages, dedupe by id
-setMessages((prev) => {
-  const seen = new Set(prev.map((m) => m.id));
-  return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
-});`,
-      },
-      {
-        lang: "ts",
-        caption: "React.memo — only the newly appended bubble re-renders",
-        lines: `// The list is nearly append-only — existing bubbles keep their msg ref.
-// memo cuts re-renders so each poll renders only the new bubble.
-export const MessageBubble = memo(
-  MessageBubbleInner,
-  (a, b) => a.mine === b.mine && a.msg === b.msg,
-);`,
+        caption: "Count only approvals on the current turn — matching the screen",
+        lines: `// Only the first PENDING step of each candidate — order ASC gives the one 'current turn'
+const candidates = await prisma.approval.findMany({
+  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
+  select: { steps: {
+    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
+    select: { reviewerId: true },
+  } },
+});
+// Only ones where I am the first-step reviewer = same criterion as the screen's 'my turn'
+const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
       },
     ],
   },
