@@ -51,7 +51,6 @@ export type UiStrings = {
   deckOtherTitle: string;
   deckAwardsTitle: string;
   deckActivityTitle: string;
-  deckStudioTitle: string;
   deckContactTitle: string;
   // deck misc
   deckCoverNote: string;
@@ -107,7 +106,6 @@ export const ui: Record<Lang, UiStrings> = {
     deckOtherTitle: "그 외 프로젝트",
     deckAwardsTitle: "수상 내역",
     deckActivityTitle: "활동과 리더십",
-    deckStudioTitle: "운영 중인 웹 스튜디오",
     deckContactTitle: "함께 만들고 싶습니다",
     deckCoverNote: "세로(문서) · 가로(덱) 버전 제공",
     coreStrengths: "주력 역량",
@@ -159,7 +157,6 @@ export const ui: Record<Lang, UiStrings> = {
     deckOtherTitle: "Other Projects",
     deckAwardsTitle: "Awards & Honors",
     deckActivityTitle: "Activity & Leadership",
-    deckStudioTitle: "A Web Studio I Run",
     deckContactTitle: "Let’s build together",
     deckCoverNote: "Document & deck versions available",
     coreStrengths: "Core Strengths",
