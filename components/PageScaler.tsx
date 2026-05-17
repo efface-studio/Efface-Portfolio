@@ -1,19 +1,19 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const MM_TO_PX = 96 / 25.4;
 
 /**
- * Scales fixed mm-sized page content down to fit its container width on screen.
- * Sets the `--zoom` custom property consumed by `.scaler` in globals.css.
- * Print resets `--zoom` to 1 so PDF output keeps exact A4 dimensions.
+ * Scales fixed mm-sized page content down to fit its container width.
+ *
+ * Uses `transform: scale()` rather than the `zoom` property: `zoom` is laid
+ * out inconsistently across browsers (iOS Safari reflows the content at the
+ * scaled width, which mangles the fixed A4 layout). `transform` always lays
+ * the page out at its true size, then scales the painted result.
+ *
+ * The wrapper height is set to the scaled height so the transform doesn't
+ * leave empty space below it. Print resets both so PDF output stays exact A4.
  */
 export default function PageScaler({
   widthMm,
@@ -22,25 +22,29 @@ export default function PageScaler({
   widthMm: number;
   children: ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
   const target = widthMm * MM_TO_PX;
 
-  // First paint (SSR + pre-hydration) can't measure the container, so start
-  // from a CSS estimate instead of 1 — otherwise mobile briefly flashes a
-  // full-width A4 page. `px-8` on the page <main> (64px total) is subtracted
-  // to approximate the container width; JS replaces this with the exact value.
-  const [zoom, setZoom] = useState<number | string>(
+  // First paint (SSR + pre-hydration) can't measure the container, so seed
+  // the scale from a CSS estimate — `px-8` on the page <main> (64px total)
+  // approximates the container width. JS then sets the exact value.
+  const [scale, setScale] = useState<number | string>(
     `clamp(0.3, calc((100vw - 64px) / ${target.toFixed(2)}), 1)`,
   );
+  const [height, setHeight] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const compute = () => {
-      const avail = ref.current?.clientWidth ?? window.innerWidth;
-      setZoom(Math.min(1, Math.max(0.3, avail / target)));
+      const avail = frameRef.current?.clientWidth ?? window.innerWidth;
+      const s = Math.min(1, Math.max(0.3, avail / target));
+      setScale(s);
+      setHeight((pageRef.current?.offsetHeight ?? 0) * s);
     };
     compute();
     const ro = new ResizeObserver(compute);
-    if (ref.current) ro.observe(ref.current);
+    if (frameRef.current) ro.observe(frameRef.current);
+    if (pageRef.current) ro.observe(pageRef.current);
     window.addEventListener("resize", compute);
     return () => {
       ro.disconnect();
@@ -49,8 +53,20 @@ export default function PageScaler({
   }, [target]);
 
   return (
-    <div ref={ref} className="flex w-full justify-center">
-      <div className="scaler" style={{ "--zoom": zoom } as CSSProperties}>
+    <div
+      ref={frameRef}
+      className="scaler-frame flex w-full justify-center overflow-hidden"
+      style={{ height }}
+    >
+      <div
+        ref={pageRef}
+        className="scaler-page shrink-0 self-start"
+        style={{
+          width: target,
+          transform: `scale(${scale})`,
+          transformOrigin: "top",
+        }}
+      >
         {children}
       </div>
     </div>
