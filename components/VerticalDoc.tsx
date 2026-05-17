@@ -759,16 +759,16 @@ function AboutVenturePage({ c }: { c: Content }) {
       </section>
 
       <div className="mt-auto pt-3">
-        <p className="text-[16.5px] font-extrabold leading-[1.5] tracking-tight">
+        <p className="text-[19px] font-extrabold leading-[1.5] tracking-tight">
           {ui.closingLine}
         </p>
-        <div className="mt-2.5 flex items-baseline justify-between border-t border-fg/20 pt-2.5">
-          <span className="text-[12.5px] font-bold text-accent">
+        <div className="mt-3 flex items-baseline justify-between border-t border-fg/20 pt-3">
+          <span className="text-[14px] font-bold text-accent">
             {profile.note}
           </span>
           <a
             href={`mailto:${profile.contact.email}`}
-            className="text-[10px] text-dim"
+            className="text-[11px] text-dim"
           >
             {profile.contact.email}
           </a>
