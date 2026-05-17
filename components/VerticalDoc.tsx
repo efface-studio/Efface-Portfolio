@@ -118,37 +118,6 @@ function ProjectHead({ project, kind }: { project: Project; kind: string }) {
   );
 }
 
-/** Horizontal meta strip — role / period / team + links. */
-function MetaStrip({ project, c }: { project: Project; c: Content }) {
-  return (
-    <div className="mt-4 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-line py-2.5">
-      {[
-        [c.ui.role, project.role],
-        [c.ui.period, project.period],
-        [c.ui.team, project.team],
-      ].map(([k, v]) => (
-        <span key={k} className="flex items-baseline gap-2">
-          <span className="text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
-            {k}
-          </span>
-          <span className="text-[10px] font-semibold">{v}</span>
-        </span>
-      ))}
-      {project.links.map((l) => (
-        <a
-          key={l.url}
-          href={l.url}
-          target="_blank"
-          rel="noreferrer"
-          className="text-[10px] font-bold text-accent"
-        >
-          {l.label} ↗
-        </a>
-      ))}
-    </div>
-  );
-}
-
 /* ----------------------- engineering deep-dive ----------------------- */
 
 function FeatureRow({ f }: { f: FeatureGroup }) {
@@ -391,17 +360,56 @@ function GomsOverviewPage({ c }: { c: Content }) {
     <DocPage n={5} c={c}>
       <ProjectHead project={goms} kind="Project — iOS App" />
 
-      {goms.banner && (
-        <img
-          src={goms.banner}
-          alt=""
-          className="mx-auto mt-5 w-[67%] rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
-        />
-      )}
+      <div className="mt-5 grid grid-cols-[1fr_82mm] gap-7">
+        <div>
+          <p className="text-[11px] leading-[1.8]">{goms.summary}</p>
 
-      <p className="mt-5 text-[12px] leading-[1.85]">{goms.summary}</p>
+          <div className="mt-4">
+            {[
+              [ui.role, goms.role],
+              [ui.period, goms.period],
+              [ui.team, goms.team],
+            ].map(([k, v]) => (
+              <div
+                key={k}
+                className="flex gap-3 border-b border-line py-[5px] first:border-t"
+              >
+                <span className="w-[12mm] shrink-0 pt-[1.5px] text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
+                  {k}
+                </span>
+                <span className="text-[9.5px] font-semibold leading-[1.55]">
+                  {v}
+                </span>
+              </div>
+            ))}
+          </div>
 
-      <MetaStrip project={goms} c={c} />
+          {goms.links.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-block text-[10px] font-bold text-accent"
+            >
+              {l.label} ↗
+            </a>
+          ))}
+        </div>
+
+        <div>
+          {goms.banner && (
+            <img
+              src={goms.banner}
+              alt=""
+              className="w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
+            />
+          )}
+          <div className="mt-3">
+            <TagRow items={goms.stack} />
+          </div>
+        </div>
+      </div>
 
       <div className="mt-5">
         {goms.metrics && (
@@ -439,11 +447,6 @@ function GomsOverviewPage({ c }: { c: Content }) {
                   {co}
                 </span>
               </div>
-            ))}
-          </div>
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {goms.stack.map((t) => (
-              <Tag key={t}>{t}</Tag>
             ))}
           </div>
         </div>
