@@ -518,6 +518,7 @@ export type Activity = {
   period: string;
   link: string;
   desc: string;
+  descLinks?: { term: string; url: string }[];
 };
 
 export const activities: Activity[] = [
@@ -528,6 +529,10 @@ export const activities: Activity[] = [
     period: "2024.08 — 2025.06",
     link: "uslash.org",
     desc: "미래의 IT 인재와 창업가를 지원하기 위해 설립한 비영리 법인 단체. U/CON25 컨퍼런스(참여자 110명·만족도 4.9), U/THON25 해커톤, 패스트파이브 정기 밋업 등을 주최·운영했습니다.",
+    descLinks: [
+      { term: "U/CON25", url: "https://www.uslash.org/projects/ucon25" },
+      { term: "U/THON25", url: "https://www.uslash.org/projects/uthon25" },
+    ],
   },
   {
     group: "GOMS 개발팀",
