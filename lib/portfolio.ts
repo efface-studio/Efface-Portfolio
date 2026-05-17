@@ -115,11 +115,7 @@ export type FeatureGroup = {
   title: string;
   desc: string;
   refs: string;
-};
-
-export type DemoShot = {
-  src: string;
-  caption: string;
+  shots?: string[];
 };
 
 export type Project = {
@@ -291,36 +287,32 @@ export const hinestFeatures: FeatureGroup[] = [
     title: "운영자 도구 11종 — 개발자 페이지",
     desc: "임퍼소네이션 · 서버사이드 세션 · 에러 대시보드 · 헬스체크 · 휴지통 · 감사 추적 · Feature Flag · API 토큰 · Rate-limit · 2FA 정책 · 터미널 콘솔을 기능 단위 PR로 분리해 점진 배포했습니다.",
     refs: "PR #93–#102 · #66 · #65",
+    shots: ["/hinest/demo-dev-console.png"],
   },
   {
     title: "사내톡 — 실시간 그룹 채팅",
     desc: "토스 스타일 플로팅 팝업으로 그룹·1:1 채팅을 구현했습니다. 코드 블록 자동 감지·신택스 하이라이팅, URL OG 프리뷰, 마크다운, 메시지 고정·리액션을 더하고, 폴링을 SSE 실시간 푸시로 전환했습니다.",
     refs: "PR #51–#64 · 7580f5f7",
+    shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
   },
   {
     title: "계정 보안 — 잠금 · 비밀번호 재설정",
     desc: "로그인 5회 실패 시 자동 잠금과 관리자 잠금 해제, 이메일 인증 기반 셀프 비밀번호 재설정(토큰 SHA-256 해시 저장 · 30분 단일 사용 · 전 세션 강제 로그아웃)을 구현했습니다.",
     refs: "PR #116 · 8a28fdd",
+    shots: ["/hinest/demo-password-reset.png"],
   },
   {
     title: "미리보기 모드",
     desc: "로그인 없이 데모 조직 데이터로 전 기능을 둘러보는 미리보기 모드를 도입했습니다. 플래그로 API 호출을 mock으로 단락하고 모든 페이지에 시드 데이터를 채웠습니다.",
     refs: "PR #119–#134",
+    shots: ["/hinest/demo-home.png"],
   },
   {
     title: "회의록 파일 · 링크 첨부",
     desc: "회의록 본문 JSON과 분리한 MeetingAttachment 테이블을 신설하고, 파일·링크 첨부 CRUD 라우트와 UI를 구현했습니다.",
     refs: "commit 7544231",
+    shots: ["/hinest/demo-docs.png"],
   },
-];
-
-export const hinestDemos: DemoShot[] = [
-  { src: "/hinest/demo-home.png", caption: "대시보드 홈" },
-  { src: "/hinest/demo-dev-console.png", caption: "개발자 콘솔" },
-  { src: "/hinest/demo-docs.png", caption: "문서함" },
-  { src: "/hinest/demo-chat-list.png", caption: "사내톡 — 채팅 목록" },
-  { src: "/hinest/demo-chat-room.png", caption: "사내톡 — 1:1 대화" },
-  { src: "/hinest/demo-password-reset.png", caption: "비밀번호 재설정" },
 ];
 
 export const hinestCases: TroubleCase[] = [

@@ -21,7 +21,6 @@ export function getContent(lang: Lang) {
     gomsCases: d.gomsCases,
     hinestCases: d.hinestCases,
     hinestFeatures: d.hinestFeatures,
-    hinestDemos: d.hinestDemos,
     awards: d.awards,
     activities: d.activities,
     showcases: d.showcases,
