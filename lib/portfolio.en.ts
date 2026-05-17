@@ -104,6 +104,7 @@ export const featuredProjects: Project[] = [
     summary:
       "An iOS app I planned and built myself while attending Gwangju Software Meister High School. It replaced the student council’s hand-written dormitory pass management with a QR-code-based system, and this service I made as a high-schooler still runs as an official campus app — used by 400+ students every week for over two years. I personally handled App Store review, release, and version management, gaining production-level iOS operations experience.",
     icon: "/goms/icon.jpg",
+    banner: "/goms/banner.png",
     screenshots: [
       "/goms/screen-1.png",
       "/goms/screen-2.png",

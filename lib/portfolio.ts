@@ -147,6 +147,7 @@ export const featuredProjects: Project[] = [
     summary:
       "광주소프트웨어마이스터고 재학 중 직접 기획하고 개발한 iOS 앱입니다. 학생회가 수기로 관리하던 기숙사 외출을 QR코드 기반으로 전환했고, 고등학생 때 만든 이 서비스는 지금도 매주 400명 이상이 쓰는 교내 공식 앱으로 2년 넘게 운영되고 있습니다. App Store 심사·배포와 버전 관리까지 직접 수행하며 실무 수준의 iOS 운영을 경험했습니다.",
     icon: "/goms/icon.jpg",
+    banner: "/goms/banner.png",
     screenshots: [
       "/goms/screen-1.png",
       "/goms/screen-2.png",
