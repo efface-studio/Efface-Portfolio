@@ -11,22 +11,27 @@ import type { Lang } from "@/lib/ui";
 // worker version stays in sync with the bundled pdfjs-dist.
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-const T: Record<Lang, { loading: string; failed: string; open: string; hint: string }> = {
+const T: Record<
+  Lang,
+  { loading: string; failed: string; open: string; hint: string; pages: string }
+> = {
   ko: {
     loading: "불러오는 중…",
     failed: "PDF를 불러오지 못했습니다.",
     open: "원본 열기 ↗",
-    hint: "← → 또는 화면 클릭으로 넘기기",
+    hint: "페이지를 클릭하면 크게 볼 수 있어요",
+    pages: "페이지",
   },
   en: {
     loading: "Loading…",
     failed: "Couldn’t load the PDF.",
     open: "Open original ↗",
-    hint: "Flip with ← → or by clicking",
+    hint: "Click a page to view it larger",
+    pages: "pages",
   },
 };
 
-/** Slideshow PDF viewer — one page at a time, flipped with arrows / keys / click. */
+/** Business-plan PDF — scrollable page list; click a page to focus it in a lightbox. */
 export default function PdfViewerInner({
   url,
   lang,
@@ -36,45 +41,52 @@ export default function PdfViewerInner({
 }) {
   const t = T[lang];
   const [numPages, setNumPages] = useState(0);
-  const [page, setPage] = useState(1);
   const [baseWidth, setBaseWidth] = useState(880);
+  const [vw, setVw] = useState(1200);
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const measure = () => {
       const w = wrapRef.current?.clientWidth ?? 880;
       setBaseWidth(Math.max(320, Math.min(w, 1000)));
+      setVw(window.innerWidth);
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  // ← / → flip through pages.
+  // While the lightbox is open: ← / → flip, Esc closes, body scroll locked.
   useEffect(() => {
+    if (lightbox == null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") setPage((p) => Math.max(1, p - 1));
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowLeft") setLightbox((p) => (p && p > 1 ? p - 1 : p));
       if (e.key === "ArrowRight")
-        setPage((p) => (numPages ? Math.min(numPages, p + 1) : p));
+        setLightbox((p) => (p && p < numPages ? p + 1 : p));
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [numPages]);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, numPages]);
 
-  const prev = () => setPage((p) => Math.max(1, p - 1));
-  const next = () => setPage((p) => (numPages ? Math.min(numPages, p + 1) : p));
-  const atStart = page <= 1;
-  const atEnd = numPages > 0 && page >= numPages;
   const pixelRatio = Math.max(2, window.devicePixelRatio || 1);
+  const lightboxWidth = Math.min(Math.round(vw * 0.9), 1400);
+  const lbAtStart = lightbox != null && lightbox <= 1;
+  const lbAtEnd = lightbox != null && lightbox >= numPages;
 
-  const navBtn =
-    "absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line-2 bg-bg/92 text-[20px] font-bold leading-none text-fg shadow-[0_8px_24px_-10px_rgba(16,16,24,0.4)] backdrop-blur-md transition-colors hover:bg-surface-2 disabled:cursor-default disabled:opacity-20 disabled:hover:bg-bg/92";
+  const lbNav =
+    "absolute top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-[24px] font-bold leading-none text-white backdrop-blur-md transition-colors hover:bg-white/25 disabled:cursor-default disabled:opacity-20 disabled:hover:bg-white/12";
 
   return (
     <div ref={wrapRef}>
       <div className="mb-4 flex items-center justify-center gap-3">
         <span className="font-mono text-[12px] tabular-nums text-dim">
-          {numPages ? `${page} / ${numPages}` : "—"}
+          {numPages ? `${numPages} ${t.pages}` : "—"}
         </span>
         <span className="h-3.5 w-px bg-line-2" />
         <span className="text-[11px] text-dim">{t.hint}</span>
@@ -111,41 +123,82 @@ export default function PdfViewerInner({
           </div>
         }
       >
-        <div className="relative flex justify-center">
-          <button
-            type="button"
-            onClick={prev}
-            disabled={atStart}
-            aria-label="Previous page"
-            className={`left-2 ${navBtn}`}
-          >
-            ‹
-          </button>
-
-          <div
-            onClick={next}
-            className={`overflow-hidden rounded-lg border border-line bg-white shadow-[0_14px_36px_-20px_rgba(16,16,24,0.45)] ${
-              atEnd ? "" : "cursor-pointer"
-            }`}
-          >
-            <Page
-              key={page}
-              pageNumber={page}
-              width={Math.round(baseWidth)}
-              devicePixelRatio={pixelRatio}
-            />
-          </div>
-
-          <button
-            type="button"
-            onClick={next}
-            disabled={atEnd}
-            aria-label="Next page"
-            className={`right-2 ${navBtn}`}
-          >
-            ›
-          </button>
+        {/* scroll view — every page, click to focus */}
+        <div className="flex flex-col items-center gap-5">
+          {Array.from({ length: numPages }, (_, i) => (
+            <div
+              key={i}
+              onClick={() => setLightbox(i + 1)}
+              className="cursor-zoom-in overflow-hidden rounded-lg border border-line bg-white shadow-[0_14px_36px_-20px_rgba(16,16,24,0.45)] transition-shadow hover:shadow-[0_18px_44px_-16px_rgba(36,64,255,0.32)]"
+            >
+              <Page
+                pageNumber={i + 1}
+                width={baseWidth}
+                devicePixelRatio={pixelRatio}
+              />
+            </div>
+          ))}
         </div>
+
+        {/* lightbox — one focused page, flip with arrows / keys */}
+        {lightbox != null && (
+          <div
+            onClick={() => setLightbox(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-6 backdrop-blur-sm"
+          >
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox((p) => (p && p > 1 ? p - 1 : p));
+              }}
+              disabled={lbAtStart}
+              aria-label="Previous page"
+              className={`left-4 ${lbNav}`}
+            >
+              ‹
+            </button>
+
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="overflow-hidden rounded-lg bg-white shadow-2xl"
+            >
+              <Page
+                pageNumber={lightbox}
+                width={lightboxWidth}
+                devicePixelRatio={pixelRatio}
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox((p) => (p && p < numPages ? p + 1 : p));
+              }}
+              disabled={lbAtEnd}
+              aria-label="Next page"
+              className={`right-4 ${lbNav}`}
+            >
+              ›
+            </button>
+
+            <div className="absolute left-1/2 top-5 -translate-x-1/2 font-mono text-[12px] tabular-nums text-white/70">
+              {lightbox} / {numPages}
+            </div>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox(null);
+              }}
+              aria-label="Close"
+              className="absolute right-5 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/12 text-[16px] text-white backdrop-blur-md transition-colors hover:bg-white/25"
+            >
+              ✕
+            </button>
+          </div>
+        )}
       </Document>
     </div>
   );
