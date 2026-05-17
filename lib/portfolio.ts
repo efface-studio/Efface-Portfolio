@@ -302,16 +302,16 @@ export const hinestFeatures: FeatureGroup[] = [
     refs: "65f78f7 · 265b594 · 38da517",
   },
   {
-    title: "미리보기 모드",
-    desc: "로그인 없이 데모 조직 데이터로 전 기능을 둘러보는 미리보기 모드를 도입했습니다. 플래그로 API 호출을 mock으로 단락하고 모든 페이지에 시드 데이터를 채웠습니다.",
-    refs: "PR #119–#134",
-    shots: ["/hinest/demo-home.png"],
-  },
-  {
     title: "회의록 파일 · 링크 첨부",
     desc: "회의록 본문 JSON과 분리한 MeetingAttachment 테이블을 신설하고, 파일·링크 첨부 CRUD 라우트와 UI를 구현했습니다.",
     refs: "commit 7544231",
     shots: ["/hinest/demo-docs.png"],
+  },
+  {
+    title: "미리보기 모드",
+    desc: "로그인 없이 데모 조직 데이터로 전 기능을 둘러보는 미리보기 모드를 도입했습니다. 플래그로 API 호출을 mock으로 단락하고 모든 페이지에 시드 데이터를 채웠습니다.",
+    refs: "PR #119–#134",
+    shots: ["/hinest/demo-home.png"],
   },
 ];
 
