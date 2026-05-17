@@ -177,9 +177,16 @@ function CoverSlide({ c }: { c: Content }) {
 
       <div className="flex items-baseline justify-between border-t border-fg/20 pt-4">
         <div className="flex items-baseline gap-4 text-[11px] text-muted">
-          <span className="font-semibold text-fg">{profile.contact.email}</span>
+          <a
+            href={`mailto:${profile.contact.email}`}
+            className="font-semibold text-fg"
+          >
+            {profile.contact.email}
+          </a>
           <span className="text-line-2">·</span>
-          <span>{profile.contact.phone}</span>
+          <a href={`tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`}>
+            {profile.contact.phone}
+          </a>
           <span className="text-line-2">·</span>
           <span>{profile.contact.github}</span>
         </div>
@@ -615,16 +622,24 @@ function ContactSlide({ c }: { c: Content }) {
 
         <div className="mt-9 flex gap-14 border-t border-fg/20 pt-5">
           {[
-            { k: "Email", v: profile.contact.email },
-            { k: "Tel", v: profile.contact.phone },
-            { k: "GitHub", v: profile.contact.github },
+            {
+              k: "Email",
+              v: profile.contact.email,
+              href: `mailto:${profile.contact.email}`,
+            },
+            {
+              k: "Tel",
+              v: profile.contact.phone,
+              href: `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
+            },
+            { k: "GitHub", v: profile.contact.github, href: undefined },
           ].map((ct) => (
             <div key={ct.k}>
               <Meta className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-dim">
                 {ct.k}
               </Meta>
               <div className="mt-1.5 font-mono text-[14px] font-bold text-fg">
-                {ct.v}
+                {ct.href ? <a href={ct.href}>{ct.v}</a> : ct.v}
               </div>
             </div>
           ))}
