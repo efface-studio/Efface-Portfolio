@@ -3,7 +3,7 @@
 
 export const profile = {
   name: "서지완",
-  nameEn: "Seo Jiwan",
+  nameEn: "Jiwan Seo",
   role: "iOS Developer & PM",
   birth: "2007.08.02",
   headline: "불편함을 발견하면, 서비스로 만듭니다.",
@@ -50,17 +50,17 @@ export const career: CareerItem[] = [
 export type SkillGroup = { label: string; items: string[] };
 
 export const skillGroups: SkillGroup[] = [
-  { label: "Language", items: ["Swift", "C / C++", "Python"] },
+  { label: "Language", items: ["Swift", "TypeScript", "C / C++", "Python"] },
   {
     label: "iOS · Framework",
     items: ["SwiftUI", "UIKit", "Swift Concurrency", "RxSwift", "Combine", "MVVM", "MVC"],
   },
   {
-    label: "Tooling",
-    items: ["Tuist", "Moya", "Needle", "Fastlane", "KingFisher", "SPM", "Push Notification"],
+    label: "Web · Backend",
+    items: ["React", "Vite", "Express", "Prisma", "SQLite"],
   },
   {
-    label: "Collaboration · Design",
+    label: "Collaboration",
     items: ["Git", "GitHub", "Xcode", "Figma", "Notion", "Photoshop", "PowerPoint"],
   },
 ];
@@ -140,7 +140,7 @@ export const featuredProjects: Project[] = [
     role: "PM/PO · iOS Developer",
     team: "iOS 3 · Android 3 · Backend 3 · Design 1",
     summary:
-      "학생회가 수기로 체크하던 기숙사 외출 관리를 QR코드 기반 앱으로 전환했습니다. 현재 매주 평균 400명 이상이 사용하는 교내 공식 서비스로 운영 중이며, App Store 심사·배포를 통해 실무 수준의 iOS 운영을 경험했습니다.",
+      "광주소프트웨어마이스터고 재학 중 직접 기획하고 개발한 iOS 앱입니다. 학생회가 수기로 관리하던 기숙사 외출을 QR코드 기반으로 전환했고, 고등학생 때 만든 이 서비스는 지금도 매주 400명 이상이 쓰는 교내 공식 앱으로 2년 넘게 운영되고 있습니다. App Store 심사·배포와 버전 관리까지 직접 수행하며 실무 수준의 iOS 운영을 경험했습니다.",
     icon: "/goms/icon.jpg",
     screenshots: [
       "/goms/screen-1.png",
@@ -421,40 +421,38 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
   },
   {
     no: "04",
-    category: "운영 · 마이그레이션",
-    title: "잠긴 계정 자가 복구 — 순환 잠김 해소",
+    category: "성능",
+    title: "전체 메시지를 매번 다시 받던 사내톡 폴링",
     ref: {
-      label: "commit 5452f0e",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/5452f0e",
+      label: "commit 65be580",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/65be580",
     },
-    file: "server/prisma/migrations/20260514000000_unlock_all_accounts/migration.sql",
+    file: "client/src/components/ChatMiniApp.tsx",
     problem:
-      "5회 실패 잠금 정책으로 운영자 계정까지 잠겨, 관리자 페이지도 ECS Exec도 막힌 순환 잠김에 빠졌습니다.",
+      "사내톡이 1.5초마다 방의 전체 메시지(~300건)를 다시 받았고, 새 메시지 하나가 붙을 때마다 리스트의 모든 버블이 다시 렌더링됐습니다. 메시지 조회도 방·멤버십·커서를 각각 따로 DB에 물었습니다.",
     solution:
-      "컨테이너 부팅 시 자동 실행되는 prisma migrate deploy를 우회로 삼아, 잠긴 계정을 푸는 일회성 SQL 마이그레이션을 추가했습니다.",
+      "마지막 메시지 id 이후만 받는 ?after 증분 폴링으로 바꿔 유휴 폴링이 빈 응답이 되게 했고, 버블을 React.memo로 감싸 새로 붙은 것만 렌더했습니다. 서버는 세 조회를 한 번의 왕복으로 병합하고 (roomId, createdAt) 인덱스를 더했습니다. 편집·리액션은 15초 주기·포커스 복귀 시 전체 동기화로 보정합니다.",
     result:
-      "다음 배포에서 모든 잠긴 계정이 복구됐고, _prisma_migrations 추적으로 멱등성을 확보했습니다.",
+      "유휴 폴링 1회 전송량을 ~300건에서 0건으로, 새 메시지당 렌더를 리스트 전체에서 버블 1개로, 메시지 조회 DB 왕복을 3회에서 1회로 줄였습니다.",
     code: [
       {
-        lang: "sql",
-        caption: "배포 시 1회 실행되는 멱등 복구 마이그레이션",
-        lines: `-- 로그인 실패 누적으로 잠긴 모든 계정을 일괄 해제
--- _prisma_migrations에 기록 → 배포마다 재실행되지 않음 (멱등)
-UPDATE "User"
-SET "lockedAt" = NULL, "failedLoginCount" = 0
-WHERE "lockedAt" IS NOT NULL OR "failedLoginCount" > 0;`,
+        lang: "ts",
+        caption: "마지막 id 이후만 받는 증분 폴링",
+        lines: `// full=false 면 마지막 메시지 이후만 — 유휴 폴링은 대부분 빈 응답
+const after = full ? null : latestIdRef.current;
+const url = \`/api/chat/rooms/\${roomId}/messages\`;
+const res = await api<{ messages: Message[] }>(
+  after ? \`\${url}?after=\${after}\` : url,
+);
+if (!after) return setMessages(res.messages);
+// 증분 응답 — 새 메시지만 이어붙이고 중복은 id로 방어
+setMessages((prev) => {
+  const seen = new Set(prev.map((m) => m.id));
+  return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
+});`,
       },
     ],
   },
-];
-
-export type OtherProject = { name: string; role: string; stack: string[] };
-
-export const otherProjects: OtherProject[] = [
-  { name: "GSM Place", role: "iOS Leader · Team Leader", stack: ["SwiftUI", "MVVM", "Tuist", "Moya", "Swift Concurrency"] },
-  { name: "oeCook", role: "iOS Leader · iOS Developer", stack: ["SwiftUI", "Tuist", "Moya", "WebView"] },
-  { name: "애틋", role: "iOS Developer", stack: ["SwiftUI", "MVVM", "Tuist", "Moya"] },
-  { name: "덕후의 시선", role: "iOS Developer", stack: ["SwiftUI", "MVVM", "Tuist", "Moya", "Swift Concurrency"] },
 ];
 
 export type Award = {
@@ -470,7 +468,7 @@ export const awards: Award[] = [
     title: "우리은행 우리 꿈·꾸·당(堂) 장학생",
     rank: "전체 · IT 분야 수석",
     date: "2025",
-    desc: "100명이 선발된 장학생 사업에서 전체 수석과 IT 분야 수석으로 선정되었습니다.",
+    desc: "50명이 선발된 장학생 사업에서 전체 수석과 IT 분야 수석으로 선정되었습니다.",
   },
   {
     title: "GSM DevFest",
@@ -521,6 +519,14 @@ export const activities: Activity[] = [
     desc: "미래의 IT 인재와 창업가를 지원하기 위해 설립한 비영리 법인 단체. U/CON25 컨퍼런스(참여자 110명·만족도 4.9), U/THON25 해커톤, 패스트파이브 정기 밋업 등을 주최·운영했습니다.",
   },
   {
+    group: "GOMS 개발팀",
+    name: "Team Haribo",
+    role: "팀 리더",
+    period: "2024.01 — 운영 중",
+    link: "team-haribo.vercel.app",
+    desc: "GOMS를 기획·개발·운영하는 개발팀 ‘Team Haribo’를 팀 리더로 이끌었습니다. iOS·Android·Backend·Design 10인 규모 팀의 일정과 협업을 조율하며 서비스 출시와 운영을 주도했습니다.",
+  },
+  {
     group: "동아리",
     name: "Mindway — 전공 동아리 부장",
     role: "부장 · iOS · PM",
@@ -554,11 +560,6 @@ export const studio = {
   fullUrl: "https://efface.dev",
   tagline: "복잡함은 지우고, 효과만 남깁니다.",
   desc: "기획·디자인·개발·배포까지 한 곳에서 책임지는 웹 외주 제작 스튜디오를 직접 운영하고 있습니다. 견고한 코드와 깔끔한 인수인계로 마무리하는 것을 원칙으로 합니다.",
-  stats: [
-    { value: "30+", label: "완료 프로젝트" },
-    { value: "4.9 / 5.0", label: "평균 만족도" },
-    { value: "1영업일", label: "내 회신" },
-  ],
   services: ["랜딩 페이지", "기업·브랜드 사이트", "쇼핑몰·커머스", "사내 관리툴·웹앱"],
   stack: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
 };

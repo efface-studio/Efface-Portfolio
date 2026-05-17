@@ -1,32 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  profile,
-  career,
-  skillGroups,
-  skillFocus,
-  featuredProjects,
-  otherProjects,
-  awards,
-  activities,
-  showcases,
-  studio,
-  aboutHighlights,
-  gomsCases,
-  hinestCases,
-  hinestFeatures,
-  type TroubleCase,
-  type FeatureGroup,
-} from "@/lib/portfolio";
+import type { TroubleCase, FeatureGroup } from "@/lib/portfolio";
+import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { ChipRow, Meta } from "@/components/primitives";
 import { CodeBlock } from "@/components/CodeBlock";
 import type { ReactNode } from "react";
 
-const TOTAL = 12;
+const TOTAL = 11;
 const pad = (n: number) => String(n).padStart(2, "0");
-
-const goms = featuredProjects[0];
-const hinest = featuredProjects[1];
 
 /* -------------------------------------------------------------- */
 
@@ -34,11 +15,13 @@ function Slide({
   n,
   label,
   title,
+  c,
   children,
 }: {
   n: number;
   label: string;
   title: string;
+  c: Content;
   children: ReactNode;
 }) {
   return (
@@ -58,10 +41,10 @@ function Slide({
       </header>
       <div className="flex min-h-0 flex-1 flex-col py-6">{children}</div>
       <footer className="flex items-center justify-between border-t border-line pt-2.5">
-        <Meta className="text-[8.5px] tracking-[0.1em] text-dim">
-          서지완 · iOS DEVELOPER &amp; PM
+        <Meta className="text-[8.5px] uppercase tracking-[0.1em] text-dim">
+          {c.profile.name} · {c.profile.role}
         </Meta>
-        <Meta className="text-[8.5px] text-dim">{profile.contact.github}</Meta>
+        <Meta className="text-[8.5px] text-dim">{c.profile.contact.github}</Meta>
       </footer>
     </div>
   );
@@ -109,50 +92,51 @@ function DeckFeature({ f }: { f: FeatureGroup }) {
 }
 
 /** Wide troubleshooting row — narrative left, code right. */
-function TroubleRow({ c }: { c: TroubleCase }) {
+function TroubleRow({ tc, c }: { tc: TroubleCase; c: Content }) {
   return (
     <div className="grid grid-cols-[1fr_1.5fr] items-center gap-6">
       <div>
         <div className="flex items-baseline justify-between gap-2">
           <div className="flex items-baseline gap-2">
             <span className="text-[14px] font-extrabold tracking-tight text-accent">
-              {c.no}
+              {tc.no}
             </span>
             <span className="text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
-              {c.category}
+              {tc.category}
             </span>
           </div>
-          {c.ref && (
+          {tc.ref && (
             <a
-              href={c.ref.url}
+              href={tc.ref.url}
               target="_blank"
               rel="noreferrer"
               className="shrink-0 font-mono text-[8px] font-bold text-accent"
             >
-              {c.ref.label} ↗
+              {tc.ref.label} ↗
             </a>
           )}
         </div>
         <h3 className="mt-1.5 text-[14px] font-bold leading-snug tracking-tight">
-          {c.title}
+          {tc.title}
         </h3>
         <p className="mt-2.5 text-[9.5px] leading-[1.6] text-muted">
-          <Meta className="font-bold text-dim">문제 </Meta>
-          {c.problem}
+          <Meta className="font-bold text-dim">{c.ui.problem}{" "}</Meta>
+          {tc.problem}
         </p>
         <p className="mt-1.5 text-[9.5px] leading-[1.6] text-fg">
-          <Meta className="font-bold text-accent">결과 </Meta>
-          {c.result}
+          <Meta className="font-bold text-accent">{c.ui.result}{" "}</Meta>
+          {tc.result}
         </p>
       </div>
-      {c.code[0] && <CodeBlock snippet={c.code[0]} />}
+      {tc.code[0] && <CodeBlock snippet={tc.code[0]} />}
     </div>
   );
 }
 
 /* ----------------------------- slides ----------------------------- */
 
-function CoverSlide() {
+function CoverSlide({ c }: { c: Content }) {
+  const { profile, ui } = c;
   const photo = profilePhoto();
   return (
     <div className="slide page-deck flex flex-col text-fg">
@@ -163,10 +147,13 @@ function CoverSlide() {
 
       <div className="flex flex-1 items-center gap-12">
         <div className="min-w-0 flex-1">
-          <h1 className="text-[96px] font-extrabold leading-[0.92] tracking-[-0.045em]">
+          <h1 className="text-[68px] font-extrabold leading-[0.95] tracking-[-0.045em]">
             {profile.name}
           </h1>
-          <p className="mt-5 text-[21px] font-bold text-muted">
+          <p className="mt-3 text-[15px] font-bold uppercase tracking-[0.3em] text-dim">
+            {profile.nameEn}
+          </p>
+          <p className="mt-3.5 text-[21px] font-bold text-muted">
             {profile.role}
           </p>
           <div className="mt-7 h-[3px] w-16 bg-accent" />
@@ -180,12 +167,14 @@ function CoverSlide() {
         {photo ? (
           <img
             src={photo}
-            alt="서지완"
+            alt={profile.name}
             className="h-[62mm] w-[49mm] shrink-0 rounded-lg object-cover"
           />
         ) : (
           <div className="flex h-[62mm] w-[49mm] shrink-0 items-center justify-center rounded-lg bg-fg">
-            <span className="text-[68px] font-extrabold text-bg">서</span>
+            <span className="text-[68px] font-extrabold text-bg">
+              {profile.name.charAt(0)}
+            </span>
           </div>
         )}
       </div>
@@ -198,17 +187,16 @@ function CoverSlide() {
           <span className="text-line-2">·</span>
           <span>{profile.contact.github}</span>
         </div>
-        <Meta className="text-[9px] text-dim">
-          세로(문서) · 가로(덱) 버전 제공
-        </Meta>
+        <Meta className="text-[9px] text-dim">{ui.deckCoverNote}</Meta>
       </div>
     </div>
   );
 }
 
-function AboutCareerSlide() {
+function AboutCareerSlide({ c }: { c: Content }) {
+  const { career, skillGroups, skillFocus, aboutHighlights, ui } = c;
   return (
-    <Slide n={2} label="About · Career" title="불편을 서비스로 만드는 사람">
+    <Slide n={2} label="About · Career" title={ui.deckAboutTitle} c={c}>
       <div className="flex min-h-0 flex-1 flex-col">
         {/* identity highlights */}
         <div className="grid grid-cols-3 gap-7 border-b border-line pb-6">
@@ -231,35 +219,35 @@ function AboutCareerSlide() {
         <div className="grid flex-1 grid-cols-[1fr_1fr] gap-10 pt-6">
           <div className="flex flex-col justify-between">
             <div>
-              <ColLabel>경력 · 학력</ColLabel>
+              <ColLabel>{ui.careerTitle}</ColLabel>
               <div className="mt-3.5">
-                {career.map((c, i) => (
+                {career.map((ci, i) => (
                   <div
-                    key={c.company}
+                    key={ci.company}
                     className={`flex items-baseline justify-between gap-4 py-2.5 ${
                       i > 0 ? "border-t border-line" : ""
                     }`}
                   >
                     <div>
                       <h4 className="text-[13px] font-bold">
-                        {c.company}
-                        {c.current ? (
+                        {ci.company}
+                        {ci.current ? (
                           <span className="ml-2 text-[9px] font-bold text-accent">
-                            재직 중
+                            {ui.current}
                           </span>
                         ) : null}
                       </h4>
-                      <p className="mt-0.5 text-[10px] text-muted">{c.role}</p>
+                      <p className="mt-0.5 text-[10px] text-muted">{ci.role}</p>
                     </div>
                     <Meta className="shrink-0 text-[9px] text-dim">
-                      {c.period}
+                      {ci.period}
                     </Meta>
                   </div>
                 ))}
               </div>
             </div>
             <div>
-              <ColLabel>주력 역량</ColLabel>
+              <ColLabel>{ui.coreStrengths}</ColLabel>
               <div className="mt-3 space-y-2">
                 {skillFocus.map((s) => (
                   <p
@@ -276,7 +264,7 @@ function AboutCareerSlide() {
           </div>
 
           <div className="flex flex-col border-l border-line pl-10">
-            <ColLabel>기술 스택</ColLabel>
+            <ColLabel>{ui.stackTitle}</ColLabel>
             <div className="mt-4 flex flex-1 flex-col justify-around">
               {skillGroups.map((g) => (
                 <div key={g.label}>
@@ -294,9 +282,11 @@ function AboutCareerSlide() {
   );
 }
 
-function GomsOverviewSlide() {
+function GomsOverviewSlide({ c }: { c: Content }) {
+  const { ui } = c;
+  const goms = c.featuredProjects[0];
   return (
-    <Slide n={3} label="Project 01 · iOS App" title="GOMS — 외출제 관리 서비스">
+    <Slide n={6} label="Project 02 · iOS App" title={ui.deckGomsTitle} c={c}>
       <div className="grid flex-1 grid-cols-[1fr_1.08fr] gap-9">
         <div className="flex flex-col justify-center">
           {goms.links[0] && (
@@ -309,7 +299,7 @@ function GomsOverviewSlide() {
               {goms.icon && (
                 <img
                   src={goms.icon}
-                  alt="GOMS 앱 아이콘"
+                  alt={goms.name}
                   className="h-[15mm] w-[15mm] rounded-[22%] border border-line"
                 />
               )}
@@ -318,7 +308,7 @@ function GomsOverviewSlide() {
                   {goms.links[0].label}
                 </Meta>
                 <div className="mt-1 text-[13px] font-bold tracking-tight text-accent">
-                  배포된 앱 보기 ↗
+                  {ui.viewDeployedApp}
                 </div>
               </div>
             </a>
@@ -354,7 +344,7 @@ function GomsOverviewSlide() {
             <img
               key={src}
               src={src}
-              alt="GOMS 스크린샷"
+              alt={goms.name}
               className="h-[82mm] w-auto rounded-xl border border-line"
             />
           ))}
@@ -364,35 +354,39 @@ function GomsOverviewSlide() {
   );
 }
 
-function GomsTroubleSlide() {
+function GomsTroubleSlide({ c }: { c: Content }) {
   return (
     <Slide
-      n={4}
-      label="Project 01 · GOMS"
-      title="트러블슈팅 — 직접 진단하고 고친 것"
+      n={7}
+      label="Project 02 · GOMS"
+      title={c.ui.deckTroubleTitle}
+      c={c}
     >
       <div className="flex flex-1 flex-col justify-around">
-        {gomsCases.map((c) => (
-          <TroubleRow key={c.no} c={c} />
+        {c.gomsCases.map((tc) => (
+          <TroubleRow key={tc.no} tc={tc} c={c} />
         ))}
       </div>
     </Slide>
   );
 }
 
-function HiNestOverviewSlide() {
+function HiNestOverviewSlide({ c }: { c: Content }) {
+  const { hinestFeatures, ui } = c;
+  const hinest = c.featuredProjects[1];
   return (
     <Slide
-      n={5}
-      label="Project 02 · Flagship"
-      title="HiNest — 사내 워크플레이스 플랫폼"
+      n={3}
+      label="Project 01 · Flagship"
+      title={ui.deckHinestTitle}
+      c={c}
     >
       <div className="grid flex-1 grid-cols-[1.04fr_1fr] gap-10">
         <div className="flex flex-col">
           {hinest.banner && (
             <img
               src={hinest.banner}
-              alt="HiNest 배너"
+              alt={hinest.name}
               className="h-[58mm] w-full rounded-lg border border-line object-cover"
             />
           )}
@@ -409,7 +403,7 @@ function HiNestOverviewSlide() {
           </div>
         </div>
         <div className="flex flex-col border-l border-line pl-10">
-          <ColLabel>핵심 기능</ColLabel>
+          <ColLabel>{ui.keyFeatures}</ColLabel>
           <div className="mt-3 flex flex-1 flex-col">
             {hinestFeatures.map((f, i) => (
               <div
@@ -432,54 +426,34 @@ function HiNestTroubleSlide({
   n,
   cases,
   range,
+  c,
 }: {
   n: number;
   cases: TroubleCase[];
   range: string;
+  c: Content;
 }) {
   return (
-    <Slide n={n} label={`Project 02 · HiNest · ${range}`} title="트러블슈팅">
+    <Slide
+      n={n}
+      label={`Project 01 · HiNest · ${range}`}
+      title={c.ui.deckTroubleTitle}
+      c={c}
+    >
       <div className="flex flex-1 flex-col justify-around">
-        {cases.map((c) => (
-          <TroubleRow key={c.no} c={c} />
+        {cases.map((tc) => (
+          <TroubleRow key={tc.no} tc={tc} c={c} />
         ))}
       </div>
     </Slide>
   );
 }
 
-function OtherProjectsSlide() {
+function AwardsSlide({ c }: { c: Content }) {
   return (
-    <Slide n={8} label="More Work" title="그 외 프로젝트">
+    <Slide n={8} label="Awards" title={c.ui.deckAwardsTitle} c={c}>
       <div className="flex flex-1 flex-col">
-        {otherProjects.map((o, i) => (
-          <div
-            key={o.name}
-            className={`flex flex-1 items-center gap-8 ${
-              i > 0 ? "border-t border-line" : ""
-            }`}
-          >
-            <div className="w-[66mm] shrink-0">
-              <h3 className="text-[21px] font-bold tracking-tight">{o.name}</h3>
-              <Meta className="mt-1.5 block text-[10px] font-semibold text-accent">
-                {o.role}
-              </Meta>
-            </div>
-            <div className="flex-1">
-              <ChipRow items={o.stack} size="md" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </Slide>
-  );
-}
-
-function AwardsSlide() {
-  return (
-    <Slide n={9} label="Awards" title="수상 내역">
-      <div className="flex flex-1 flex-col">
-        {awards.map((a, i) => (
+        {c.awards.map((a, i) => (
           <div
             key={a.title}
             className={`grid flex-1 grid-cols-[32mm_1fr] items-center gap-7 ${
@@ -508,40 +482,53 @@ function AwardsSlide() {
   );
 }
 
-function ActivitySlide() {
+function ActivitySlide({ c }: { c: Content }) {
+  const { activities, showcases, ui } = c;
   return (
-    <Slide n={10} label="Activity" title="활동과 리더십">
+    <Slide n={9} label="Activity" title={ui.deckActivityTitle} c={c}>
       <div className="flex flex-1 flex-col gap-6">
         <div className="flex flex-1 flex-col">
           {activities.map((act, i) => (
             <div
               key={act.name}
-              className={`grid flex-1 grid-cols-[36mm_1fr] gap-7 ${
+              className={`flex flex-1 flex-col justify-center ${
                 i > 0 ? "border-t border-line" : ""
               }`}
             >
-              <div className="pt-0.5">
-                <Meta className="text-[8.5px] font-bold uppercase tracking-[0.14em] text-accent">
-                  {act.group}
-                </Meta>
-                <p className="mt-1 text-[9px] text-dim">{act.period}</p>
-              </div>
-              <div>
-                <h3 className="text-[13.5px] font-bold">
-                  {act.name}
-                  <span className="ml-2 text-[9px] font-normal text-dim">
-                    {act.role}
-                  </span>
-                </h3>
-                <p className="mt-1 text-[10px] leading-[1.6] text-muted">
-                  {act.desc}
-                </p>
+              <div className="grid grid-cols-[36mm_1fr] gap-7">
+                <div className="pt-0.5">
+                  <Meta className="text-[8.5px] font-bold uppercase tracking-[0.14em] text-accent">
+                    {act.group}
+                  </Meta>
+                  <p className="mt-1 text-[9px] text-dim">{act.period}</p>
+                </div>
+                <div>
+                  <h3 className="text-[13.5px] font-bold">
+                    {act.name}
+                    <span className="ml-2 text-[9px] font-normal text-dim">
+                      {act.role}
+                    </span>
+                    {act.link ? (
+                      <a
+                        href={`https://${act.link}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ml-2 text-[9px] font-bold text-accent"
+                      >
+                        {act.link} ↗
+                      </a>
+                    ) : null}
+                  </h3>
+                  <p className="mt-1 text-[10px] leading-[1.6] text-muted">
+                    {act.desc}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
         </div>
         <div>
-          <ColLabel>부스 · 행사 · 교육</ColLabel>
+          <ColLabel>{ui.exhibitionsTitle}</ColLabel>
           <div className="mt-2">
             {showcases.map((s, i) => (
               <div
@@ -565,9 +552,10 @@ function ActivitySlide() {
   );
 }
 
-function StudioSlide() {
+function StudioSlide({ c }: { c: Content }) {
+  const { studio, ui } = c;
   return (
-    <Slide n={11} label="Venture" title="운영 중인 웹 스튜디오">
+    <Slide n={10} label="Venture" title={ui.deckStudioTitle} c={c}>
       <div className="flex flex-1 flex-col justify-center">
         <div className="flex items-end gap-4">
           <h3 className="text-[56px] font-extrabold leading-[0.9] tracking-[-0.03em]">
@@ -589,18 +577,7 @@ function StudioSlide() {
           {studio.desc}
         </p>
 
-        <div className="mt-7 flex gap-12 border-y border-line py-4">
-          {studio.stats.map((s) => (
-            <div key={s.label}>
-              <div className="text-[26px] font-extrabold leading-none tracking-tight text-accent">
-                {s.value}
-              </div>
-              <Meta className="mt-2 block text-[9px] text-dim">{s.label}</Meta>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-5 grid grid-cols-[24mm_1fr] items-baseline gap-4">
+        <div className="mt-7 grid grid-cols-[24mm_1fr] items-baseline gap-4">
           <Meta className="text-[9px] font-bold uppercase tracking-[0.14em] text-dim">
             Services
           </Meta>
@@ -617,16 +594,16 @@ function StudioSlide() {
   );
 }
 
-function ContactSlide() {
+function ContactSlide({ c }: { c: Content }) {
+  const { profile, ui } = c;
   return (
-    <Slide n={12} label="Contact" title="함께 만들고 싶습니다">
+    <Slide n={11} label="Contact" title={ui.deckContactTitle} c={c}>
       <div className="flex flex-1 flex-col justify-center">
         <p className="max-w-[212mm] text-[22px] font-extrabold leading-[1.5] tracking-tight">
-          기획부터 개발·배포까지, 팀과 협업해 문제를 해결하는 모습을
-          보여드리겠습니다.
+          {ui.closingLine}
         </p>
         <p className="mt-3 text-[12.5px] leading-[1.7] text-muted">
-          자세한 이야기는 인터뷰에서 직접 전하고 싶습니다.
+          {ui.contactLead}
         </p>
 
         <div className="mt-9 flex gap-14 border-t border-fg/20 pt-5">
@@ -634,25 +611,19 @@ function ContactSlide() {
             { k: "Email", v: profile.contact.email },
             { k: "Tel", v: profile.contact.phone },
             { k: "GitHub", v: profile.contact.github },
-          ].map((c) => (
-            <div key={c.k}>
+          ].map((ct) => (
+            <div key={ct.k}>
               <Meta className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-dim">
-                {c.k}
+                {ct.k}
               </Meta>
               <div className="mt-1.5 font-mono text-[14px] font-bold text-fg">
-                {c.v}
+                {ct.v}
               </div>
             </div>
           ))}
         </div>
 
         <p className="mt-7 text-[11px] font-bold text-accent">{profile.note}</p>
-        <p className="mt-3 text-[9px] leading-[1.6] text-muted">
-          이 포트폴리오 또한 템플릿 없이 직접 디자인하고 개발했습니다.{" "}
-          <span className="font-mono text-dim">
-            Next.js · TypeScript · Tailwind CSS
-          </span>
-        </p>
       </div>
     </Slide>
   );
@@ -660,21 +631,21 @@ function ContactSlide() {
 
 /* -------------------------------------------------------------- */
 
-export default function Deck() {
+export default function Deck({ lang }: { lang: Lang }) {
+  const c = getContent(lang);
   return (
     <div className="print-stack flex flex-col items-center gap-10">
-      <CoverSlide />
-      <AboutCareerSlide />
-      <GomsOverviewSlide />
-      <GomsTroubleSlide />
-      <HiNestOverviewSlide />
-      <HiNestTroubleSlide n={6} cases={hinestCases.slice(0, 2)} range="01–02" />
-      <HiNestTroubleSlide n={7} cases={hinestCases.slice(2, 4)} range="03–04" />
-      <OtherProjectsSlide />
-      <AwardsSlide />
-      <ActivitySlide />
-      <StudioSlide />
-      <ContactSlide />
+      <CoverSlide c={c} />
+      <AboutCareerSlide c={c} />
+      <HiNestOverviewSlide c={c} />
+      <HiNestTroubleSlide n={4} cases={c.hinestCases.slice(0, 2)} range="01–02" c={c} />
+      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2)} range="03–04" c={c} />
+      <GomsOverviewSlide c={c} />
+      <GomsTroubleSlide c={c} />
+      <AwardsSlide c={c} />
+      <ActivitySlide c={c} />
+      <StudioSlide c={c} />
+      <ContactSlide c={c} />
     </div>
   );
 }

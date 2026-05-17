@@ -1,37 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  profile,
-  career,
-  skillGroups,
-  featuredProjects,
-  otherProjects,
-  awards,
-  activities,
-  showcases,
-  studio,
-  aboutMe,
-  gomsCases,
-  hinestCases,
-  hinestFeatures,
-  type Project,
-  type TroubleCase,
-  type FeatureGroup,
-} from "@/lib/portfolio";
+import type { Project, TroubleCase, FeatureGroup } from "@/lib/portfolio";
+import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { CodeBlock } from "@/components/CodeBlock";
 import type { ReactNode } from "react";
 
-const TOTAL = 8;
-const [goms, hinest] = featuredProjects;
+const TOTAL = 7;
 
 /* ----------------------------- shells ----------------------------- */
 
-function DocPage({ n, children }: { n: number; children: ReactNode }) {
+function DocPage({
+  n,
+  c,
+  children,
+}: {
+  n: number;
+  c: Content;
+  children: ReactNode;
+}) {
   return (
     <div className="doc-page page-doc flex flex-col text-fg">
       <div className="flex min-h-0 flex-1 flex-col">{children}</div>
       <div className="mt-6 flex items-center justify-between border-t border-line pt-2.5 text-[8.5px] tracking-wide text-dim">
-        <span>서지완 — iOS Developer &amp; PM</span>
+        <span>
+          {c.profile.name} — {c.profile.role}
+        </span>
         <span>
           {String(n).padStart(2, "0")} &nbsp;/&nbsp; {String(TOTAL).padStart(2, "0")}
         </span>
@@ -40,7 +33,7 @@ function DocPage({ n, children }: { n: number; children: ReactNode }) {
   );
 }
 
-/** Section header — Korean title left, English label right, hairline under. */
+/** Section header — title left, English label right, hairline under. */
 function SectionHead({ title, label }: { title: string; label: string }) {
   return (
     <div className="mb-4 flex items-baseline justify-between border-b border-fg/20 pb-2">
@@ -125,13 +118,13 @@ function ProjectHead({ project, kind }: { project: Project; kind: string }) {
 }
 
 /** Horizontal meta strip — role / period / team + links. */
-function MetaStrip({ project }: { project: Project }) {
+function MetaStrip({ project, c }: { project: Project; c: Content }) {
   return (
     <div className="mt-4 flex flex-wrap items-baseline gap-x-7 gap-y-2 border-y border-line py-2.5">
       {[
-        ["역할", project.role],
-        ["기간", project.period],
-        ["팀", project.team],
+        [c.ui.role, project.role],
+        [c.ui.period, project.period],
+        [c.ui.team, project.team],
       ].map(([k, v]) => (
         <span key={k} className="flex items-baseline gap-2">
           <span className="text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
@@ -197,7 +190,7 @@ function CaseRow({
         {label}
       </span>
       <p
-        className={`text-[9.5px] leading-[1.6] ${
+        className={`text-[9px] leading-[1.55] ${
           accent ? "font-semibold text-fg" : "text-muted"
         }`}
       >
@@ -207,44 +200,44 @@ function CaseRow({
   );
 }
 
-function TroubleCaseBlock({ c }: { c: TroubleCase }) {
+function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-3">
         <div className="flex items-baseline gap-2.5">
           <span className="text-[12px] font-extrabold tracking-tight text-accent">
-            {c.no}
+            {tc.no}
           </span>
           <span className="text-[8px] font-bold uppercase tracking-[0.16em] text-dim">
-            {c.category}
+            {tc.category}
           </span>
         </div>
-        {c.ref && (
+        {tc.ref && (
           <a
-            href={c.ref.url}
+            href={tc.ref.url}
             target="_blank"
             rel="noreferrer"
             className="shrink-0 font-mono text-[8px] font-bold text-accent"
           >
-            {c.ref.label} ↗
+            {tc.ref.label} ↗
           </a>
         )}
       </div>
       <h3 className="mt-1.5 text-[14px] font-extrabold leading-[1.3] tracking-tight">
-        {c.title}
+        {tc.title}
       </h3>
-      {c.file && (
-        <p className="mt-1 font-mono text-[7.5px] text-dim">{c.file}</p>
+      {tc.file && (
+        <p className="mt-1 font-mono text-[7.5px] text-dim">{tc.file}</p>
       )}
 
-      <div className="mt-2.5 space-y-1.5 border-t border-line pt-2.5">
-        <CaseRow label="문제" text={c.problem} />
-        <CaseRow label="해결" text={c.solution} />
-        <CaseRow label="결과" text={c.result} accent />
+      <div className="mt-2 space-y-1 border-t border-line pt-2">
+        <CaseRow label={c.ui.problem} text={tc.problem} />
+        <CaseRow label={c.ui.solution} text={tc.solution} />
+        <CaseRow label={c.ui.result} text={tc.result} accent />
       </div>
 
-      <div className="mt-3 space-y-2">
-        {c.code.map((s) => (
+      <div className="mt-2.5 space-y-2">
+        {tc.code.map((s) => (
           <CodeBlock key={s.caption} snippet={s} />
         ))}
       </div>
@@ -254,10 +247,11 @@ function TroubleCaseBlock({ c }: { c: TroubleCase }) {
 
 /* ----------------------------- pages ----------------------------- */
 
-function Page1() {
+function CoverPage({ c }: { c: Content }) {
+  const { profile, career, skillGroups, awards, ui } = c;
   const photo = profilePhoto();
   return (
-    <DocPage n={1}>
+    <DocPage n={1} c={c}>
       <header>
         <div className="flex items-baseline justify-between text-[8.5px] font-bold uppercase tracking-[0.22em] text-dim">
           <span>Portfolio</span>
@@ -266,10 +260,15 @@ function Page1() {
 
         <div className="mt-6 flex items-start justify-between gap-8">
           <div className="min-w-0 flex-1">
-            <h1 className="text-[44px] font-extrabold leading-[0.95] tracking-[-0.04em]">
-              {profile.name}
-            </h1>
-            <div className="mt-3 flex items-baseline gap-2.5">
+            <div className="flex items-baseline gap-3">
+              <h1 className="text-[36px] font-extrabold leading-[1] tracking-[-0.04em]">
+                {profile.name}
+              </h1>
+              <span className="text-[13px] font-bold uppercase tracking-[0.18em] text-dim">
+                {profile.nameEn}
+              </span>
+            </div>
+            <div className="mt-2.5 flex items-baseline gap-2.5">
               <p className="text-[15px] font-bold text-accent">
                 {profile.role}
               </p>
@@ -286,22 +285,24 @@ function Page1() {
           {photo ? (
             <img
               src={photo}
-              alt="서지완"
+              alt={profile.name}
               className="h-[52mm] w-[40mm] shrink-0 rounded-lg object-cover"
             />
           ) : (
             <div className="flex h-[52mm] w-[40mm] shrink-0 items-center justify-center rounded-lg bg-fg">
-              <span className="text-[40px] font-extrabold text-bg">서</span>
+              <span className="text-[40px] font-extrabold text-bg">
+                {profile.name.charAt(0)}
+              </span>
             </div>
           )}
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-x-10 gap-y-3 border-t border-fg/20 pt-3">
           {[
-            ["이메일", profile.contact.email, ""],
-            ["휴대폰", profile.contact.phone, ""],
+            [ui.contactEmail, profile.contact.email, ""],
+            [ui.contactPhone, profile.contact.phone, ""],
             ["GitHub", profile.contact.github, profile.contact.githubUrl],
-            ["앱스토어", "배포 앱 보기 ↗", profile.contact.appStore],
+            [ui.contactAppStore, ui.viewAppStore, profile.contact.appStore],
           ].map(([k, v, href]) => (
             <span key={k} className="flex items-baseline gap-2.5">
               <span className="w-[15mm] shrink-0 text-[9px] font-bold uppercase tracking-wide text-dim">
@@ -324,27 +325,27 @@ function Page1() {
         </div>
       </header>
 
-      <section className="mt-6">
-        <SectionHead title="경력 · 학력" label="Career" />
+      <section className="mt-5">
+        <SectionHead title={ui.careerTitle} label="Career" />
         <div className="space-y-2.5">
-          {career.map((c) => (
-            <Entry key={c.company} meta={c.period}>
+          {career.map((ci) => (
+            <Entry key={ci.company} meta={ci.period}>
               <h3 className="text-[12.5px] font-bold">
-                {c.company}
-                {c.current ? (
+                {ci.company}
+                {ci.current ? (
                   <span className="ml-2 rounded-full bg-accent-soft px-2 py-[2px] text-[8px] font-bold text-accent">
-                    재직 중
+                    {ui.current}
                   </span>
                 ) : null}
               </h3>
-              <p className="mt-0.5 text-[10.5px] text-muted">{c.role}</p>
+              <p className="mt-0.5 text-[10.5px] text-muted">{ci.role}</p>
             </Entry>
           ))}
         </div>
       </section>
 
-      <section className="mt-5">
-        <SectionHead title="기술 스택" label="Stack" />
+      <section className="mt-4">
+        <SectionHead title={ui.stackTitle} label="Stack" />
         <div className="space-y-2">
           {skillGroups.map((g) => (
             <Entry key={g.label} meta={g.label}>
@@ -361,9 +362,9 @@ function Page1() {
         </div>
       </section>
 
-      <section className="mt-5">
-        <SectionHead title="수상 내역" label="Awards" />
-        <div className="space-y-2">
+      <section className="mt-4">
+        <SectionHead title={ui.awardsTitle} label="Awards" />
+        <div className="space-y-1.5">
           {awards.map((a) => (
             <Entry key={a.title} meta={a.date}>
               <h4 className="text-[12px] font-bold">
@@ -388,10 +389,12 @@ function Page1() {
   );
 }
 
-/* --- GOMS I — overview --- */
-function Page2() {
+/* --- GOMS — overview --- */
+function GomsOverviewPage({ c }: { c: Content }) {
+  const { ui } = c;
+  const goms = c.featuredProjects[0];
   return (
-    <DocPage n={2}>
+    <DocPage n={5} c={c}>
       <ProjectHead project={goms} kind="Project — iOS App" />
 
       {goms.screenshots && (
@@ -409,9 +412,9 @@ function Page2() {
 
       <p className="mt-5 text-[12px] leading-[1.85]">{goms.summary}</p>
 
-      <MetaStrip project={goms} />
+      <MetaStrip project={goms} c={c} />
 
-      <div className="mt-5 flex min-h-0 flex-1 flex-col">
+      <div className="mt-5">
         {goms.metrics && (
           <div className="grid grid-cols-3 border-y border-line">
             {goms.metrics.map((m, i) => (
@@ -430,27 +433,29 @@ function Page2() {
           </div>
         )}
 
-        <div className="mt-6 flex flex-1 flex-col">
+        <div className="mt-6">
           <div className="mb-3 flex items-baseline justify-between border-b border-fg/20 pb-2">
-            <h4 className="text-[13px] font-bold tracking-tight">주요 기여</h4>
+            <h4 className="text-[13px] font-bold tracking-tight">
+              {ui.keyContributions}
+            </h4>
             <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-dim">
               Key Contributions
             </span>
           </div>
-          <div className="flex flex-1 flex-col justify-between">
-            {goms.contributions.map((c) => (
-              <div key={c} className="flex gap-2.5">
+          <div className="space-y-2.5">
+            {goms.contributions.map((co) => (
+              <div key={co} className="flex gap-2.5">
                 <span className="mt-[7px] h-px w-2.5 shrink-0 bg-accent" />
                 <span className="text-[10.5px] leading-[1.6] text-muted">
-                  {c}
+                  {co}
                 </span>
               </div>
             ))}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {goms.stack.map((t) => (
-                <Tag key={t}>{t}</Tag>
-              ))}
-            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {goms.stack.map((t) => (
+              <Tag key={t}>{t}</Tag>
+            ))}
           </div>
         </div>
       </div>
@@ -458,61 +463,100 @@ function Page2() {
   );
 }
 
-/* --- GOMS II — troubleshooting --- */
-function Page3() {
+/* --- GOMS — troubleshooting --- */
+function GomsTroublePage({ c }: { c: Content }) {
+  const { gomsCases, ui } = c;
   return (
-    <DocPage n={3}>
+    <DocPage n={6} c={c}>
       <p className="text-[8.5px] font-bold uppercase tracking-[0.22em] text-accent">
         GOMS — Engineering Deep-Dive
       </p>
       <div className="mt-2 flex items-baseline justify-between border-b border-fg/20 pb-2">
-        <h2 className="text-[15px] font-bold tracking-tight">트러블슈팅</h2>
+        <h2 className="text-[15px] font-bold tracking-tight">
+          {ui.troubleshooting}
+        </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
           Case 01 — 03
         </span>
       </div>
       <p className="mt-2.5 text-[9.5px] leading-[1.6] text-muted">
-        운영 중인 iOS 앱에서 마주친 성능·인증·예외 처리 문제를 직접 진단하고
-        리팩토링한 기록입니다.
+        {ui.gomsTroubleIntro}
       </p>
       <div className="mt-4">
-        <TroubleCaseBlock c={gomsCases[0]} />
+        <TroubleCaseBlock tc={gomsCases[0]} c={c} />
         <div className="my-3 border-t border-line-2" />
-        <TroubleCaseBlock c={gomsCases[1]} />
+        <TroubleCaseBlock tc={gomsCases[1]} c={c} />
         <div className="my-3 border-t border-line-2" />
-        <TroubleCaseBlock c={gomsCases[2]} />
+        <TroubleCaseBlock tc={gomsCases[2]} c={c} />
       </div>
     </DocPage>
   );
 }
 
-/* --- HiNest I — overview + key features --- */
-function Page4() {
+/* --- HiNest — overview + key features --- */
+function HiNestOverviewPage({ c }: { c: Content }) {
+  const { hinestFeatures, ui } = c;
+  const hinest = c.featuredProjects[1];
   return (
-    <DocPage n={4}>
+    <DocPage n={2} c={c}>
       <ProjectHead project={hinest} kind="Project — Flagship · Web Platform" />
 
-      {hinest.banner && (
-        <div className="mt-5 overflow-hidden rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]">
-          <img
-            src={hinest.banner}
-            alt=""
-            className="h-[50mm] w-full object-cover"
-          />
+      <div className="mt-5 grid grid-cols-[1fr_82mm] gap-7">
+        <div>
+          <p className="text-[11px] leading-[1.8]">{hinest.summary}</p>
+
+          <div className="mt-4">
+            {[
+              [ui.role, hinest.role],
+              [ui.period, hinest.period],
+              [ui.team, hinest.team],
+            ].map(([k, v]) => (
+              <div
+                key={k}
+                className="flex gap-3 border-b border-line py-[5px] first:border-t"
+              >
+                <span className="w-[12mm] shrink-0 pt-[1.5px] text-[8px] font-bold uppercase tracking-[0.14em] text-dim">
+                  {k}
+                </span>
+                <span className="text-[9.5px] font-semibold leading-[1.55]">
+                  {v}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {hinest.links.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-block text-[10px] font-bold text-accent"
+            >
+              {l.label} ↗
+            </a>
+          ))}
         </div>
-      )}
 
-      <p className="mt-5 text-[12px] leading-[1.85]">{hinest.summary}</p>
-
-      <MetaStrip project={hinest} />
-
-      <div className="mt-3">
-        <TagRow items={hinest.stack} />
+        <div>
+          {hinest.banner && (
+            <img
+              src={hinest.banner}
+              alt=""
+              className="w-full rounded-lg border border-line shadow-[0_14px_34px_-18px_rgba(16,16,24,0.36)]"
+            />
+          )}
+          <div className="mt-3">
+            <TagRow items={hinest.stack} />
+          </div>
+        </div>
       </div>
 
       <div className="mt-6 flex min-h-0 flex-1 flex-col">
         <div className="flex items-baseline justify-between border-b border-fg/20 pb-2">
-          <h4 className="text-[13px] font-bold tracking-tight">핵심 기능</h4>
+          <h4 className="text-[13px] font-bold tracking-tight">
+            {ui.keyFeatures}
+          </h4>
           <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-dim">
             Key Features
           </span>
@@ -534,125 +578,106 @@ function Page4() {
   );
 }
 
-/* --- HiNest II — troubleshooting 01·02 --- */
-function Page5() {
+/* --- HiNest — troubleshooting 01·02 --- */
+function HiNestTroublePageA({ c }: { c: Content }) {
+  const { hinestCases, ui } = c;
   return (
-    <DocPage n={5}>
+    <DocPage n={3} c={c}>
       <p className="text-[8.5px] font-bold uppercase tracking-[0.22em] text-accent">
         HiNest — Engineering Deep-Dive
       </p>
       <div className="mt-2 flex items-baseline justify-between border-b border-fg/20 pb-2">
-        <h2 className="text-[15px] font-bold tracking-tight">트러블슈팅</h2>
+        <h2 className="text-[15px] font-bold tracking-tight">
+          {ui.troubleshooting}
+        </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
           Case 01 — 02
         </span>
       </div>
       <p className="mt-2.5 text-[9.5px] leading-[1.6] text-muted">
-        운영 중 마주친 동시성·보안·정합성 문제를 실제 PR·커밋으로 해결한
-        기록입니다. 코드는 핵심 부분만 발췌했습니다.
+        {ui.hinestTroubleIntro}
       </p>
       <div className="mt-4">
-        <TroubleCaseBlock c={hinestCases[0]} />
+        <TroubleCaseBlock tc={hinestCases[0]} c={c} />
         <div className="my-4 border-t border-line-2" />
-        <TroubleCaseBlock c={hinestCases[1]} />
+        <TroubleCaseBlock tc={hinestCases[1]} c={c} />
       </div>
     </DocPage>
   );
 }
 
-/* --- HiNest III — troubleshooting 03·04 --- */
-function Page6() {
+/* --- HiNest — troubleshooting 03·04 --- */
+function HiNestTroublePageB({ c }: { c: Content }) {
+  const { hinestCases, ui } = c;
   return (
-    <DocPage n={6}>
+    <DocPage n={4} c={c}>
       <p className="text-[8.5px] font-bold uppercase tracking-[0.22em] text-accent">
         HiNest — Engineering Deep-Dive
       </p>
       <div className="mt-2 flex items-baseline justify-between border-b border-fg/20 pb-2">
-        <h2 className="text-[15px] font-bold tracking-tight">트러블슈팅</h2>
+        <h2 className="text-[15px] font-bold tracking-tight">
+          {ui.troubleshooting}
+        </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
           Case 03 — 04
         </span>
       </div>
       <div className="mt-4">
-        <TroubleCaseBlock c={hinestCases[2]} />
+        <TroubleCaseBlock tc={hinestCases[2]} c={c} />
         <div className="my-4 border-t border-line-2" />
-        <TroubleCaseBlock c={hinestCases[3]} />
+        <TroubleCaseBlock tc={hinestCases[3]} c={c} />
       </div>
 
-      <div className="mt-6 rounded-lg bg-accent-soft px-5 py-4">
-        <div className="flex items-baseline justify-between">
-          <h4 className="text-[10.5px] font-bold tracking-tight text-accent">
-            트러블슈팅 노트
-          </h4>
-          <span className="text-[7.5px] font-bold uppercase tracking-[0.2em] text-accent/55">
+      <div className="mt-5 flex gap-4 rounded-lg border border-accent/15 bg-accent-soft px-5 py-4">
+        <div className="w-[3px] shrink-0 self-stretch rounded-full bg-accent" />
+        <div>
+          <p className="text-[7.5px] font-bold uppercase tracking-[0.22em] text-accent">
             Engineering Note
-          </span>
+          </p>
+          <h4 className="mt-1.5 text-[11px] font-bold tracking-tight text-fg">
+            {ui.troubleNoteTitle}
+          </h4>
+          <p className="mt-2 text-[9.5px] leading-[1.72] text-muted">
+            {ui.troubleNoteBody}
+          </p>
         </div>
-        <p className="mt-2 text-[9.5px] leading-[1.72] text-muted">
-          네 사례는 모두 평소엔 정상이지만 동시 요청·미가입 입력·다단계 상태처럼
-          특정 조건이 겹칠 때만 어긋나는 문제였습니다. 재현이 어려운 결함일수록
-          화면이 아니라 데이터·시간·신뢰 경계에서 원인을 찾았고, 수정은 PR과
-          마이그레이션 단위로 남겨 추적·롤백할 수 있게 했습니다.
-        </p>
       </div>
     </DocPage>
   );
 }
 
-/* --- 그 외 프로젝트 + 자기소개 --- */
-function Page7() {
+/* --- about + venture (final page) --- */
+function AboutVenturePage({ c }: { c: Content }) {
+  const { aboutMe, activities, showcases, studio, profile, ui } = c;
   return (
-    <DocPage n={7}>
+    <DocPage n={7} c={c}>
       <section>
-        <SectionHead title="그 외 프로젝트" label="More Work" />
-        <div className="space-y-4">
-          {otherProjects.map((o) => (
-            <Entry key={o.name} meta={o.role.split(" · ")[0]}>
-              <div className="flex items-baseline gap-2.5">
-                <h4 className="text-[12.5px] font-bold">{o.name}</h4>
-                <span className="text-[9.5px] text-dim">{o.role}</span>
-              </div>
-              <div className="mt-2">
-                <TagRow items={o.stack} />
-              </div>
-            </Entry>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-9">
-        <SectionHead title="자기소개" label="About" />
-        <div className="space-y-4">
+        <SectionHead title={ui.aboutTitle} label="About" />
+        <div className="space-y-2">
           {[
-            { tag: "강점", ...aboutMe.strength },
-            { tag: "보완점", ...aboutMe.weakness },
+            { tag: ui.strengthTag, ...aboutMe.strength },
+            { tag: ui.weaknessTag, ...aboutMe.weakness },
           ].map((x) => (
             <Entry key={x.tag} meta={x.tag}>
-              <h4 className="text-[12px] font-bold">{x.label}</h4>
-              <p className="mt-1.5 text-[10.5px] leading-[1.8] text-muted">
+              <h4 className="text-[11px] font-bold">{x.label}</h4>
+              <p className="mt-1 text-[9px] leading-[1.6] text-muted">
                 {x.body}
               </p>
             </Entry>
           ))}
         </div>
       </section>
-    </DocPage>
-  );
-}
 
-function Page8() {
-  return (
-    <DocPage n={8}>
-      <section>
-        <SectionHead title="활동 · 리더십" label="Venture & Leadership" />
-        <div className="space-y-3.5">
-          <Entry meta="2024 — 운영 중">
-            <div className="flex items-baseline gap-2.5">
-              <h4 className="text-[14px] font-extrabold tracking-tight">
+      <section className="mt-4">
+        <SectionHead title={ui.ventureTitle} label="Leadership" />
+        <div className="space-y-2">
+          <Entry meta={ui.studioMeta}>
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+              <h4 className="text-[12px] font-extrabold tracking-tight">
                 {studio.name}
               </h4>
               <span className="rounded-full bg-accent-soft px-2 py-[2px] text-[8px] font-bold text-accent">
-                운영 스튜디오
+                {ui.studioBadge}
               </span>
               <a
                 href={studio.fullUrl}
@@ -663,29 +688,31 @@ function Page8() {
                 {studio.url} ↗
               </a>
             </div>
-            <p className="mt-1 text-[10px] leading-[1.7] text-muted">
+            <p className="mt-1 text-[9px] leading-[1.55] text-muted">
               {studio.desc}
             </p>
-            <div className="mt-1.5 flex gap-5">
-              {studio.stats.map((s) => (
-                <span key={s.label} className="text-[9.5px]">
-                  <span className="font-extrabold text-fg">{s.value}</span>
-                  <span className="ml-1 text-dim">{s.label}</span>
-                </span>
-              ))}
-            </div>
           </Entry>
 
           {activities.map((act) => (
             <Entry key={act.name} meta={act.period}>
-              <div className="flex items-baseline gap-2.5">
-                <h4 className="text-[12.5px] font-bold">{act.name}</h4>
+              <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                <h4 className="text-[11px] font-bold">{act.name}</h4>
                 <span className="rounded-full border border-line-2 px-2 py-[2px] text-[8px] font-semibold text-muted">
                   {act.group}
                 </span>
                 <span className="text-[9px] text-dim">{act.role}</span>
+                {act.link ? (
+                  <a
+                    href={`https://${act.link}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[9px] font-bold text-accent"
+                  >
+                    {act.link} ↗
+                  </a>
+                ) : null}
               </div>
-              <p className="mt-1 text-[10px] leading-[1.7] text-muted">
+              <p className="mt-1 text-[9px] leading-[1.55] text-muted">
                 {act.desc}
               </p>
             </Entry>
@@ -693,16 +720,16 @@ function Page8() {
         </div>
       </section>
 
-      <section className="mt-7">
-        <SectionHead title="부스 · 행사 · 교육" label="Exhibitions" />
-        <div className="space-y-2.5">
+      <section className="mt-4">
+        <SectionHead title={ui.exhibitionsTitle} label="Exhibitions" />
+        <div className="space-y-1">
           {showcases.map((s) => (
             <Entry key={s.name} meta={s.date}>
-              <div className="flex items-baseline gap-2.5">
-                <h4 className="text-[11.5px] font-bold">{s.name}</h4>
-                <span className="text-[9.5px] text-muted">{s.role}</span>
+              <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                <h4 className="text-[11px] font-bold">{s.name}</h4>
+                <span className="text-[9px] text-muted">{s.role}</span>
                 {s.place ? (
-                  <span className="text-[9px] text-dim">· {s.place}</span>
+                  <span className="text-[8.5px] text-dim">· {s.place}</span>
                 ) : null}
               </div>
             </Entry>
@@ -710,41 +737,32 @@ function Page8() {
         </div>
       </section>
 
-      <div className="mt-auto pt-7">
-        <p className="text-[14px] font-extrabold leading-[1.55] tracking-tight">
-          기획부터 개발·배포까지, 팀과 협업해 문제를 해결하는 모습을
-          보여드리겠습니다.
+      <div className="mt-auto pt-3">
+        <p className="text-[11.5px] font-extrabold leading-[1.5] tracking-tight">
+          {ui.closingLine}
         </p>
-        <div className="mt-2 flex items-baseline justify-between border-t border-fg/20 pt-2.5">
-          <span className="text-[10px] font-bold text-accent">
+        <div className="mt-1.5 flex items-baseline justify-between border-t border-fg/20 pt-2">
+          <span className="text-[9.5px] font-bold text-accent">
             {profile.note}
           </span>
-          <span className="text-[9.5px] text-dim">
-            {profile.contact.email}
-          </span>
+          <span className="text-[9px] text-dim">{profile.contact.email}</span>
         </div>
-        <p className="mt-3 text-[8.5px] leading-[1.6] text-muted">
-          이 이력서 또한 템플릿 없이 직접 디자인하고 개발했습니다.{" "}
-          <span className="font-mono text-dim">
-            Next.js · TypeScript · Tailwind CSS
-          </span>
-        </p>
       </div>
     </DocPage>
   );
 }
 
-export default function VerticalDoc() {
+export default function VerticalDoc({ lang }: { lang: Lang }) {
+  const c = getContent(lang);
   return (
     <div className="print-stack flex flex-col items-center gap-10">
-      <Page1 />
-      <Page2 />
-      <Page3 />
-      <Page4 />
-      <Page5 />
-      <Page6 />
-      <Page7 />
-      <Page8 />
+      <CoverPage c={c} />
+      <HiNestOverviewPage c={c} />
+      <HiNestTroublePageA c={c} />
+      <HiNestTroublePageB c={c} />
+      <GomsOverviewPage c={c} />
+      <GomsTroublePage c={c} />
+      <AboutVenturePage c={c} />
     </div>
   );
 }
