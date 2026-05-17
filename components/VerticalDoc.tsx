@@ -721,14 +721,14 @@ function AboutVenturePage({ c }: { c: Content }) {
       </section>
 
       <div className="mt-auto pt-3">
-        <p className="text-[11.5px] font-extrabold leading-[1.5] tracking-tight">
+        <p className="text-[14px] font-extrabold leading-[1.5] tracking-tight">
           {ui.closingLine}
         </p>
-        <div className="mt-1.5 flex items-baseline justify-between border-t border-fg/20 pt-2">
-          <span className="text-[9.5px] font-bold text-accent">
+        <div className="mt-2 flex items-baseline justify-between border-t border-fg/20 pt-2.5">
+          <span className="text-[11px] font-bold text-accent">
             {profile.note}
           </span>
-          <span className="text-[9px] text-dim">{profile.contact.email}</span>
+          <span className="text-[10px] text-dim">{profile.contact.email}</span>
         </div>
       </div>
     </DocPage>
