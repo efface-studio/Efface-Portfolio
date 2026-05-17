@@ -38,8 +38,6 @@ export type UiStrings = {
   // engineering deep-dive
   gomsTroubleIntro: string;
   hinestTroubleIntro: string;
-  troubleNoteTitle: string;
-  troubleNoteBody: string;
   // about
   strengthTag: string;
   weaknessTag: string;
@@ -101,9 +99,6 @@ export const ui: Record<Lang, UiStrings> = {
       "운영 중인 iOS 앱에서 마주친 성능·인증·예외 처리 문제를 직접 진단하고 리팩토링한 기록입니다.",
     hinestTroubleIntro:
       "운영 중 마주친 동시성·정합성·보안·성능 문제를 실제 PR·커밋으로 해결한 기록입니다. 코드는 핵심 부분만 발췌했습니다.",
-    troubleNoteTitle: "트러블슈팅 노트",
-    troubleNoteBody:
-      "네 사례는 모두 화면에는 멀쩡해 보였지만, 동시 요청·다단계 상태·미가입 입력처럼 조건이 겹칠 때만 어긋나거나 폴링처럼 비용이 조용히 쌓이는 문제였습니다. 원인을 화면이 아니라 데이터·시간·신뢰·비용의 경계에서 찾았고, 수정은 PR과 커밋 단위로 남겨 추적·롤백할 수 있게 했습니다.",
     strengthTag: "강점",
     weaknessTag: "보완점",
     studioBadge: "운영 스튜디오",
@@ -159,9 +154,6 @@ export const ui: Record<Lang, UiStrings> = {
       "A record of the performance, authentication, and exception-handling issues I diagnosed and refactored myself in a live iOS app.",
     hinestTroubleIntro:
       "A record of concurrency, data-integrity, security, and performance issues resolved through real PRs and commits. Only the essential parts of the code are excerpted.",
-    troubleNoteTitle: "Troubleshooting Note",
-    troubleNoteBody:
-      "All four cases looked fine on screen but went wrong underneath — going off only when conditions overlapped (concurrent requests, multi-step states, input from non-members) or where cost quietly piled up, as with polling. I traced each one at the data, timing, trust, and cost boundaries rather than on screen, and kept every fix as a PR or commit so it stays traceable and reversible.",
     strengthTag: "Strength",
     weaknessTag: "Growth Area",
     studioBadge: "Studio",

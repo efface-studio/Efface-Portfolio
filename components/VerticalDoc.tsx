@@ -627,21 +627,6 @@ function HiNestTroublePageB({ c }: { c: Content }) {
         <div className="my-4 border-t border-line-2" />
         <TroubleCaseBlock tc={hinestCases[3]} c={c} />
       </div>
-
-      <div className="mt-5 flex gap-4 rounded-lg border border-accent/15 bg-accent-soft px-5 py-4">
-        <div className="w-[3px] shrink-0 self-stretch rounded-full bg-accent" />
-        <div>
-          <p className="text-[7.5px] font-bold uppercase tracking-[0.22em] text-accent">
-            Engineering Note
-          </p>
-          <h4 className="mt-1.5 text-[11px] font-bold tracking-tight text-fg">
-            {ui.troubleNoteTitle}
-          </h4>
-          <p className="mt-2 text-[9.5px] leading-[1.72] text-muted">
-            {ui.troubleNoteBody}
-          </p>
-        </div>
-      </div>
     </DocPage>
   );
 }

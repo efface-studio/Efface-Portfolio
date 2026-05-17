@@ -21,7 +21,7 @@ export const profile = {
   birth: "2007.08.02",
   headline: "When I find friction, I turn it into a service.",
   summary:
-    "An iOS developer who turns everyday campus inconveniences into real services — planning them, building the iOS app, and seeing them through release and operation as PM. I enjoy collaborating with all kinds of people and getting one step further than yesterday.",
+    "A developer who turns everyday inconveniences into real services — planning them, building the iOS app and the frontend, and seeing them through release and operation as PM. I enjoy collaborating with all kinds of people and getting one step further than yesterday.",
   contact: {
     email: "xixn2@efface.dev",
     phone: "010-6286-0063",
@@ -407,6 +407,16 @@ setMessages((prev) => {
   const seen = new Set(prev.map((m) => m.id));
   return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
 });`,
+      },
+      {
+        lang: "ts",
+        caption: "React.memo — only the newly appended bubble re-renders",
+        lines: `// The list is nearly append-only — existing bubbles keep their msg ref.
+// memo cuts re-renders so each poll renders only the new bubble.
+export const MessageBubble = memo(
+  MessageBubbleInner,
+  (a, b) => a.mine === b.mine && a.msg === b.msg,
+);`,
       },
     ],
   },

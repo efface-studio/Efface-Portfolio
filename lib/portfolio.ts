@@ -8,7 +8,7 @@ export const profile = {
   birth: "2007.08.02",
   headline: "불편함을 발견하면, 서비스로 만듭니다.",
   summary:
-    "교내 생활의 불편함을 직접 서비스로 기획하고 iOS 개발과 PM을 맡아 배포·운영까지 완수해 온 개발자입니다. 다양한 사람들과 협업하며 어제보다 한 걸음 더 나아가는 과정을 즐깁니다.",
+    "일상 생활의 불편함을 직접 서비스로 기획하고 iOS·프론트엔드 개발과 PM을 맡아 배포·운영까지 완수해 온 개발자입니다. 다양한 사람들과 협업하며 어제보다 한 걸음 더 나아가는 과정을 즐깁니다.",
   contact: {
     email: "xixn2@efface.dev",
     phone: "010-6286-0063",
@@ -450,6 +450,16 @@ setMessages((prev) => {
   const seen = new Set(prev.map((m) => m.id));
   return [...prev, ...res.messages.filter((m) => !seen.has(m.id))];
 });`,
+      },
+      {
+        lang: "ts",
+        caption: "React.memo — 새로 붙은 버블만 다시 그린다",
+        lines: `// 리스트는 거의 append-only — 기존 버블의 msg 참조는 그대로다.
+// memo로 재렌더를 끊으면 폴링마다 새 버블만 렌더된다.
+export const MessageBubble = memo(
+  MessageBubbleInner,
+  (a, b) => a.mine === b.mine && a.msg === b.msg,
+);`,
       },
     ],
   },
