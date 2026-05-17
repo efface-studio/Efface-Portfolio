@@ -38,3 +38,37 @@ export function linkifyRefs(refs: string): ReactNode[] {
     return part;
   });
 }
+
+/**
+ * Renders text with the given terms turned into links — used to link event
+ * names (e.g. U/CON25) inside an activity description.
+ */
+export function linkifyDesc(
+  text: string,
+  links?: { term: string; url: string }[],
+): ReactNode {
+  if (!links || links.length === 0) return text;
+  const re = new RegExp(
+    `(${links
+      .map((l) => l.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join("|")})`,
+    "g",
+  );
+  const urlOf = new Map(links.map((l) => [l.term, l.url]));
+  return text.split(re).map((part, i) => {
+    const url = urlOf.get(part);
+    return url ? (
+      <a
+        key={i}
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="font-semibold text-accent"
+      >
+        {part}
+      </a>
+    ) : (
+      part
+    );
+  });
+}

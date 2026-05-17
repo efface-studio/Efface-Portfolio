@@ -3,7 +3,7 @@ import type { Project, TroubleCase, FeatureGroup } from "@/lib/portfolio";
 import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { CodeBlock } from "@/components/CodeBlock";
-import { linkifyRefs } from "@/components/refs";
+import { linkifyDesc, linkifyRefs } from "@/components/refs";
 import type { ReactNode } from "react";
 
 const TOTAL = 7;
@@ -696,7 +696,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                 ) : null}
               </div>
               <p className="mt-1 text-[9px] leading-[1.55] text-muted">
-                {act.desc}
+                {linkifyDesc(act.desc, act.descLinks)}
               </p>
             </Entry>
           ))}

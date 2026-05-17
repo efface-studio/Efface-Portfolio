@@ -468,6 +468,10 @@ export const activities: Activity[] = [
     period: "2024.08 — 2025.06",
     link: "uslash.org",
     desc: "A nonprofit organization founded to support future IT talent and entrepreneurs. We hosted and ran the U/CON25 conference (110 attendees · 4.9 satisfaction), the U/THON25 hackathon, and regular FastFive meetups.",
+    descLinks: [
+      { term: "U/CON25", url: "https://www.uslash.org/projects/ucon25" },
+      { term: "U/THON25", url: "https://www.uslash.org/projects/uthon25" },
+    ],
   },
   {
     group: "GOMS Dev Team",

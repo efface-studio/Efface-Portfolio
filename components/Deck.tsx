@@ -4,7 +4,7 @@ import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { ChipRow, Meta } from "@/components/primitives";
 import { CodeBlock } from "@/components/CodeBlock";
-import { linkifyRefs } from "@/components/refs";
+import { linkifyDesc, linkifyRefs } from "@/components/refs";
 import type { ReactNode } from "react";
 
 const TOTAL = 11;
@@ -521,7 +521,7 @@ function ActivitySlide({ c }: { c: Content }) {
                     ) : null}
                   </h3>
                   <p className="mt-1 text-[10px] leading-[1.6] text-muted">
-                    {act.desc}
+                    {linkifyDesc(act.desc, act.descLinks)}
                   </p>
                 </div>
               </div>
