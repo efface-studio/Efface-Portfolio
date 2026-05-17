@@ -23,9 +23,11 @@ export default function ImageZoom({
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    document.documentElement.classList.add("lightbox-open");
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.documentElement.classList.remove("lightbox-open");
     };
   }, [open]);
 
@@ -46,7 +48,7 @@ export default function ImageZoom({
             e.stopPropagation();
             setOpen(false);
           }}
-          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/85 p-10 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex cursor-zoom-out items-center justify-center bg-black/85 p-10 backdrop-blur-sm"
         >
           <img
             src={src}

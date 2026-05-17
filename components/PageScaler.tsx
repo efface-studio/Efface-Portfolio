@@ -23,10 +23,17 @@ export default function PageScaler({
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [zoom, setZoom] = useState(1);
+  const target = widthMm * MM_TO_PX;
+
+  // First paint (SSR + pre-hydration) can't measure the container, so start
+  // from a CSS estimate instead of 1 — otherwise mobile briefly flashes a
+  // full-width A4 page. `px-8` on the page <main> (64px total) is subtracted
+  // to approximate the container width; JS replaces this with the exact value.
+  const [zoom, setZoom] = useState<number | string>(
+    `clamp(0.3, calc((100vw - 64px) / ${target.toFixed(2)}), 1)`,
+  );
 
   useEffect(() => {
-    const target = widthMm * MM_TO_PX;
     const compute = () => {
       const avail = ref.current?.clientWidth ?? window.innerWidth;
       setZoom(Math.min(1, Math.max(0.3, avail / target)));
@@ -39,7 +46,7 @@ export default function PageScaler({
       ro.disconnect();
       window.removeEventListener("resize", compute);
     };
-  }, [widthMm]);
+  }, [target]);
 
   return (
     <div ref={ref} className="flex w-full justify-center">

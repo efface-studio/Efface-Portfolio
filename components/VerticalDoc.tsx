@@ -5,6 +5,7 @@ import { profilePhoto } from "@/lib/assets";
 import { CodeBlock } from "@/components/CodeBlock";
 import { linkifyDesc, linkifyRefs } from "@/components/refs";
 import ImageZoom from "@/components/ImageZoom";
+import LinkIcon from "@/components/LinkIcon";
 import type { ReactNode } from "react";
 
 const TOTAL = 7;
@@ -24,9 +25,7 @@ function DocPage({
     <div className="doc-page page-doc flex flex-col text-fg">
       <div className="flex min-h-0 flex-1 flex-col">{children}</div>
       <div className="mt-6 flex items-center justify-between border-t border-line pt-2.5 text-[8.5px] tracking-wide text-dim">
-        <span>
-          {c.profile.name} — {c.profile.role}
-        </span>
+        <span>{c.profile.footer}</span>
         <span>
           {String(n).padStart(2, "0")} &nbsp;/&nbsp; {String(TOTAL).padStart(2, "0")}
         </span>
@@ -409,8 +408,9 @@ function GomsOverviewPage({ c }: { c: Content }) {
                 href={l.url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[10px] font-bold text-accent"
+                className="inline-flex items-center gap-1 text-[10px] font-bold text-accent"
               >
+                <LinkIcon label={l.label} projectIcon={goms.icon} />
                 {l.label} ↗
               </a>
             ))}
@@ -559,8 +559,9 @@ function HiNestOverviewPage({ c }: { c: Content }) {
                 href={l.url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[10px] font-bold text-accent"
+                className="inline-flex items-center gap-1 text-[10px] font-bold text-accent"
               >
+                <LinkIcon label={l.label} projectIcon={hinest.icon} />
                 {l.label} ↗
               </a>
             ))}
@@ -743,6 +744,11 @@ function AboutVenturePage({ c }: { c: Content }) {
                   <span className="text-[8.5px] text-dim">· {s.place}</span>
                 ) : null}
               </div>
+              {s.desc ? (
+                <p className="mt-0.5 text-[9px] leading-[1.5] text-muted">
+                  {s.desc}
+                </p>
+              ) : null}
             </Entry>
           ))}
         </div>

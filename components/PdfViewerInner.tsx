@@ -68,9 +68,11 @@ export default function PdfViewerInner({
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    document.documentElement.classList.add("lightbox-open");
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.documentElement.classList.remove("lightbox-open");
     };
   }, [lightbox, numPages]);
 
@@ -144,7 +146,7 @@ export default function PdfViewerInner({
         {lightbox != null && (
           <div
             onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-6 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-6 backdrop-blur-sm"
           >
             <button
               type="button"

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ui, type Lang } from "@/lib/ui";
 
 function DownloadIcon() {
@@ -39,14 +40,14 @@ function SegLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${
-        active ? "bg-accent text-white" : "text-muted hover:text-fg"
+      className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-3 ${
+        active ? "bg-[#2440ff] text-white" : "text-muted hover:text-fg"
       }`}
     >
       {label}
       {sub ? (
         <span
-          className={`font-mono text-[9.5px] font-medium ${
+          className={`hidden font-mono text-[9.5px] font-medium sm:inline ${
             active ? "text-white/70" : "text-dim"
           }`}
         >
@@ -69,8 +70,22 @@ export default function Controls({ lang }: { lang: Lang }) {
   const langQuery = lang === "en" ? "?lang=en" : "";
   const view = isPlan ? "/business-plan" : isDeck ? "/deck" : "/";
 
+  // Hide the bar while a lightbox is open — the lightboxes mark this by
+  // adding a `lightbox-open` class to <html>.
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  useEffect(() => {
+    const root = document.documentElement;
+    const sync = () => setLightboxOpen(root.classList.contains("lightbox-open"));
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   const actionClass =
-    "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-fg transition-colors hover:bg-surface-2";
+    "flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-semibold text-fg transition-colors hover:bg-surface-2 sm:px-3.5";
+
+  if (lightboxOpen) return null;
 
   return (
     <div className="no-print fixed inset-x-0 bottom-5 z-50 flex justify-center px-4">
@@ -105,20 +120,22 @@ export default function Controls({ lang }: { lang: Lang }) {
           <a
             href={`/docs/efface-business-plan-${lang}.pdf`}
             download
+            aria-label={t.pdf}
             className={actionClass}
           >
             <DownloadIcon />
-            {t.pdf}
+            <span className="hidden sm:inline">{t.pdf}</span>
           </a>
         ) : (
           <button
             type="button"
             onClick={() => window.print()}
             title={t.printHint}
+            aria-label={t.pdf}
             className={actionClass}
           >
             <DownloadIcon />
-            {t.pdf}
+            <span className="hidden sm:inline">{t.pdf}</span>
           </button>
         )}
       </div>

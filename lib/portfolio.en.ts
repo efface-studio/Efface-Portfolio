@@ -18,6 +18,7 @@ export const profile = {
   name: "Jiwan Seo",
   nameEn: "서지완",
   role: "iOS · Frontend Developer & PM",
+  footer: "Jiwan SEO — efface Founder / Engineer",
   birth: "2007.08.02",
   headline: "When I find friction, I turn it into a service.",
   summary:
@@ -25,11 +26,11 @@ export const profile = {
   contact: {
     email: "xixn2@efface.dev",
     phone: "010-6286-0063",
-    github: "github.com/xixn2",
+    github: "xixn2",
     githubUrl: "https://github.com/xixn2",
-    linkedin: "linkedin.com/in/xixn2",
+    linkedin: "xixn2",
     linkedinUrl: "https://www.linkedin.com/in/xixn2",
-    appStore: "https://apps.apple.com/kr/app/goms/id6502936560",
+    appStore: "https://apps.apple.com/kr/developer/jiwan-seo/id1778994453",
   },
   note: "Seeking alternative military service as an Industrial Technical Personnel.",
 };
@@ -506,11 +507,36 @@ export const activities: Activity[] = [
 ];
 
 export const showcases: Showcase[] = [
-  { name: "2025 AI Expo", role: "GOMS booth operation & presentation", date: "2025.05", place: "COEX, Seoul" },
+  {
+    name: "2025 AI Expo",
+    role: "GOMS booth operation & presentation",
+    date: "2025.05",
+    place: "COEX, Seoul",
+    desc: "As PM and iOS Leader, presented ‘GOMS’ — the largest in-house app project — and improved the service from feedback gathered on site.",
+  },
   { name: "DevFest", role: "Washer booth operation", date: "2025.07", place: "On campus" },
-  { name: "2024 Softwave", role: "Expo booth operation", date: "2024.12", place: "COEX, Seoul" },
+  {
+    name: "2024 Softwave",
+    role: "Expo booth operation",
+    date: "2024.12",
+    place: "COEX, Seoul",
+    desc: "Operated the booth for ‘Expo’, an education-office commissioned project, using visitor feedback to diagnose and improve the service.",
+  },
+  {
+    name: "2023 Softwave",
+    role: "Software festival attendee",
+    date: "2023.12",
+    place: "COEX, Seoul",
+    desc: "Attended Korea’s largest software festival, exploring services from other schools and startups and networking with working developers.",
+  },
   { name: "2023 KWDC", role: "Apple conference attendee", date: "2023.07", place: "COEX, Seoul" },
-  { name: "Cyber Guardians", role: "Completed an information-security education program", date: "2023", place: "" },
+  {
+    name: "Cyber Guardians",
+    role: "Completed an information-security education program",
+    date: "2023",
+    place: "",
+    desc: "Completed an information-security program hosted by the Korea Internet & Security Agency (KISA), spanning fundamentals to network security, vulnerability analysis, and penetration testing.",
+  },
 ];
 
 export const studio = {
@@ -541,10 +567,10 @@ export const aboutHighlights: Highlight[] = [
 export const aboutMe = {
   strength: {
     label: "Someone who enjoys new challenges",
-    body: "When I notice an inconvenience, I never let go of the question ‘what if I made this into a service?’ and develop it into a concrete plan. I recruit teammates, divide up roles, and drive development through to release, then show what I’ve built to real users at outside competitions and events like Softwave and AI Expo to collect feedback.",
+    body: "When I notice an inconvenience, I never let go of the question ‘what if I made this into a service?’ and develop it into a concrete plan. I recruit teammates myself, divide up roles, and drive everything from development through App Store release and operation — and rather than hesitating in front of unfamiliar technology or a new challenge, I tend to dive in first. I then show what I’ve built to real users at outside competitions and events like Softwave and AI Expo, carrying the feedback I gather on site into the next round of improvements.",
   },
   weakness: {
     label: "A logic-first disposition",
-    body: "I have a strength for analyzing problems systematically, prioritizing logic and feasibility — but at times I have not fully considered teammates’ feelings and positions. Lately I have worked to check and respect teammates’ emotions first during meetings and feedback, balancing problem-solving with emotional consideration.",
+    body: "I have a strength for analyzing problems systematically, prioritizing logic and feasibility — but because I move quickly toward a conclusion, at times I have not fully considered teammates’ feelings and positions. To make up for this, I have lately worked to check and respect teammates’ thoughts and emotions first during meetings and feedback, rather than leading with my conclusion, balancing problem-solving with emotional consideration.",
   },
 };

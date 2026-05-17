@@ -5,6 +5,7 @@ export const profile = {
   name: "서지완",
   nameEn: "Jiwan Seo",
   role: "iOS · Frontend Developer & PM",
+  footer: "서지완 (Jiwan SEO) — efface Founder / Engineer",
   birth: "2007.08.02",
   headline: "불편함을 발견하면, 서비스로 만듭니다.",
   summary:
@@ -12,11 +13,11 @@ export const profile = {
   contact: {
     email: "xixn2@efface.dev",
     phone: "010-6286-0063",
-    github: "github.com/xixn2",
+    github: "xixn2",
     githubUrl: "https://github.com/xixn2",
-    linkedin: "linkedin.com/in/xixn2",
+    linkedin: "xixn2",
     linkedinUrl: "https://www.linkedin.com/in/xixn2",
-    appStore: "https://apps.apple.com/kr/app/goms/id6502936560",
+    appStore: "https://apps.apple.com/kr/developer/jiwan-seo/id1778994453",
   },
   note: "병역특례(산업기능요원)를 희망하고 있습니다.",
 };
@@ -566,14 +567,45 @@ export const activities: Activity[] = [
   },
 ];
 
-export type Showcase = { name: string; role: string; date: string; place: string };
+export type Showcase = {
+  name: string;
+  role: string;
+  date: string;
+  place: string;
+  desc?: string;
+};
 
 export const showcases: Showcase[] = [
-  { name: "2025 AI Expo", role: "GOMS 부스 운영 · 발표", date: "2025.05", place: "서울 코엑스" },
+  {
+    name: "2025 AI Expo",
+    role: "GOMS 부스 운영 · 발표",
+    date: "2025.05",
+    place: "서울 코엑스",
+    desc: "PM·iOS Leader로서 교내 최대 규모 앱 프로젝트 ‘GOMS’를 발표하고, 현장에서 받은 피드백으로 서비스 문제점을 개선했습니다.",
+  },
   { name: "DevFest", role: "Washer 부스 운영", date: "2025.07", place: "교내" },
-  { name: "2024 Softwave", role: "Expo 부스 운영", date: "2024.12", place: "서울 코엑스" },
+  {
+    name: "2024 Softwave",
+    role: "Expo 부스 운영",
+    date: "2024.12",
+    place: "서울 코엑스",
+    desc: "교육청 외주 프로젝트 ‘Expo’의 부스를 운영하며 방문자 피드백으로 서비스 문제점을 진단하고 개선해 나갔습니다.",
+  },
+  {
+    name: "2023 Softwave",
+    role: "소프트웨어 축전 참여",
+    date: "2023.12",
+    place: "서울 코엑스",
+    desc: "국내 최대 규모 소프트웨어 축전에 참여해 타 소프트웨어마이스터고 학생과 스타트업의 서비스를 관람하고 현업 개발자와 네트워킹했습니다.",
+  },
   { name: "2023 KWDC", role: "Apple 컨퍼런스 참여", date: "2023.07", place: "서울 코엑스" },
-  { name: "사이버 가디언즈", role: "정보보안 교육 프로그램 이수", date: "2023", place: "" },
+  {
+    name: "사이버 가디언즈",
+    role: "정보보안 교육 프로그램 이수",
+    date: "2023",
+    place: "",
+    desc: "한국인터넷진흥원(KISA)이 주관한 정보보안 교육 프로그램으로, 기본 개념부터 네트워크 보안·시스템 취약점 분석·모의 해킹까지 다루는 과정을 이수했습니다.",
+  },
 ];
 
 export const studio = {
@@ -606,10 +638,10 @@ export const aboutHighlights: Highlight[] = [
 export const aboutMe = {
   strength: {
     label: "새로운 도전을 즐기는 성격",
-    body: "불편함을 발견하면 ‘이걸 서비스로 만들면 어떨까?’라는 질문을 놓치지 않고 구체적인 기획으로 발전시킵니다. 팀원을 모집하고 역할을 분배해 개발과 배포까지 주도하며, 만든 서비스를 외부 공모전과 Softwave·AI Expo 등에서 실제 사용자에게 선보이고 피드백을 수집해 왔습니다.",
+    body: "불편함을 발견하면 ‘이걸 서비스로 만들면 어떨까?’라는 질문을 놓치지 않고 구체적인 기획으로 발전시킵니다. 팀원을 직접 모집하고 역할을 분배해 개발부터 App Store 배포·운영까지 끝까지 주도하며, 낯선 기술이나 새로운 도전 앞에서도 망설이기보다 일단 부딪혀 보는 편입니다. 그렇게 만든 서비스를 외부 공모전과 Softwave·AI Expo 등에서 실제 사용자에게 선보이고, 현장에서 모은 피드백을 다음 개선으로 이어 왔습니다.",
   },
   weakness: {
     label: "논리 중심의 성향",
-    body: "문제를 논리와 현실성 우선으로 접근해 체계적으로 분석하는 강점이 있지만, 때로 팀원의 감정과 입장을 충분히 살피지 못할 때가 있었습니다. 최근에는 회의·피드백 과정에서 팀원의 감정을 먼저 확인하고 존중하며 문제 해결과 정서적 배려의 균형을 맞추려 노력하고 있습니다.",
+    body: "문제를 논리와 현실성 우선으로 접근해 체계적으로 분석하는 강점이 있지만, 결론으로 빠르게 향하다 보니 때로 팀원의 감정과 입장을 충분히 살피지 못할 때가 있었습니다. 이를 보완하기 위해 최근에는 회의·피드백 과정에서 결론을 먼저 꺼내기보다 팀원의 생각과 감정을 먼저 확인하고 존중하며, 문제 해결과 정서적 배려 사이의 균형을 맞추려 노력하고 있습니다.",
   },
 };
