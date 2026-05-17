@@ -181,7 +181,7 @@ export const featuredProjects: Project[] = [
     name: "HiNest",
     tagline: "사내 워크플레이스 플랫폼",
     org: "(주) 하이비츠",
-    period: "2026.03 — 진행 중",
+    period: "2026.03 — 운영·유지보수 중",
     role: "기획 · 디자인 · 개발 · 운영",
     team: "1인 단독 진행",
     summary:

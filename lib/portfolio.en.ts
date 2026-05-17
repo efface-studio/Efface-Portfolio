@@ -138,7 +138,7 @@ export const featuredProjects: Project[] = [
     name: "HiNest",
     tagline: "Internal Workplace Platform",
     org: "Hivits Inc.",
-    period: "2026.03 — In progress",
+    period: "2026.03 — In operation",
     role: "Planning · Design · Development · Operations",
     team: "Solo project",
     summary:
