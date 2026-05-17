@@ -6,18 +6,6 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { linkifyDesc, linkifyRefs } from "@/components/refs";
 import ImageZoom from "@/components/ImageZoom";
 import type { ReactNode } from "react";
-import type { IconType } from "react-icons";
-import {
-  SiReact,
-  SiVite,
-  SiTypescript,
-  SiExpress,
-  SiPrisma,
-  SiSqlite,
-  SiSwift,
-  SiFastlane,
-  SiFirebase,
-} from "react-icons/si";
 
 const TOTAL = 7;
 
@@ -59,22 +47,9 @@ function SectionHead({ title, label }: { title: string; label: string }) {
   );
 }
 
-const TECH_ICONS: Record<string, IconType> = {
-  React: SiReact,
-  Vite: SiVite,
-  TypeScript: SiTypescript,
-  Express: SiExpress,
-  Prisma: SiPrisma,
-  SQLite: SiSqlite,
-  "Swift Concurrency": SiSwift,
-  Fastlane: SiFastlane,
-  "Firebase Cloud Messaging": SiFirebase,
-};
-
-function Tag({ icon: Icon, children }: { icon?: IconType; children: ReactNode }) {
+function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-line bg-surface px-2 py-[3px] text-[9.5px] font-medium text-muted">
-      {Icon && <Icon className="shrink-0 text-[10px] text-fg/70" aria-hidden />}
+    <span className="inline-flex items-center rounded-full border border-line bg-surface px-2 py-[3px] text-[9.5px] font-medium text-muted">
       {children}
     </span>
   );
@@ -84,9 +59,7 @@ function TagRow({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap gap-1">
       {items.map((t) => (
-        <Tag key={t} icon={TECH_ICONS[t]}>
-          {t}
-        </Tag>
+        <Tag key={t}>{t}</Tag>
       ))}
     </div>
   );
