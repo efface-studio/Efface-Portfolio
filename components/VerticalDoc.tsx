@@ -595,12 +595,9 @@ function HiNestTroublePageA({ c }: { c: Content }) {
           Case 01 — 02
         </span>
       </div>
-      <p className="mt-2.5 text-[9.5px] leading-[1.6] text-muted">
-        {ui.hinestTroubleIntro}
-      </p>
-      <div className="mt-4">
+      <div className="mt-3">
         <TroubleCaseBlock tc={hinestCases[0]} c={c} />
-        <div className="my-4 border-t border-line-2" />
+        <div className="my-2.5 border-t border-line-2" />
         <TroubleCaseBlock tc={hinestCases[1]} c={c} />
       </div>
     </DocPage>
