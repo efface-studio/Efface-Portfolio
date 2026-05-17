@@ -3,6 +3,7 @@ import type { Project, TroubleCase, FeatureGroup } from "@/lib/portfolio";
 import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { CodeBlock } from "@/components/CodeBlock";
+import { linkifyRefs } from "@/components/refs";
 import type { ReactNode } from "react";
 
 const TOTAL = 7;
@@ -158,7 +159,7 @@ function FeatureRow({ f }: { f: FeatureGroup }) {
           {f.key}
         </p>
         <p className="mt-2 font-mono text-[7px] leading-[1.55] tracking-wide text-dim">
-          {f.refs}
+          {linkifyRefs(f.refs)}
         </p>
       </div>
       <div className="min-w-0">

@@ -4,6 +4,7 @@ import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { ChipRow, Meta } from "@/components/primitives";
 import { CodeBlock } from "@/components/CodeBlock";
+import { linkifyRefs } from "@/components/refs";
 import type { ReactNode } from "react";
 
 const TOTAL = 11;
@@ -82,7 +83,7 @@ function DeckFeature({ f }: { f: FeatureGroup }) {
         <div className="flex items-baseline justify-between gap-2">
           <h4 className="text-[12px] font-bold tracking-tight">{f.title}</h4>
           <span className="shrink-0 font-mono text-[8px] text-dim">
-            {f.refs}
+            {linkifyRefs(f.refs)}
           </span>
         </div>
         <p className="mt-1 text-[9.5px] leading-[1.55] text-muted">{f.desc}</p>
