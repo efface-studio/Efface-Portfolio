@@ -118,6 +118,11 @@ export type FeatureGroup = {
   refs: string;
 };
 
+export type DemoShot = {
+  src: string;
+  caption: string;
+};
+
 export type Project = {
   name: string;
   tagline: string;
@@ -319,6 +324,15 @@ export const hinestFeatures: FeatureGroup[] = [
     desc: "보안 점검에서 발견된 HIGH 등급 취약점 3건을 진단하고 수정했습니다.",
     refs: "PR #85",
   },
+];
+
+export const hinestDemos: DemoShot[] = [
+  { src: "/hinest/demo-home.png", caption: "대시보드 홈" },
+  { src: "/hinest/demo-dev-console.png", caption: "개발자 콘솔" },
+  { src: "/hinest/demo-docs.png", caption: "문서함" },
+  { src: "/hinest/demo-chat-list.png", caption: "사내톡 — 채팅 목록" },
+  { src: "/hinest/demo-chat-room.png", caption: "사내톡 — 1:1 대화" },
+  { src: "/hinest/demo-password-reset.png", caption: "비밀번호 재설정" },
 ];
 
 export const hinestCases: TroubleCase[] = [

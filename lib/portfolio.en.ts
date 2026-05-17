@@ -7,6 +7,7 @@ import type {
   SkillFocus,
   TroubleCase,
   FeatureGroup,
+  DemoShot,
   Project,
   Award,
   Activity,
@@ -276,6 +277,15 @@ export const hinestFeatures: FeatureGroup[] = [
     desc: "Diagnosed and fixed 3 HIGH-severity vulnerabilities found in a security review.",
     refs: "PR #85",
   },
+];
+
+export const hinestDemos: DemoShot[] = [
+  { src: "/hinest/demo-home.png", caption: "Dashboard home" },
+  { src: "/hinest/demo-dev-console.png", caption: "Developer console" },
+  { src: "/hinest/demo-docs.png", caption: "Document hub" },
+  { src: "/hinest/demo-chat-list.png", caption: "Team Chat — chat list" },
+  { src: "/hinest/demo-chat-room.png", caption: "Team Chat — 1:1 chat" },
+  { src: "/hinest/demo-password-reset.png", caption: "Password reset" },
 ];
 
 export const hinestCases: TroubleCase[] = [
