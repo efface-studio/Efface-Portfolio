@@ -11,22 +11,22 @@ import type { Lang } from "@/lib/ui";
 // worker version stays in sync with the bundled pdfjs-dist.
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-const ZOOMS = [0.5, 0.65, 0.8, 1, 1.25, 1.5];
-const DEFAULT_ZOOM = 3;
-
-const T: Record<Lang, { loading: string; failed: string; open: string }> = {
+const T: Record<Lang, { loading: string; failed: string; open: string; hint: string }> = {
   ko: {
     loading: "불러오는 중…",
     failed: "PDF를 불러오지 못했습니다.",
     open: "원본 열기 ↗",
+    hint: "← → 또는 화면 클릭으로 넘기기",
   },
   en: {
     loading: "Loading…",
     failed: "Couldn’t load the PDF.",
     open: "Open original ↗",
+    hint: "Flip with ← → or by clicking",
   },
 };
 
+/** Slideshow PDF viewer — one page at a time, flipped with arrows / keys / click. */
 export default function PdfViewerInner({
   url,
   lang,
@@ -36,84 +36,54 @@ export default function PdfViewerInner({
 }) {
   const t = T[lang];
   const [numPages, setNumPages] = useState(0);
-  const [current, setCurrent] = useState(1);
-  const [baseWidth, setBaseWidth] = useState(820);
-  const [zoomIdx, setZoomIdx] = useState(DEFAULT_ZOOM);
+  const [page, setPage] = useState(1);
+  const [baseWidth, setBaseWidth] = useState(880);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const pageEls = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const measure = () => {
-      const w = wrapRef.current?.clientWidth ?? 820;
-      setBaseWidth(Math.max(320, Math.min(w, 960)));
+      const w = wrapRef.current?.clientWidth ?? 880;
+      setBaseWidth(Math.max(320, Math.min(w, 1000)));
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, []);
 
+  // ← / → flip through pages.
   useEffect(() => {
-    const onScroll = () => {
-      const mid = window.innerHeight / 2;
-      let best = 1;
-      let bestDist = Infinity;
-      pageEls.current.forEach((el, i) => {
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - mid);
-        if (d < bestDist) {
-          bestDist = d;
-          best = i + 1;
-        }
-      });
-      setCurrent(best);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") setPage((p) => Math.max(1, p - 1));
+      if (e.key === "ArrowRight")
+        setPage((p) => (numPages ? Math.min(numPages, p + 1) : p));
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [numPages]);
 
-  const zoom = ZOOMS[zoomIdx];
-  const pageWidth = Math.round(baseWidth * zoom);
-  // Render the canvas at >=2x so the PDF stays crisp on low-DPI displays.
+  const prev = () => setPage((p) => Math.max(1, p - 1));
+  const next = () => setPage((p) => (numPages ? Math.min(numPages, p + 1) : p));
+  const atStart = page <= 1;
+  const atEnd = numPages > 0 && page >= numPages;
   const pixelRatio = Math.max(2, window.devicePixelRatio || 1);
 
-  const zoomBtn =
-    "flex h-6 w-6 items-center justify-center rounded-full text-[15px] font-bold leading-none text-fg transition-colors hover:bg-surface-2 disabled:opacity-30 disabled:hover:bg-transparent";
+  const navBtn =
+    "absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line-2 bg-bg/92 text-[20px] font-bold leading-none text-fg shadow-[0_8px_24px_-10px_rgba(16,16,24,0.4)] backdrop-blur-md transition-colors hover:bg-surface-2 disabled:cursor-default disabled:opacity-20 disabled:hover:bg-bg/92";
 
   return (
     <div ref={wrapRef}>
-      <div className="sticky top-3 z-20 mx-auto mb-5 flex w-fit items-center gap-2.5 rounded-full border border-line-2 bg-bg/90 px-3.5 py-1.5 shadow-[0_8px_24px_-12px_rgba(16,16,24,0.3)] backdrop-blur-md">
-        <span className="px-0.5 font-mono text-[11px] tabular-nums text-dim">
-          {numPages ? `${current} / ${numPages}` : "—"}
+      <div className="mb-4 flex items-center justify-center gap-3">
+        <span className="font-mono text-[12px] tabular-nums text-dim">
+          {numPages ? `${page} / ${numPages}` : "—"}
         </span>
-        <span className="h-4 w-px bg-line-2" />
-        <button
-          type="button"
-          onClick={() => setZoomIdx((i) => Math.max(0, i - 1))}
-          disabled={zoomIdx === 0}
-          className={zoomBtn}
-          aria-label="Zoom out"
-        >
-          −
-        </button>
-        <span className="w-[38px] text-center font-mono text-[11px] font-semibold tabular-nums text-fg">
-          {Math.round(zoom * 100)}%
-        </span>
-        <button
-          type="button"
-          onClick={() => setZoomIdx((i) => Math.min(ZOOMS.length - 1, i + 1))}
-          disabled={zoomIdx === ZOOMS.length - 1}
-          className={zoomBtn}
-          aria-label="Zoom in"
-        >
-          +
-        </button>
-        <span className="h-4 w-px bg-line-2" />
+        <span className="h-3.5 w-px bg-line-2" />
+        <span className="text-[11px] text-dim">{t.hint}</span>
+        <span className="h-3.5 w-px bg-line-2" />
         <a
           href={url}
           target="_blank"
           rel="noreferrer"
-          className="px-0.5 text-[11px] font-semibold text-accent"
+          className="text-[11px] font-semibold text-accent"
         >
           {t.open}
         </a>
@@ -141,24 +111,40 @@ export default function PdfViewerInner({
           </div>
         }
       >
-        <div className="overflow-x-auto pb-1">
-          <div className="flex flex-col items-center gap-5">
-            {Array.from({ length: numPages }, (_, i) => (
-              <div
-                key={i}
-                ref={(el) => {
-                  pageEls.current[i] = el;
-                }}
-                className="overflow-hidden rounded-lg border border-line bg-white shadow-[0_14px_36px_-20px_rgba(16,16,24,0.45)]"
-              >
-                <Page
-                  pageNumber={i + 1}
-                  width={pageWidth}
-                  devicePixelRatio={pixelRatio}
-                />
-              </div>
-            ))}
+        <div className="relative flex justify-center">
+          <button
+            type="button"
+            onClick={prev}
+            disabled={atStart}
+            aria-label="Previous page"
+            className={`left-2 ${navBtn}`}
+          >
+            ‹
+          </button>
+
+          <div
+            onClick={next}
+            className={`overflow-hidden rounded-lg border border-line bg-white shadow-[0_14px_36px_-20px_rgba(16,16,24,0.45)] ${
+              atEnd ? "" : "cursor-pointer"
+            }`}
+          >
+            <Page
+              key={page}
+              pageNumber={page}
+              width={Math.round(baseWidth)}
+              devicePixelRatio={pixelRatio}
+            />
           </div>
+
+          <button
+            type="button"
+            onClick={next}
+            disabled={atEnd}
+            aria-label="Next page"
+            className={`right-2 ${navBtn}`}
+          >
+            ›
+          </button>
         </div>
       </Document>
     </div>
