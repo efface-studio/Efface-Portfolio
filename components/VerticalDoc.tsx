@@ -153,21 +153,14 @@ function MetaStrip({ project, c }: { project: Project; c: Content }) {
 
 function FeatureRow({ f }: { f: FeatureGroup }) {
   return (
-    <div className="grid grid-cols-[27mm_1fr] gap-5">
-      <div>
-        <p className="text-[21px] font-extrabold leading-none tracking-tight text-accent">
-          {f.key}
-        </p>
-        <p className="mt-2 font-mono text-[7px] leading-[1.55] tracking-wide text-dim">
-          {linkifyRefs(f.refs)}
-        </p>
-      </div>
-      <div className="min-w-0">
+    <div>
+      <div className="flex items-baseline justify-between gap-3">
         <h4 className="text-[12px] font-bold tracking-tight">{f.title}</h4>
-        <p className="mt-1.5 text-[9.5px] leading-[1.65] text-muted">
-          {f.desc}
-        </p>
+        <span className="shrink-0 font-mono text-[7px] tracking-wide text-dim">
+          {linkifyRefs(f.refs)}
+        </span>
       </div>
+      <p className="mt-1.5 text-[9.5px] leading-[1.65] text-muted">{f.desc}</p>
     </div>
   );
 }
@@ -569,7 +562,7 @@ function HiNestOverviewPage({ c }: { c: Content }) {
         <div className="flex flex-1 flex-col">
           {hinestFeatures.map((f, i) => (
             <div
-              key={f.key}
+              key={f.title}
               className={`flex flex-1 flex-col justify-center ${
                 i > 0 ? "border-t border-line" : ""
               }`}
