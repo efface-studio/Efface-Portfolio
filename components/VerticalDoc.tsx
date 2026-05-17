@@ -743,6 +743,11 @@ function AboutVenturePage({ c }: { c: Content }) {
                   <span className="text-[8.5px] text-dim">· {s.place}</span>
                 ) : null}
               </div>
+              {s.desc ? (
+                <p className="mt-0.5 text-[9px] leading-[1.5] text-muted">
+                  {s.desc}
+                </p>
+              ) : null}
             </Entry>
           ))}
         </div>
