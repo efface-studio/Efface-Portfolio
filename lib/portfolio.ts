@@ -129,13 +129,13 @@ export const featuredProjects: Project[] = [
     summary:
       "광주소프트웨어마이스터고 재학 중 직접 기획하고 개발한 iOS 앱입니다. 학생회가 수기로 관리하던 기숙사 외출을 QR코드 기반으로 전환했고, 고등학생 때 만든 이 서비스는 지금도 매주 400명 이상이 쓰는 교내 공식 앱으로 2년 넘게 운영되고 있습니다. App Store 심사·배포와 버전 관리까지 직접 수행하며 실무 수준의 iOS 운영을 경험했습니다.",
     icon: "/goms/icon.jpg",
-    banner: "/goms/banner.png",
+    banner: "/goms/banner.webp",
     screenshots: [
-      "/goms/screen-1.png",
-      "/goms/screen-2.png",
-      "/goms/screen-3.png",
-      "/goms/screen-4.png",
-      "/goms/screen-5.png",
+      "/goms/screen-1.webp",
+      "/goms/screen-2.webp",
+      "/goms/screen-3.webp",
+      "/goms/screen-4.webp",
+      "/goms/screen-5.webp",
     ],
     stack: [
       "UIKit",
@@ -179,7 +179,7 @@ export const featuredProjects: Project[] = [
     summary:
       "흩어진 팀 업무 — 공지·일정·근태·회의록·결재·문서 — 를 한 곳에서 관리하는 (주)하이비츠의 사내 워크플레이스 플랫폼입니다. 기획·디자인·개발·운영까지 전 과정을 1인으로 맡아 만들고 있습니다. 도입 이후 흩어져 있던 대화와 업무 보고가 한 곳으로 모였고, 회의록과 결재 흐름도 훨씬 정리됐습니다. 외부 SaaS 구독 비용도 줄일 수 있었습니다.",
     icon: "/hinest/icon.svg",
-    banner: "/hinest/banner.png",
+    banner: "/hinest/banner.webp",
     stack: ["React", "Vite", "TypeScript", "Express", "Prisma", "SQLite"],
     links: [
       { label: "GitHub", url: "https://github.com/efface-studio/HiNest-Client" },
@@ -281,31 +281,31 @@ export const hinestFeatures: FeatureGroup[] = [
     title: "운영자 도구 11종 — 개발자 페이지",
     desc: "임퍼소네이션 · 서버사이드 세션 · 에러 대시보드 · 헬스체크 · 휴지통 · 감사 추적 · Feature Flag · API 토큰 · Rate-limit · 2FA 정책 · 터미널 콘솔을 기능 단위 PR로 분리해 점진 배포했습니다.",
     refs: "PR #93–#102 · #66 · #65",
-    shots: ["/hinest/demo-dev-console.png"],
+    shots: ["/hinest/demo-dev-console.webp"],
   },
   {
     title: "사내톡 — 실시간 그룹 채팅",
     desc: "토스 스타일 플로팅 팝업으로 그룹·1:1 채팅을 구현했습니다. 코드 블록 자동 감지·신택스 하이라이팅, URL OG 프리뷰, 마크다운, 메시지 고정·리액션을 더하고, 폴링을 SSE 실시간 푸시로 전환했습니다.",
     refs: "PR #51–#64 · 7580f5f7",
-    shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
+    shots: ["/hinest/demo-chat-list.webp", "/hinest/demo-chat-room.webp"],
   },
   {
     title: "프로젝트 — 팀 단위 협업 공간",
     desc: "팀 단위 협업을 ‘프로젝트’ 공간으로 묶어 관리하는 기능입니다. ADMIN이 프로젝트를 생성하고 OWNER·MANAGER·MEMBER 3단계 권한 아래, 프로젝트별 전용 캘린더·QA 체크리스트·GitHub·Datadog·Vercel 웹훅 채널·멤버 관리를 제공합니다.",
     refs: "commit 65f78f7 · 265b594 · 38da517",
-    shots: ["/hinest/demo-projects.png"],
+    shots: ["/hinest/demo-projects.webp"],
   },
   {
     title: "회의록 파일 · 링크 첨부",
     desc: "회의록 본문 JSON과 분리한 MeetingAttachment 테이블을 신설하고, 파일·링크 첨부 CRUD 라우트와 UI를 구현했습니다.",
     refs: "commit 7544231",
-    shots: ["/hinest/demo-docs.png"],
+    shots: ["/hinest/demo-docs.webp"],
   },
   {
     title: "미리보기 모드",
     desc: "로그인 없이 데모 조직 데이터로 전 기능을 둘러보는 미리보기 모드를 도입했습니다. 플래그로 API 호출을 mock으로 단락하고 모든 페이지에 시드 데이터를 채웠습니다.",
     refs: "PR #119–#134",
-    shots: ["/hinest/demo-home.png"],
+    shots: ["/hinest/demo-home.webp"],
   },
 ];
 

@@ -87,13 +87,13 @@ export const featuredProjects: Project[] = [
     summary:
       "An iOS app I planned and built myself while attending Gwangju Software Meister High School. It replaced the student council’s hand-written dormitory pass management with a QR-code-based system, and this service I made as a high-schooler still runs as an official campus app — used by 400+ students every week for over two years. I personally handled App Store review, release, and version management, gaining production-level iOS operations experience.",
     icon: "/goms/icon.jpg",
-    banner: "/goms/banner.png",
+    banner: "/goms/banner.webp",
     screenshots: [
-      "/goms/screen-1.png",
-      "/goms/screen-2.png",
-      "/goms/screen-3.png",
-      "/goms/screen-4.png",
-      "/goms/screen-5.png",
+      "/goms/screen-1.webp",
+      "/goms/screen-2.webp",
+      "/goms/screen-3.webp",
+      "/goms/screen-4.webp",
+      "/goms/screen-5.webp",
     ],
     stack: [
       "UIKit",
@@ -137,7 +137,7 @@ export const featuredProjects: Project[] = [
     summary:
       "Hivits’ internal workplace platform that manages scattered team work — announcements, schedules, attendance, meeting notes, approvals, documents — in one place. I’m building it end to end on my own, from planning and design to development and operations. Since adoption, conversations and status reports that were scattered across tools now live in one place, and the meeting-note and approval flows are far better organized. It also cut external SaaS subscription costs.",
     icon: "/hinest/icon.svg",
-    banner: "/hinest/banner.png",
+    banner: "/hinest/banner.webp",
     stack: ["React", "Vite", "TypeScript", "Express", "Prisma", "SQLite"],
     links: [
       { label: "GitHub", url: "https://github.com/efface-studio/HiNest-Client" },
@@ -239,31 +239,31 @@ export const hinestFeatures: FeatureGroup[] = [
     title: "11 operator tools — developer page",
     desc: "Split impersonation, server-side sessions, an error dashboard, health checks, a trash bin, audit trails, feature flags, API tokens, rate-limiting, a 2FA policy, and a terminal console into feature-level PRs for incremental rollout.",
     refs: "PR #93–#102 · #66 · #65",
-    shots: ["/hinest/demo-dev-console.png"],
+    shots: ["/hinest/demo-dev-console.webp"],
   },
   {
     title: "In-house chat — real-time group messaging",
     desc: "A Toss-style floating popup for group and 1:1 chat — with automatic code-block detection and syntax highlighting, URL OG previews, markdown, and message pins and reactions, plus a move from polling to real-time SSE push.",
     refs: "PR #51–#64 · 7580f5f7",
-    shots: ["/hinest/demo-chat-list.png", "/hinest/demo-chat-room.png"],
+    shots: ["/hinest/demo-chat-list.webp", "/hinest/demo-chat-room.webp"],
   },
   {
     title: "Projects — a team-level collaboration space",
     desc: "Groups team-level collaboration into dedicated ‘Project’ spaces. An ADMIN creates a project, and under three roles — OWNER, MANAGER, MEMBER — each project offers its own calendar, a QA checklist, GitHub/Datadog/Vercel webhook channels, and member management.",
     refs: "commit 65f78f7 · 265b594 · 38da517",
-    shots: ["/hinest/demo-projects.png"],
+    shots: ["/hinest/demo-projects.webp"],
   },
   {
     title: "Meeting-note file & link attachments",
     desc: "Added a MeetingAttachment table separate from the meeting-note body JSON, with CRUD routes and UI for file and link attachments.",
     refs: "commit 7544231",
-    shots: ["/hinest/demo-docs.png"],
+    shots: ["/hinest/demo-docs.webp"],
   },
   {
     title: "Preview mode",
     desc: "Added a preview mode that tours every feature with demo-org data and no login. A flag short-circuits API calls to mocks, and every page is filled with seed data.",
     refs: "PR #119–#134",
-    shots: ["/hinest/demo-home.png"],
+    shots: ["/hinest/demo-home.webp"],
   },
 ];
 
