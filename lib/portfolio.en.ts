@@ -143,7 +143,7 @@ export const featuredProjects: Project[] = [
     role: "Planning · Design · Development · Operations",
     team: "Solo project",
     summary:
-      "Hivits’ internal workplace platform that manages scattered team work — announcements, schedules, attendance, meeting notes, approvals, documents — in one place. I’m building it end to end on my own, from planning and design to development and operations.",
+      "Hivits’ internal workplace platform that manages scattered team work — announcements, schedules, attendance, meeting notes, approvals, documents — in one place. I’m building it end to end on my own, from planning and design to development and operations. Since adoption, conversations and status reports that were scattered across tools now live in one place, and the meeting-note and approval flows are far better organized. It also cut external SaaS subscription costs.",
     icon: "/hinest/icon.svg",
     banner: "/hinest/banner.png",
     stack: ["React", "Vite", "TypeScript", "Express", "Prisma", "SQLite"],
