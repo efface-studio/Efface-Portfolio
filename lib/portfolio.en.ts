@@ -109,6 +109,8 @@ export const featuredProjects: Project[] = [
       "/goms/screen-1.png",
       "/goms/screen-2.png",
       "/goms/screen-3.png",
+      "/goms/screen-4.png",
+      "/goms/screen-5.png",
     ],
     stack: [
       "UIKit",
