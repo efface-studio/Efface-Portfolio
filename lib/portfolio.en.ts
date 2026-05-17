@@ -242,40 +242,29 @@ func forceOuting(for studentID: String) async throws {
  * Code is excerpted and condensed from real PRs/commits in efface-studio/HiNest-Client. */
 export const hinestFeatures: FeatureGroup[] = [
   {
-    key: "A",
     title: "11 operator tools — developer page",
     desc: "Split impersonation, server-side sessions, an error dashboard, health checks, a trash bin, audit trails, feature flags, API tokens, rate-limiting, a 2FA policy, and a terminal console into feature-level PRs for incremental rollout.",
     refs: "PR #93–#102 · #66 · #65",
   },
   {
-    key: "B",
     title: "In-house chat — real-time group messaging",
     desc: "A Toss-style floating popup for group and 1:1 chat — with automatic code-block detection and syntax highlighting, URL OG previews, markdown, and message pins and reactions, plus a move from polling to real-time SSE push.",
     refs: "PR #51–#64 · 7580f5f7",
   },
   {
-    key: "C",
     title: "Account security — lockout & password reset",
     desc: "Built automatic lockout after 5 failed logins with admin unlock, and email-verified self-service password reset (reset token stored as a SHA-256 hash, single-use for 30 minutes, forced logout of all sessions).",
     refs: "PR #116 · 8a28fdd",
   },
   {
-    key: "D",
     title: "Preview mode",
     desc: "Added a preview mode that tours every feature with demo-org data and no login. A flag short-circuits API calls to mocks, and every page is filled with seed data.",
     refs: "PR #119–#134",
   },
   {
-    key: "E",
     title: "Meeting-note file & link attachments",
     desc: "Added a MeetingAttachment table separate from the meeting-note body JSON, with CRUD routes and UI for file and link attachments.",
     refs: "commit 7544231",
-  },
-  {
-    key: "F",
-    title: "Security-review response",
-    desc: "Diagnosed and fixed 3 HIGH-severity vulnerabilities found in a security review.",
-    refs: "PR #85",
   },
 ];
 

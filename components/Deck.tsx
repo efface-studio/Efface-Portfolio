@@ -75,19 +75,14 @@ function MetaRow({ k, v }: { k: string; v: string }) {
 /** HiNest key-feature row — letter index + title + description. */
 function DeckFeature({ f }: { f: FeatureGroup }) {
   return (
-    <div className="flex gap-3.5">
-      <p className="w-[7mm] shrink-0 text-[19px] font-extrabold leading-none tracking-tight text-accent">
-        {f.key}
-      </p>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-baseline justify-between gap-2">
-          <h4 className="text-[12px] font-bold tracking-tight">{f.title}</h4>
-          <span className="shrink-0 font-mono text-[8px] text-dim">
-            {linkifyRefs(f.refs)}
-          </span>
-        </div>
-        <p className="mt-1 text-[9.5px] leading-[1.55] text-muted">{f.desc}</p>
+    <div className="min-w-0">
+      <div className="flex items-baseline justify-between gap-2">
+        <h4 className="text-[12px] font-bold tracking-tight">{f.title}</h4>
+        <span className="shrink-0 font-mono text-[8px] text-dim">
+          {linkifyRefs(f.refs)}
+        </span>
       </div>
+      <p className="mt-1 text-[9.5px] leading-[1.55] text-muted">{f.desc}</p>
     </div>
   );
 }
@@ -419,7 +414,7 @@ function HiNestOverviewSlide({ c }: { c: Content }) {
           <div className="mt-3 flex flex-1 flex-col">
             {hinestFeatures.map((f, i) => (
               <div
-                key={f.key}
+                key={f.title}
                 className={`flex flex-1 flex-col justify-center ${
                   i > 0 ? "border-t border-line" : ""
                 }`}
