@@ -503,11 +503,11 @@ function GomsTroublePage({ c }: { c: Content }) {
       <p className="mt-2.5 text-[9.5px] leading-[1.6] text-muted">
         {ui.gomsTroubleIntro}
       </p>
-      <div className="mt-4">
+      <div className="mt-3.5">
         <TroubleCaseBlock tc={gomsCases[0]} c={c} />
-        <div className="my-3 border-t border-line-2" />
+        <div className="my-2 border-t border-line-2" />
         <TroubleCaseBlock tc={gomsCases[1]} c={c} />
-        <div className="my-3 border-t border-line-2" />
+        <div className="my-2 border-t border-line-2" />
         <TroubleCaseBlock tc={gomsCases[2]} c={c} />
       </div>
     </DocPage>

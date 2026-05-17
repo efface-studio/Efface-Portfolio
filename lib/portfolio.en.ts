@@ -215,23 +215,24 @@ var accessToken: String {
   },
   {
     no: "03",
-    category: "Feature · Exception Handling",
-    title: "Forced check-out for users who cannot scan a QR code",
+    category: "Scan · Deduplication",
+    title: "A QR scan guard reset on every camera frame",
+    file: "Feature/Scene/QR/StudentQRViewController.swift",
     problem:
-      "Users with low-end cameras or no scan permission could not get their QR recognized, leaving a blind spot where their pass could not be processed at all.",
+      "The QR scan guard flag lived as a local variable inside the captureOutput callback, so it reset to true every frame — the guard did nothing, and one QR code fired the outing API repeatedly.",
     solution:
-      "Added a forced check-out feature that lets an admin transition the pass state directly, without a QR scan.",
+      "Lifted the flag to an instance property, locked it on a successful scan and stopped the captureSession, then released it 1.5s later.",
     result:
-      "Made pass processing possible even when scanning is not, closing the operational blind spot.",
+      "One QR scan now maps to exactly one outing request and one screen transition — the duplicate calls are gone.",
     code: [
       {
         lang: "swift",
-        caption: "Admin forced check-out — bypassing the scan step",
-        lines: `// When a camera or permission issue blocks the QR scan, an admin transitions the state directly
-func forceOuting(for studentID: String) async throws {
-    try await outingClient.updateState(studentID, to: .outing)
-    await MainActor.run { reloadOutingList() }
-}`,
+        caption: "Callback-local variable → instance flag",
+        lines: `// AS-IS — local variable in the callback: reset true every frame
+func captureOutput(...) { var isScanningEnabled = true /* ... */ }
+
+// TO-BE — instance property + lock on scan · 1.5s debounce
+private var isScanningEnabled = true`,
       },
     ],
   },

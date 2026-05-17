@@ -260,23 +260,24 @@ var accessToken: String {
   },
   {
     no: "03",
-    category: "기능 · 예외 대응",
-    title: "QR 스캔 불가 사용자를 위한 강제 외출",
+    category: "스캔 · 중복 제어",
+    title: "프레임마다 리셋돼 무력화된 QR 스캔 가드",
+    file: "Feature/Scene/QR/StudentQRViewController.swift",
     problem:
-      "카메라 성능이 낮거나 스캔 권한이 없는 사용자는 QR 인식이 안 돼, 외출 처리를 아예 할 수 없는 사각지대가 있었습니다.",
+      "QR 스캔 가드 플래그를 captureOutput 콜백 안의 지역 변수로 둬, 카메라 프레임마다 true로 리셋됐습니다. 가드가 무력화돼 같은 QR 한 장이 외출 API를 연속 중복 호출했습니다.",
     solution:
-      "관리자가 QR 스캔 없이 외출 상태를 직접 전이시키는 강제 외출 기능을 추가했습니다.",
+      "플래그를 인스턴스 프로퍼티로 올려 인식 즉시 잠그고 captureSession을 정지했으며, 1.5초 뒤 다시 풀어 다음 스캔을 허용했습니다.",
     result:
-      "스캔이 불가능한 상황에서도 외출 처리가 가능해져 운영 사각지대를 없앴습니다.",
+      "QR 1회 인식이 외출 요청·화면 전환 1회로 보장돼 중복 호출이 사라졌습니다.",
     code: [
       {
         lang: "swift",
-        caption: "관리자 강제 외출 — 스캔 단계 우회",
-        lines: `// 카메라·권한 문제로 QR 스캔이 막힌 경우 관리자가 외출 상태를 직접 전이
-func forceOuting(for studentID: String) async throws {
-    try await outingClient.updateState(studentID, to: .outing)
-    await MainActor.run { reloadOutingList() }
-}`,
+        caption: "콜백 지역 변수 → 인스턴스 플래그",
+        lines: `// AS-IS — 콜백 안의 지역 변수: 매 프레임 true 로 리셋돼 가드 무력
+func captureOutput(...) { var isScanningEnabled = true /* ... */ }
+
+// TO-BE — 인스턴스 프로퍼티 + 인식 즉시 잠금 · 1.5초 디바운스
+private var isScanningEnabled = true`,
       },
     ],
   },
