@@ -467,6 +467,18 @@ function GomsOverviewPage({ c }: { c: Content }) {
             ))}
           </div>
         </div>
+
+        {goms.screenshots && (
+          <div className="mt-6 flex justify-center gap-3">
+            {goms.screenshots.map((src) => (
+              <ImageZoom
+                key={src}
+                src={src}
+                className="h-[56mm] w-auto rounded-lg border border-line shadow-[0_12px_30px_-16px_rgba(16,16,24,0.34)]"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </DocPage>
   );
