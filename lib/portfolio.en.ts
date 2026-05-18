@@ -478,7 +478,7 @@ export const activities: Activity[] = [
     name: "Mindway — Major Club President",
     role: "President · iOS · PM",
     period: "2023.10 — 2025.03",
-    link: "",
+    link: "github.com/Team-MindWay",
     desc: "Led a major-focused club of 30+ members as president and grew the team by 200%. Ran weekly QA to improve service quality and established an autonomous collaboration culture.",
   },
   {
@@ -486,7 +486,7 @@ export const activities: Activity[] = [
     name: "School Enterprise — Office-of-Education Club",
     role: "iOS Developer",
     period: "2024.06 — 2025.05",
-    link: "",
+    link: "github.com/school-of-company",
     desc: "An in-school startup club run on contract for the Gwangju Metropolitan Office of Education. I developed and operated ‘Expo,’ an exhibition pre-registration service, gaining production-level project experience.",
   },
 ];
@@ -514,7 +514,13 @@ export const showcases: Showcase[] = [
     place: "COEX, Seoul",
     desc: "Attended Korea’s largest software festival, exploring services from other schools and startups and networking with working developers.",
   },
-  { name: "2023 KWDC", role: "Apple conference attendee", date: "2023.07", place: "COEX, Seoul" },
+  {
+    name: "2023 KWDC",
+    role: "Apple conference attendee",
+    date: "2023.07",
+    place: "COEX, Seoul",
+    desc: "Attended a Korean Apple-developer community conference, taking in Swift and iOS sessions and talks by working developers to keep up with platform trends.",
+  },
   {
     name: "Cyber Guardians",
     role: "Completed an information-security education program",
