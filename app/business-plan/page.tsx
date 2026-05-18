@@ -1,5 +1,12 @@
+import { cookies } from "next/headers";
 import Controls from "@/components/Controls";
 import PdfViewer from "@/components/PdfViewer";
+import PasswordGate from "@/components/PasswordGate";
+import {
+  PLAN_GATE_ENABLED,
+  PLAN_GATE_COOKIE,
+  PLAN_GATE_TOKEN,
+} from "@/lib/gate";
 import { ui } from "@/lib/ui";
 
 export default async function BusinessPlanPage({
@@ -7,6 +14,13 @@ export default async function BusinessPlanPage({
 }: {
   searchParams: Promise<{ lang?: string }>;
 }) {
+  // The business plan sits behind its own password, in addition to the
+  // site-wide gate enforced by the root layout.
+  const planAuthed =
+    !PLAN_GATE_ENABLED ||
+    (await cookies()).get(PLAN_GATE_COOKIE)?.value === PLAN_GATE_TOKEN;
+  if (!planAuthed) return <PasswordGate variant="plan" />;
+
   const { lang } = await searchParams;
   const l = lang === "en" ? "en" : "ko";
   const t = ui[l];

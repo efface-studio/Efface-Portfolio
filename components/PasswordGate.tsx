@@ -2,11 +2,32 @@
 
 import { useState } from "react";
 
-/** Full-screen password gate shown until the visitor authenticates. */
-export default function PasswordGate() {
+const COPY = {
+  site: {
+    label: "Portfolio",
+    title: "서지완",
+    desc: "비공개 포트폴리오입니다. 전달받은 비밀번호를 입력하면 들어갈 수 있습니다.",
+  },
+  plan: {
+    label: "efface — Venture",
+    title: "사업계획서",
+    desc: "사업계획서는 별도 비밀번호로 보호되어 있습니다. 전달받은 비밀번호를 입력해 주세요.",
+  },
+};
+
+/**
+ * Full-screen password gate. `variant` selects the site-wide gate or the
+ * separate business-plan gate (a second, independent password).
+ */
+export default function PasswordGate({
+  variant = "site",
+}: {
+  variant?: "site" | "plan";
+}) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const copy = COPY[variant];
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -17,7 +38,7 @@ export default function PasswordGate() {
       const res = await fetch("/api/gate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, gate: variant }),
       });
       if (res.ok) {
         window.location.reload();
@@ -35,14 +56,13 @@ export default function PasswordGate() {
     <main className="flex min-h-screen items-center justify-center bg-backdrop px-6 text-fg">
       <form onSubmit={submit} className="w-full max-w-[320px]">
         <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-accent">
-          Portfolio
+          {copy.label}
         </p>
         <h1 className="mt-2.5 text-[30px] font-extrabold tracking-[-0.03em]">
-          서지완
+          {copy.title}
         </h1>
         <p className="mt-2.5 text-[11.5px] leading-[1.75] text-muted">
-          비공개 포트폴리오입니다. 전달받은 비밀번호를 입력하면 들어갈 수
-          있습니다.
+          {copy.desc}
         </p>
 
         <input
