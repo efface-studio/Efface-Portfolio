@@ -63,7 +63,7 @@ export default function PageLightbox({
     setIdx(i);
   };
 
-  const zoom = Math.min(
+  const scale = Math.min(
     (vp.w * 0.94) / (pageWidthMm * MM_TO_PX),
     (vp.h * 0.92) / (pageHeightMm * MM_TO_PX),
   );
@@ -97,7 +97,7 @@ export default function PageLightbox({
 
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{ zoom }}
+            style={{ transform: `scale(${scale})` }}
             dangerouslySetInnerHTML={{ __html: pages[idx] }}
           />
 
