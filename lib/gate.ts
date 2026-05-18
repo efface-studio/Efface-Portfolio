@@ -5,10 +5,11 @@
  * password into the browser bundle. It is imported only by the root layout
  * (Server Component) and the /api/gate route handler.
  *
- * The access password is read from the SITE_PASSWORD environment variable and
- * is intentionally NOT written in this file, so it is never committed to
- * source control. For local development it lives in .env.local (git-ignored);
- * when deploying, set SITE_PASSWORD in the host's environment variables.
+ * Passwords are read from environment variables (SITE_PASSWORD for the whole
+ * site, PLAN_PASSWORD for the separate /business-plan gate) and are
+ * intentionally NOT written in this file, so they are never committed to
+ * source control. For local development they live in .env.local (git-ignored);
+ * when deploying, set them in the host's environment variables.
  */
 import { createHash } from "crypto";
 
@@ -28,4 +29,25 @@ export const GATE_TOKEN = GATE_ENABLED
 /** Returns true when the supplied input matches the configured password. */
 export function verifyPassword(input: string): boolean {
   return GATE_ENABLED && input.trim() === password;
+}
+
+/* --- Business-plan gate — a second, independent password for /business-plan.
+ * Dormant unless PLAN_PASSWORD is set, so the rest of the site is unaffected. */
+
+const planPassword = (process.env.PLAN_PASSWORD ?? "").trim();
+
+/** True only when a separate business-plan password is configured. */
+export const PLAN_GATE_ENABLED = planPassword.length > 0;
+
+/** Name of the http-only business-plan auth cookie. */
+export const PLAN_GATE_COOKIE = "pf_plan_gate";
+
+/** Opaque cookie token for the business-plan gate — a hash, never plaintext. */
+export const PLAN_GATE_TOKEN = PLAN_GATE_ENABLED
+  ? createHash("sha256").update(planPassword).digest("hex")
+  : "";
+
+/** Returns true when the input matches the business-plan password. */
+export function verifyPlanPassword(input: string): boolean {
+  return PLAN_GATE_ENABLED && input.trim() === planPassword;
 }
