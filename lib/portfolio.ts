@@ -567,7 +567,13 @@ export const showcases: Showcase[] = [
     place: "서울 코엑스",
     desc: "PM·iOS Leader로서 교내 최대 규모 앱 프로젝트 ‘GOMS’를 발표하고, 현장에서 받은 피드백으로 서비스 문제점을 개선했습니다.",
   },
-  { name: "DevFest", role: "Washer 부스 운영", date: "2025.07", place: "교내" },
+  {
+    name: "DevFest",
+    role: "Washer 부스 운영",
+    date: "2025.07",
+    place: "교내",
+    desc: "삼성 SmartThings를 활용한 기숙사 세탁기·건조기 관리·예약 서비스 ‘Washer’를 PM·iOS 개발로 직접 만들어, 교내 개발 콘테스트에서 25개 팀 중 최우수상(1위)을 수상했습니다.",
+  },
   {
     name: "2024 Softwave",
     role: "Expo 부스 운영",
