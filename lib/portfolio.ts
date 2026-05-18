@@ -538,7 +538,7 @@ export const activities: Activity[] = [
     name: "Mindway — 전공 동아리 부장",
     role: "부장 · iOS · PM",
     period: "2023.10 — 2025.03",
-    link: "",
+    link: "github.com/Team-MindWay",
     desc: "30명 이상 규모의 전공 동아리를 부장으로 이끌며 팀 규모를 200% 확대했습니다. 매주 QA로 서비스 품질을 개선하고 자율적인 협업 문화를 정착시켰습니다.",
   },
   {
@@ -546,7 +546,7 @@ export const activities: Activity[] = [
     name: "학교기업 — 교육청 외주 동아리",
     role: "iOS Developer",
     period: "2024.06 — 2025.05",
-    link: "",
+    link: "github.com/school-of-company",
     desc: "광주광역시 교육청의 외주로 운영되는 학교 내부 스타트업 동아리. 박람회 사전 등록 서비스 ‘Expo’를 개발·운영하며 실무 수준의 프로젝트를 경험했습니다.",
   },
 ];
@@ -582,7 +582,13 @@ export const showcases: Showcase[] = [
     place: "서울 코엑스",
     desc: "국내 최대 규모 소프트웨어 축전에 참여해 타 소프트웨어마이스터고 학생과 스타트업의 서비스를 관람하고 현업 개발자와 네트워킹했습니다.",
   },
-  { name: "2023 KWDC", role: "Apple 컨퍼런스 참여", date: "2023.07", place: "서울 코엑스" },
+  {
+    name: "2023 KWDC",
+    role: "Apple 컨퍼런스 참여",
+    date: "2023.07",
+    place: "서울 코엑스",
+    desc: "국내 Apple 개발자 커뮤니티 컨퍼런스에 참여해 Swift·iOS 최신 기술 세션과 현업 개발자들의 발표를 들으며 플랫폼 트렌드를 접했습니다.",
+  },
   {
     name: "사이버 가디언즈",
     role: "정보보안 교육 프로그램 이수",
