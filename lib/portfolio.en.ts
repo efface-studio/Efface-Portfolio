@@ -499,7 +499,13 @@ export const showcases: Showcase[] = [
     place: "COEX, Seoul",
     desc: "As PM and iOS Leader, presented ‘GOMS’ — the largest in-house app project — and improved the service from feedback gathered on site.",
   },
-  { name: "DevFest", role: "Washer booth operation", date: "2025.07", place: "On campus" },
+  {
+    name: "DevFest",
+    role: "Washer booth operation",
+    date: "2025.07",
+    place: "On campus",
+    desc: "Built ‘Washer,’ a dormitory washer/dryer management and reservation service powered by Samsung SmartThings, as PM and iOS developer — winning first place among 25 teams at the in-school dev contest.",
+  },
   {
     name: "2024 Softwave",
     role: "Expo booth operation",
