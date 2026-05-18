@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 import { GATE_ENABLED, GATE_COOKIE, GATE_TOKEN } from "@/lib/gate";
 import PasswordGate from "@/components/PasswordGate";
 import "./globals.css";
@@ -44,7 +45,10 @@ export default async function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/variable/pretendardvariable.css"
         />
       </head>
-      <body>{authed ? children : <PasswordGate />}</body>
+      <body>
+        {authed ? children : <PasswordGate />}
+        <Analytics />
+      </body>
     </html>
   );
 }
