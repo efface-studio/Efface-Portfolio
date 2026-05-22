@@ -455,6 +455,49 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
       },
     ],
   },
+  {
+    no: "05",
+    category: "운영 · 비용",
+    title: "사용자 수에 비해 비대했던 AWS 청구서",
+    ref: {
+      label: "PR #138",
+      url: "https://github.com/efface-studio/HiNest-Client/pull/138",
+    },
+    file: ".github/workflows/cost-log-retention.yml",
+    problem:
+      "CloudWatch 로그 그룹 6개가 Never expire 기본값으로 무한 누적 중이었고, 클라이언트 SSE fallback 폴링이 hidden 탭에서도 계속 돌아 Fargate task가 idle에 못 들어갔습니다.",
+    solution:
+      "GitHub Actions OIDC + 주간 cron으로 로그 retention(일반 30일·일회성 7일)을 자동 표준화하고, 헬스체크·SSE 핸드셰이크의 access log를 핫패스에서 스킵했습니다. 클라이언트 폴링 4곳은 document.visibilityState로 게이팅해 hidden 탭에서 정지시켰습니다.",
+    result:
+      "월 청구 4~8% 즉시 절감에 더해, 백그라운드 폴링이 사라져 Fargate task를 다운사이즈할 여지(0.5→0.25 vCPU)를 확보했고, 누적되던 로그 저장 비용을 사전 차단했습니다.",
+    code: [
+      {
+        lang: "ts",
+        caption: "탭 가시성으로 폴링 게이팅 — hidden에선 정지",
+        lines: `// 복귀 시 즉시 1회 동기화 + 인터벌 재무장 — 사용자 체감 0
+let timer: number | null = null;
+const start = () => (timer ??= window.setInterval(load, 60_000));
+const stop = () => {
+  if (timer !== null) { clearInterval(timer); timer = null; }
+};
+if (document.visibilityState === "visible") start();
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") { load(); start(); }
+  else stop();
+});`,
+      },
+      {
+        lang: "ts",
+        caption: "핫패스 access log 스킵 — 2xx만, 장애 라인은 보존",
+        lines: `const SKIP = new Set(["/api/health", "/api/notification/stream"]);
+res.on("finish", () => {
+  // 4xx/5xx는 그대로 남겨 장애 진단 가능성 보존
+  if (SKIP.has(req.path) && res.statusCode < 400) return;
+  pushHttpLog(\`\${req.method} \${scrubUrl(url)} \${res.statusCode} \${dur}ms\`);
+});`,
+      },
+    ],
+  },
 ];
 
 export type Award = {

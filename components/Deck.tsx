@@ -645,7 +645,7 @@ export default function Deck({ lang }: { lang: Lang }) {
       <AboutCareerSlide c={c} />
       <HiNestOverviewSlide c={c} />
       <HiNestTroubleSlide n={4} cases={c.hinestCases.slice(0, 2)} range="01–02" c={c} />
-      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2)} range="03–04" c={c} />
+      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2)} range="03–05" c={c} />
       <GomsOverviewSlide c={c} />
       <GomsTroubleSlide c={c} />
       <AwardsSlide c={c} />
