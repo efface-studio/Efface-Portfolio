@@ -413,6 +413,49 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
       },
     ],
   },
+  {
+    no: "05",
+    category: "Operations · Cost",
+    title: "An AWS bill that grew faster than the user count",
+    ref: {
+      label: "PR #138",
+      url: "https://github.com/efface-studio/HiNest-Client/pull/138",
+    },
+    file: ".github/workflows/cost-log-retention.yml",
+    problem:
+      "Six CloudWatch log groups were left on the default Never-expire policy and piled up indefinitely, while client SSE fallback polling kept running in hidden tabs — preventing Fargate tasks from going idle.",
+    solution:
+      "Used GitHub Actions OIDC with a weekly cron to standardise log retention (30 days, 7 days for one-shot debug groups), skipped access logs for health-check and SSE handshake hot paths, and visibility-gated four client poll loops so they pause when the tab is hidden.",
+    result:
+      "Cut the monthly bill by 4–8% immediately, opened up headroom to downsize the Fargate task (0.5 → 0.25 vCPU) once background polling stopped, and capped future log-storage cost growth.",
+    code: [
+      {
+        lang: "ts",
+        caption: "Visibility-gated polling — pause when the tab is hidden",
+        lines: `// On return, refresh once and re-arm the interval — no perceptible UX hit
+let timer: number | null = null;
+const start = () => (timer ??= window.setInterval(load, 60_000));
+const stop = () => {
+  if (timer !== null) { clearInterval(timer); timer = null; }
+};
+if (document.visibilityState === "visible") start();
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") { load(); start(); }
+  else stop();
+});`,
+      },
+      {
+        lang: "ts",
+        caption: "Skip access logs on hot paths — keep 4xx/5xx for diagnostics",
+        lines: `const SKIP = new Set(["/api/health", "/api/notification/stream"]);
+res.on("finish", () => {
+  // Only skip 2xx — leave error rows for incident diagnosis
+  if (SKIP.has(req.path) && res.statusCode < 400) return;
+  pushHttpLog(\`\${req.method} \${scrubUrl(url)} \${res.statusCode} \${dur}ms\`);
+});`,
+      },
+    ],
+  },
 ];
 
 export const awards: Award[] = [
