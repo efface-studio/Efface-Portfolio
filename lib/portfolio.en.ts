@@ -425,9 +425,9 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
     problem:
       "Six CloudWatch log groups were left on the default Never-expire policy and piled up indefinitely, while client SSE fallback polling kept running in hidden tabs — preventing Fargate tasks from going idle.",
     solution:
-      "Used GitHub Actions OIDC with a weekly cron to standardise log retention (30 days, 7 days for one-shot debug groups), skipped access logs for health-check and SSE handshake hot paths, and visibility-gated four client poll loops so they pause when the tab is hidden.",
+      "Used GitHub Actions OIDC with a weekly cron to standardise log retention (30 days, 7 days for one-shot debug groups), skipped access logs on the health-check and SSE-handshake hot paths, and visibility-gated four client poll loops so they pause when the tab is hidden. A follow-up PR #139 added four operational workflows — Fargate diagnose & rightsize (with health check + auto-rollback), ECR lifecycle, and a VPC cost audit — turning the ongoing tuning into tooling.",
     result:
-      "Cut the monthly bill by 4–8% immediately, opened up headroom to downsize the Fargate task (0.5 → 0.25 vCPU) once background polling stopped, and capped future log-storage cost growth.",
+      "With RDS dominating the absolute bill, I held off on a HiNest-only dollar figure and measured per mechanism instead. Polling RPS on the hot endpoints dropped 40–75% per tab with background tabs going to zero, and the in-memory log buffer shrank 80% to give Fargate downsizing (0.5 → 0.25 vCPU) the memory headroom it needed. Mutating workflows ship with a health check plus auto-rollback; diagnostic workflows are read-only.",
     code: [
       {
         lang: "ts",
