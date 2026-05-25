@@ -11,7 +11,20 @@
  * source control. For local development they live in .env.local (git-ignored);
  * when deploying, set them in the host's environment variables.
  */
-import { createHash } from "crypto";
+import { createHash, timingSafeEqual } from "crypto";
+
+/** Constant-time string compare — prevents timing-attack password guessing. */
+function safeEqual(a: string, b: string): boolean {
+  const ab = Buffer.from(a);
+  const bb = Buffer.from(b);
+  // timingSafeEqual requires same-length buffers. Compare a dummy against
+  // itself when lengths differ so the rejection path doesn't return faster.
+  if (ab.length !== bb.length) {
+    timingSafeEqual(ab, ab);
+    return false;
+  }
+  return timingSafeEqual(ab, bb);
+}
 
 const password = (process.env.SITE_PASSWORD ?? "").trim();
 
@@ -28,7 +41,7 @@ export const GATE_TOKEN = GATE_ENABLED
 
 /** Returns true when the supplied input matches the configured password. */
 export function verifyPassword(input: string): boolean {
-  return GATE_ENABLED && input.trim() === password;
+  return GATE_ENABLED && safeEqual(input.trim(), password);
 }
 
 /* --- Business-plan gate — a second, independent password for /business-plan.
@@ -49,5 +62,5 @@ export const PLAN_GATE_TOKEN = PLAN_GATE_ENABLED
 
 /** Returns true when the input matches the business-plan password. */
 export function verifyPlanPassword(input: string): boolean {
-  return PLAN_GATE_ENABLED && input.trim() === planPassword;
+  return PLAN_GATE_ENABLED && safeEqual(input.trim(), planPassword);
 }
