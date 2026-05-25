@@ -1,0 +1,5 @@
+# Private portfolio — keep it out of search engines.
+# The root layout also sends `robots: noindex, nofollow` via metadata;
+# this file is belt-and-suspenders for crawlers that read robots.txt first.
+User-agent: *
+Disallow: /
