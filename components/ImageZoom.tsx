@@ -2,10 +2,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * An image that opens a full-screen enlarged copy of itself on click.
- * stopPropagation keeps the click from also triggering PageLightbox.
+ * The overlay is portalled to <body> so it escapes the PageScaler
+ * `transform: scale()` ancestor — a fixed element inside a transformed
+ * parent is positioned (and scaled) relative to that parent, not the
+ * viewport, which otherwise traps the "full-screen" view inside the
+ * shrunk page. stopPropagation keeps the click from also triggering
+ * PageLightbox.
  */
 export default function ImageZoom({
   src,
@@ -42,21 +48,23 @@ export default function ImageZoom({
         }}
         className={`cursor-zoom-in ${className ?? ""}`}
       />
-      {open && (
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen(false);
-          }}
-          className="fixed inset-0 z-[60] flex cursor-zoom-out items-center justify-center bg-black/85 p-10 backdrop-blur-sm"
-        >
-          <img
-            src={src}
-            alt=""
-            className="max-h-full max-w-full rounded-lg shadow-2xl"
-          />
-        </div>
-      )}
+      {open &&
+        createPortal(
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(false);
+            }}
+            className="fixed inset-0 z-[60] flex cursor-zoom-out items-center justify-center bg-black/85 p-10 backdrop-blur-sm"
+          >
+            <img
+              src={src}
+              alt=""
+              className="max-h-full max-w-full rounded-lg shadow-2xl"
+            />
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
