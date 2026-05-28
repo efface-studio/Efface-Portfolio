@@ -180,25 +180,46 @@ function CoverSlide({ c }: { c: Content }) {
       </div>
 
       <div className="flex items-baseline justify-between border-t border-fg/20 pt-4">
-        <div className="flex items-baseline gap-4 text-[11px] text-muted">
-          <a
-            href={`mailto:${profile.contact.email}`}
-            className="font-semibold text-fg"
-          >
-            {profile.contact.email}
-          </a>
-          <span className="text-line-2">·</span>
-          <a href={`tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`}>
-            {profile.contact.phone}
-          </a>
-          <span className="text-line-2">·</span>
-          <a href={profile.contact.githubUrl} target="_blank" rel="noreferrer">
-            {profile.contact.github}
-          </a>
-          <span className="text-line-2">·</span>
-          <a href={profile.contact.linkedinUrl} target="_blank" rel="noreferrer">
-            {profile.contact.linkedin}
-          </a>
+        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-[11px] text-muted">
+          {[
+            {
+              k: "Email",
+              v: profile.contact.email,
+              href: `mailto:${profile.contact.email}`,
+              strong: true,
+            },
+            {
+              k: "Tel",
+              v: profile.contact.phone,
+              href: `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
+            },
+            {
+              k: "GitHub",
+              v: profile.contact.github,
+              href: profile.contact.githubUrl,
+              ext: true,
+            },
+            {
+              k: "LinkedIn",
+              v: profile.contact.linkedin,
+              href: profile.contact.linkedinUrl,
+              ext: true,
+            },
+          ].map((ct) => (
+            <span key={ct.k} className="inline-flex items-baseline gap-1.5">
+              <Meta className="text-[8px] font-bold uppercase tracking-[0.12em] text-dim">
+                {ct.k}
+              </Meta>
+              <a
+                href={ct.href}
+                target={ct.ext ? "_blank" : undefined}
+                rel={ct.ext ? "noreferrer" : undefined}
+                className={ct.strong ? "font-semibold text-fg" : ""}
+              >
+                {ct.v}
+              </a>
+            </span>
+          ))}
         </div>
         <Meta className="text-[9px] text-dim">{ui.deckCoverNote}</Meta>
       </div>
