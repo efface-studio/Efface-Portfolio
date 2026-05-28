@@ -7,7 +7,7 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { linkifyDesc, linkifyRefs } from "@/components/refs";
 import type { ReactNode } from "react";
 
-const TOTAL = 10;
+const TOTAL = 11;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /* -------------------------------------------------------------- */
@@ -284,7 +284,7 @@ function GomsOverviewSlide({ c }: { c: Content }) {
   const { ui } = c;
   const goms = c.featuredProjects[0];
   return (
-    <Slide n={6} label="Project 02 · iOS App" title={ui.deckGomsTitle} c={c}>
+    <Slide n={7} label="Project 02 · iOS App" title={ui.deckGomsTitle} c={c}>
       <div className="flex flex-1 flex-col">
         <div className="grid grid-cols-[1fr_1.08fr] gap-9">
           <div className="flex flex-col">
@@ -381,7 +381,7 @@ function GomsOverviewSlide({ c }: { c: Content }) {
 function GomsTroubleSlide({ c }: { c: Content }) {
   return (
     <Slide
-      n={7}
+      n={8}
       label="Project 02 · GOMS"
       title={c.ui.deckTroubleTitle}
       c={c}
@@ -490,7 +490,7 @@ function HiNestTroubleSlide({
 
 function AwardsSlide({ c }: { c: Content }) {
   return (
-    <Slide n={8} label="Awards" title={c.ui.deckAwardsTitle} c={c}>
+    <Slide n={9} label="Awards" title={c.ui.deckAwardsTitle} c={c}>
       <div className="flex flex-1 flex-col">
         {c.awards.map((a, i) => (
           <div
@@ -524,7 +524,7 @@ function AwardsSlide({ c }: { c: Content }) {
 function ActivitySlide({ c }: { c: Content }) {
   const { activities, showcases, studio, ui } = c;
   return (
-    <Slide n={9} label="Activity" title={ui.deckActivityTitle} c={c}>
+    <Slide n={10} label="Activity" title={ui.deckActivityTitle} c={c}>
       <div className="flex flex-1 flex-col gap-6">
         <div className="flex flex-1 flex-col">
           <div className="flex flex-1 flex-col justify-center">
@@ -625,7 +625,7 @@ function ActivitySlide({ c }: { c: Content }) {
 function ContactSlide({ c }: { c: Content }) {
   const { profile, ui } = c;
   return (
-    <Slide n={10} label="Contact" title={ui.deckContactTitle} c={c}>
+    <Slide n={11} label="Contact" title={ui.deckContactTitle} c={c}>
       <div className="flex flex-1 flex-col justify-center">
         <p className="max-w-[212mm] text-[22px] font-extrabold leading-[1.5] tracking-tight">
           {ui.closingLine}
@@ -684,7 +684,8 @@ export default function Deck({ lang }: { lang: Lang }) {
       <AboutCareerSlide c={c} />
       <HiNestOverviewSlide c={c} />
       <HiNestTroubleSlide n={4} cases={c.hinestCases.slice(0, 2)} range="01–02" c={c} />
-      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2)} range="03–05" c={c} />
+      <HiNestTroubleSlide n={5} cases={c.hinestCases.slice(2, 4)} range="03–04" c={c} />
+      <HiNestTroubleSlide n={6} cases={c.hinestCases.slice(4)} range="05" c={c} />
       <GomsOverviewSlide c={c} />
       <GomsTroubleSlide c={c} />
       <AwardsSlide c={c} />
