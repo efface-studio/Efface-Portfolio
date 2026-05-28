@@ -3,7 +3,7 @@ import type { Project, TroubleCase, FeatureGroup } from "@/lib/portfolio";
 import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { CodeBlock } from "@/components/CodeBlock";
-import { linkifyDesc, linkifyRefs } from "@/components/refs";
+import { linkifyDesc, linkifyRefs, highlightMetrics } from "@/components/refs";
 import ImageZoom from "@/components/ImageZoom";
 import LinkIcon from "@/components/LinkIcon";
 import type { ReactNode } from "react";
@@ -170,7 +170,7 @@ function CaseRow({
           accent ? "font-semibold text-fg" : "text-muted"
         }`}
       >
-        {text}
+        {accent ? highlightMetrics(text) : text}
       </p>
     </div>
   );
