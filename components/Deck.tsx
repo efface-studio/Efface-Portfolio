@@ -661,7 +661,7 @@ function ContactSlide({ c }: { c: Content }) {
               <Meta className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-dim">
                 {ct.k}
               </Meta>
-              <div className="mt-1.5 font-mono text-[14px] font-bold text-fg">
+              <div className="mt-1.5 text-[14px] font-bold tracking-tight text-fg">
                 {ct.href ? <a href={ct.href}>{ct.v}</a> : ct.v}
               </div>
             </div>
