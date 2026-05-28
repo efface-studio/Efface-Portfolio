@@ -644,52 +644,76 @@ function ActivitySlide({ c }: { c: Content }) {
 }
 
 function ContactSlide({ c }: { c: Content }) {
-  const { profile, ui } = c;
+  const { profile, aboutMe, ui } = c;
   return (
-    <Slide n={10} label="Contact" title={ui.deckContactTitle} c={c}>
-      <div className="flex flex-1 flex-col justify-center">
-        <p className="max-w-[212mm] text-[22px] font-extrabold leading-[1.5] tracking-tight">
-          {ui.closingLine}
-        </p>
-        <p className="mt-3 text-[12.5px] leading-[1.7] text-muted">
-          {ui.contactLead}
-        </p>
-
-        <div className="mt-9 flex gap-14 border-t border-fg/20 pt-5">
-          {[
-            {
-              k: "Email",
-              v: profile.contact.email,
-              href: `mailto:${profile.contact.email}`,
-            },
-            {
-              k: "Tel",
-              v: profile.contact.phone,
-              href: `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
-            },
-            {
-              k: "GitHub",
-              v: profile.contact.github,
-              href: profile.contact.githubUrl,
-            },
-            {
-              k: "LinkedIn",
-              v: profile.contact.linkedin,
-              href: profile.contact.linkedinUrl,
-            },
-          ].map((ct) => (
-            <div key={ct.k}>
-              <Meta className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-dim">
-                {ct.k}
-              </Meta>
-              <div className="mt-1.5 text-[14px] font-bold tracking-tight text-fg">
-                {ct.href ? <a href={ct.href}>{ct.v}</a> : ct.v}
+    <Slide n={10} label="About · Contact" title={ui.deckContactTitle} c={c}>
+      <div className="flex flex-1 flex-col justify-center gap-7">
+        <div>
+          <ColLabel>{ui.aboutTitle}</ColLabel>
+          <div className="mt-3 grid grid-cols-2 gap-10">
+            {[
+              { tag: ui.strengthTag, ...aboutMe.strength },
+              { tag: ui.weaknessTag, ...aboutMe.weakness },
+            ].map((x) => (
+              <div key={x.tag}>
+                <Meta className="text-[8.5px] font-bold uppercase tracking-[0.16em] text-dim">
+                  {x.tag}
+                </Meta>
+                <h3 className="mt-1 text-[13px] font-bold tracking-tight">
+                  {x.label}
+                </h3>
+                <p className="mt-1.5 text-[10.5px] leading-[1.6] text-muted">
+                  {x.body}
+                </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <p className="mt-7 text-[11px] font-bold text-accent">{profile.note}</p>
+        <div className="border-t border-fg/20 pt-6">
+          <p className="max-w-[212mm] text-[20px] font-extrabold leading-[1.45] tracking-tight">
+            {ui.closingLine}
+          </p>
+          <p className="mt-2.5 text-[12px] leading-[1.65] text-muted">
+            {ui.contactLead}
+          </p>
+
+          <div className="mt-6 flex gap-14">
+            {[
+              {
+                k: "Email",
+                v: profile.contact.email,
+                href: `mailto:${profile.contact.email}`,
+              },
+              {
+                k: "Tel",
+                v: profile.contact.phone,
+                href: `tel:${profile.contact.phone.replace(/[^\d+]/g, "")}`,
+              },
+              {
+                k: "GitHub",
+                v: profile.contact.github,
+                href: profile.contact.githubUrl,
+              },
+              {
+                k: "LinkedIn",
+                v: profile.contact.linkedin,
+                href: profile.contact.linkedinUrl,
+              },
+            ].map((ct) => (
+              <div key={ct.k}>
+                <Meta className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-dim">
+                  {ct.k}
+                </Meta>
+                <div className="mt-1.5 text-[14px] font-bold tracking-tight text-fg">
+                  {ct.href ? <a href={ct.href}>{ct.v}</a> : ct.v}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-6 text-[11px] font-bold text-accent">{profile.note}</p>
+        </div>
       </div>
     </Slide>
   );
