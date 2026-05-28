@@ -115,8 +115,10 @@ export function CodeBlock({
         </span>
       </figcaption>
       <div
-        className={`bg-[#1a1b26] px-3 font-mono text-[8px] ${
-          fit ? "py-1.5 leading-[1.55]" : "py-2 leading-[1.72]"
+        className={`bg-[#1a1b26] px-3 font-mono ${
+          fit
+            ? "text-[7.5px] py-1.5 leading-[1.5]"
+            : "text-[8px] py-2 leading-[1.72]"
         }`}
       >
         {lines.map((line, i) => {

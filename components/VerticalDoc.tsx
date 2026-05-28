@@ -206,16 +206,17 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
         <p className="mt-1 font-mono text-[7.5px] text-dim">{tc.file}</p>
       )}
 
-      <div className="mt-2 space-y-0.5 border-t border-line pt-1.5">
-        <CaseRow label={c.ui.problem} text={tc.problem} />
-        <CaseRow label={c.ui.solution} text={tc.solution} />
-        <CaseRow label={c.ui.result} text={tc.result} accent />
-      </div>
-
-      <div className="mt-2 space-y-1.5">
-        {tc.code.map((s) => (
-          <CodeBlock key={s.caption} snippet={s} fit />
-        ))}
+      <div className="mt-2 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3.5 border-t border-line pt-2">
+        <div className="space-y-0.5">
+          <CaseRow label={c.ui.problem} text={tc.problem} />
+          <CaseRow label={c.ui.solution} text={tc.solution} />
+          <CaseRow label={c.ui.result} text={tc.result} accent />
+        </div>
+        <div className="flex flex-col gap-2">
+          {tc.code.map((s) => (
+            <CodeBlock key={s.caption} snippet={s} fit />
+          ))}
+        </div>
       </div>
     </article>
   );
