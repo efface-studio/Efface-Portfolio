@@ -4,7 +4,7 @@ import { getContent, type Content, type Lang } from "@/lib/content";
 import { profilePhoto } from "@/lib/assets";
 import { ChipRow, Meta } from "@/components/primitives";
 import { CodeBlock } from "@/components/CodeBlock";
-import { linkifyDesc, linkifyRefs } from "@/components/refs";
+import { linkifyDesc, linkifyRefs, highlightMetrics } from "@/components/refs";
 import type { ReactNode } from "react";
 
 const TOTAL = 10;
@@ -125,7 +125,7 @@ function TroubleRow({ tc, c }: { tc: TroubleCase; c: Content }) {
         </p>
         <p className="mt-1 text-[8.7px] leading-[1.48] text-fg">
           <Meta className="font-bold text-accent">{c.ui.result}{" "}</Meta>
-          {tc.result}
+          {highlightMetrics(tc.result)}
         </p>
       </div>
       {tc.code[0] && <CodeBlock snippet={tc.code[0]} />}

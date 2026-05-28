@@ -72,3 +72,30 @@ export function linkifyDesc(
     );
   });
 }
+
+/**
+ * Highlights metric tokens inside a troubleshooting result so the performance
+ * and cost numbers stand out: percentages and ranges ("−90%", "40~75%"),
+ * arrow reductions ("0.5→0.25 vCPU") and counts with a unit ("3회", "300건").
+ * PR/commit refs live in other fields, so this never touches them.
+ */
+const METRIC_RE =
+  /([−+-]?\d[\d,]*(?:\.\d+)?(?:\s*[~–—-]\s*\d[\d,]*(?:\.\d+)?)?\s*%|\d[\d,]*(?:\.\d+)?\s*→\s*\d[\d,]*(?:\.\d+)?(?:\s*vCPU)?|\d[\d,]*(?:\.\d+)?\s*(?:건|회|명|개|배|분|ms|MB|GB|RPS|vCPU))/g;
+
+export function highlightMetrics(text: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let last = 0;
+  let key = 0;
+  for (const m of text.matchAll(METRIC_RE)) {
+    const idx = m.index ?? 0;
+    if (idx > last) out.push(text.slice(last, idx));
+    out.push(
+      <strong key={key++} className="font-bold text-accent">
+        {m[0]}
+      </strong>,
+    );
+    last = idx + m[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
