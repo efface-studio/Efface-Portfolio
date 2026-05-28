@@ -133,7 +133,7 @@ export const featuredProjects: Project[] = [
     name: "HiNest",
     tagline: "Internal Workplace Platform",
     org: "Hivits Inc.",
-    period: "2026.03 — In operation",
+    period: "2026.04 — In operation",
     role: "Planning · Design · Development · Operations",
     team: "Solo project",
     summary:
@@ -425,9 +425,9 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
     problem:
       "Six CloudWatch log groups were left on the default Never-expire policy and piled up indefinitely, while client SSE fallback polling kept running in hidden tabs — preventing Fargate tasks from going idle.",
     solution:
-      "Used GitHub Actions OIDC with a weekly cron to standardise log retention (30 days, 7 days for one-shot debug groups), skipped access logs on the health-check and SSE-handshake hot paths, and visibility-gated four client poll loops so they pause when the tab is hidden. A follow-up PR #139 added four operational workflows — Fargate diagnose & rightsize (with health check + auto-rollback), ECR lifecycle, and a VPC cost audit — turning the ongoing tuning into tooling.",
+      "Used GitHub Actions OIDC with a weekly cron to standardise log retention (30 days, 7 days for one-shot debug groups), skipped access logs on the health-check and SSE-handshake hot paths, and visibility-gated four client poll loops so they pause when the tab is hidden. A follow-up PR #139 added four operational workflows — Fargate diagnose & rightsize (with health check + auto-rollback), ECR lifecycle, and a VPC cost audit — turning the ongoing tuning into tooling. I also removed the schedule from a now-obsolete keepalive workflow (a 10-minute ping left over from the Render era), saving ~4,300 GitHub Actions minutes a month — a CI cost, not AWS (PR #152) — and moved @types/* packages to devDependencies so the production image no longer bundles type-only packages, trimming ECR storage and Fargate pull time (PR #156).",
     result:
-      "With RDS dominating the absolute bill, I held off on a HiNest-only dollar figure and measured per mechanism instead. Polling RPS on the hot endpoints dropped 40–75% per tab with background tabs going to zero, and the in-memory log buffer shrank 80% to give Fargate downsizing (0.5 → 0.25 vCPU) the memory headroom it needed. Mutating workflows ship with a health check plus auto-rollback; diagnostic workflows are read-only.",
+      "With RDS dominating the absolute bill, I held off on a HiNest-only dollar figure and measured per mechanism instead. Polling RPS on the hot endpoints dropped 40–75% per tab with background tabs going to zero, and the in-memory log buffer shrank 90% to give Fargate downsizing (0.5 → 0.25 vCPU) the memory headroom it needed. Mutating workflows ship with a health check plus auto-rollback; diagnostic workflows are read-only.",
     code: [
       {
         lang: "ts",

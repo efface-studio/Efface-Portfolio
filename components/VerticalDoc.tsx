@@ -706,7 +706,7 @@ function AboutVenturePage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-4">
+      <section className="mt-3">
         <SectionHead title={ui.ventureTitle} label="Leadership" />
         <div className="space-y-2">
           <Entry meta={ui.studioMeta}>
@@ -758,7 +758,7 @@ function AboutVenturePage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-4">
+      <section className="mt-3">
         <SectionHead title={ui.exhibitionsTitle} label="Exhibitions" />
         <div className="space-y-1">
           {showcases.map((s) => (
