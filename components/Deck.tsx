@@ -343,7 +343,7 @@ function GomsOverviewSlide({ c }: { c: Content }) {
               <img
                 src={goms.banner}
                 alt={goms.name}
-                className="h-[30mm] w-full rounded-lg border border-line object-cover"
+                className="h-[64mm] w-auto self-center rounded-lg border border-line object-contain"
               />
             )}
             {goms.screenshots && (
