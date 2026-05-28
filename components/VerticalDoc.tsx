@@ -8,7 +8,7 @@ import ImageZoom from "@/components/ImageZoom";
 import LinkIcon from "@/components/LinkIcon";
 import type { ReactNode } from "react";
 
-const TOTAL = 8;
+const TOTAL = 7;
 
 /* ----------------------------- shells ----------------------------- */
 
@@ -166,7 +166,7 @@ function CaseRow({
         {label}
       </span>
       <p
-        className={`text-[9px] leading-[1.5] ${
+        className={`text-[8.7px] leading-[1.45] ${
           accent ? "font-semibold text-fg" : "text-muted"
         }`}
       >
@@ -206,7 +206,7 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
         <p className="mt-1 font-mono text-[7.5px] text-dim">{tc.file}</p>
       )}
 
-      <div className="mt-2 space-y-1 border-t border-line pt-2">
+      <div className="mt-2 space-y-0.5 border-t border-line pt-1.5">
         <CaseRow label={c.ui.problem} text={tc.problem} />
         <CaseRow label={c.ui.solution} text={tc.solution} />
         <CaseRow label={c.ui.result} text={tc.result} accent />
@@ -378,7 +378,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
   const { ui } = c;
   const goms = c.featuredProjects[0];
   return (
-    <DocPage n={6} c={c}>
+    <DocPage n={5} c={c}>
       <div className="grid grid-cols-[1fr_82mm] gap-7">
         <div>
           <ProjectHead project={goms} kind="Project — iOS App" />
@@ -495,7 +495,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
 function GomsTroublePage({ c }: { c: Content }) {
   const { gomsCases, ui } = c;
   return (
-    <DocPage n={7} c={c}>
+    <DocPage n={6} c={c}>
       <p className="text-[8.5px] font-bold uppercase tracking-[0.22em] text-accent">
         GOMS — Engineering Deep-Dive
       </p>
@@ -650,32 +650,12 @@ function HiNestTroublePageB({ c }: { c: Content }) {
           {ui.troubleshooting}
         </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
-          Case 03
+          Case 03 — 04
         </span>
       </div>
       <div className="mt-4">
         <TroubleCaseBlock tc={hinestCases[2]} c={c} />
-      </div>
-    </DocPage>
-  );
-}
-
-function HiNestTroublePageC({ c }: { c: Content }) {
-  const { hinestCases, ui } = c;
-  return (
-    <DocPage n={5} c={c}>
-      <p className="text-[8.5px] font-bold uppercase tracking-[0.22em] text-accent">
-        HiNest — Engineering Deep-Dive
-      </p>
-      <div className="mt-2 flex items-baseline justify-between border-b border-fg/20 pb-2">
-        <h2 className="text-[15px] font-bold tracking-tight">
-          {ui.troubleshooting}
-        </h2>
-        <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
-          Case 04
-        </span>
-      </div>
-      <div className="mt-4">
+        <div className="my-1.5 border-t border-line-2" />
         <TroubleCaseBlock tc={hinestCases[3]} c={c} />
       </div>
     </DocPage>
@@ -686,7 +666,7 @@ function HiNestTroublePageC({ c }: { c: Content }) {
 function AboutVenturePage({ c }: { c: Content }) {
   const { aboutMe, activities, showcases, studio, profile, ui } = c;
   return (
-    <DocPage n={8} c={c}>
+    <DocPage n={7} c={c}>
       <section>
         <SectionHead title={ui.aboutTitle} label="About" />
         <div className="space-y-2">
@@ -806,7 +786,6 @@ export default function VerticalDoc({ lang }: { lang: Lang }) {
       <HiNestOverviewPage c={c} />
       <HiNestTroublePageA c={c} />
       <HiNestTroublePageB c={c} />
-      <HiNestTroublePageC c={c} />
       <GomsOverviewPage c={c} />
       <GomsTroublePage c={c} />
       <AboutVenturePage c={c} />
