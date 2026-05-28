@@ -112,14 +112,18 @@ function TroubleRow({ tc, c }: { tc: TroubleCase; c: Content }) {
             </a>
           )}
         </div>
-        <h3 className="mt-1.5 text-[14px] font-bold leading-snug tracking-tight">
+        <h3 className="mt-1 text-[14px] font-bold leading-snug tracking-tight">
           {tc.title}
         </h3>
-        <p className="mt-2.5 text-[9.5px] leading-[1.6] text-muted">
+        <p className="mt-1.5 text-[8.7px] leading-[1.48] text-muted">
           <Meta className="font-bold text-dim">{c.ui.problem}{" "}</Meta>
           {tc.problem}
         </p>
-        <p className="mt-1.5 text-[9.5px] leading-[1.6] text-fg">
+        <p className="mt-1 text-[8.7px] leading-[1.48] text-muted">
+          <Meta className="font-bold text-dim">{c.ui.solution}{" "}</Meta>
+          {tc.solution}
+        </p>
+        <p className="mt-1 text-[8.7px] leading-[1.48] text-fg">
           <Meta className="font-bold text-accent">{c.ui.result}{" "}</Meta>
           {tc.result}
         </p>
@@ -281,78 +285,93 @@ function GomsOverviewSlide({ c }: { c: Content }) {
   const goms = c.featuredProjects[0];
   return (
     <Slide n={6} label="Project 02 · iOS App" title={ui.deckGomsTitle} c={c}>
-      <div className="grid flex-1 grid-cols-[1fr_1.08fr] gap-9">
-        <div className="flex flex-col">
-          {goms.links[0] && (
-            <a
-              href={goms.links[0].url}
-              target="_blank"
-              rel="noreferrer"
-              className="flex w-fit items-center gap-3.5"
-            >
-              {goms.icon && (
-                <img
-                  src={goms.icon}
-                  alt={goms.name}
-                  className="h-[15mm] w-[15mm] rounded-[22%] border border-line"
-                />
-              )}
-              <div>
-                <Meta className="text-[8.5px] font-bold uppercase tracking-[0.16em] text-dim">
-                  {goms.links[0].label}
-                </Meta>
-                <div className="mt-1 text-[13px] font-bold tracking-tight text-accent">
-                  {ui.viewDeployedApp}
-                </div>
-              </div>
-            </a>
-          )}
-          <p className="mt-5 text-[12px] leading-[1.75] text-muted">
-            {goms.summary}
-          </p>
-          <div className="mt-4">
-            <MetaRow k="Role" v={goms.role} />
-            <MetaRow k="Team" v={goms.team} />
-            <MetaRow k="Period" v={goms.period} />
-          </div>
-          {goms.metrics && (
-            <div className="mt-5 flex gap-10 border-y border-line py-3.5">
-              {goms.metrics.map((m) => (
-                <div key={m.label}>
-                  <div className="text-[22px] font-extrabold leading-none tracking-tight text-accent">
-                    {m.value}
-                  </div>
-                  <Meta className="mt-1.5 block text-[9px] text-dim">
-                    {m.label}
+      <div className="flex flex-1 flex-col">
+        <div className="grid grid-cols-[1fr_1.08fr] gap-9">
+          <div className="flex flex-col">
+            {goms.links[0] && (
+              <a
+                href={goms.links[0].url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex w-fit items-center gap-3.5"
+              >
+                {goms.icon && (
+                  <img
+                    src={goms.icon}
+                    alt={goms.name}
+                    className="h-[14mm] w-[14mm] rounded-[22%] border border-line"
+                  />
+                )}
+                <div>
+                  <Meta className="text-[8.5px] font-bold uppercase tracking-[0.16em] text-dim">
+                    {goms.links[0].label}
                   </Meta>
+                  <div className="mt-1 text-[13px] font-bold tracking-tight text-accent">
+                    {ui.viewDeployedApp}
+                  </div>
                 </div>
-              ))}
+              </a>
+            )}
+            <p className="mt-4 text-[11px] leading-[1.7] text-muted">
+              {goms.summary}
+            </p>
+            <div className="mt-3">
+              <MetaRow k="Role" v={goms.role} />
+              <MetaRow k="Team" v={goms.team} />
+              <MetaRow k="Period" v={goms.period} />
             </div>
-          )}
-          <div className="mt-4">
-            <ChipRow items={goms.stack} />
+            {goms.metrics && (
+              <div className="mt-4 flex gap-10 border-y border-line py-3">
+                {goms.metrics.map((m) => (
+                  <div key={m.label}>
+                    <div className="text-[20px] font-extrabold leading-none tracking-tight text-accent">
+                      {m.value}
+                    </div>
+                    <Meta className="mt-1.5 block text-[9px] text-dim">
+                      {m.label}
+                    </Meta>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="mt-3">
+              <ChipRow items={goms.stack} />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center gap-3">
+            {goms.banner && (
+              <img
+                src={goms.banner}
+                alt={goms.name}
+                className="h-[30mm] w-full rounded-lg border border-line object-cover"
+              />
+            )}
+            {goms.screenshots && (
+              <div className="flex items-center justify-center gap-3">
+                {goms.screenshots.map((src) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt={goms.name}
+                    className="h-[32mm] w-auto rounded-xl border border-line"
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
-        <div className="flex flex-col justify-center gap-4">
-          {goms.banner && (
-            <img
-              src={goms.banner}
-              alt={goms.name}
-              className="w-full rounded-lg border border-line object-cover"
-            />
-          )}
-          {goms.screenshots && (
-            <div className="flex items-center justify-center gap-3">
-              {goms.screenshots.map((src) => (
-                <img
-                  key={src}
-                  src={src}
-                  alt={goms.name}
-                  className="h-[52mm] w-auto rounded-xl border border-line"
-                />
-              ))}
-            </div>
-          )}
+        <div className="mt-4 border-t border-line pt-3">
+          <ColLabel>{ui.keyContributions}</ColLabel>
+          <div className="mt-2 grid grid-cols-2 gap-x-8 gap-y-0.5">
+            {goms.contributions.map((co) => (
+              <div key={co} className="flex gap-2">
+                <span className="mt-[6px] h-px w-2 shrink-0 bg-accent" />
+                <span className="text-[8.5px] leading-[1.5] text-muted">
+                  {co}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Slide>
@@ -406,6 +425,21 @@ function HiNestOverviewSlide({ c }: { c: Content }) {
           <div className="mt-4">
             <ChipRow items={hinest.stack} />
           </div>
+          {hinest.links.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+              {hinest.links.map((l) => (
+                <a
+                  key={l.url}
+                  href={l.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[10px] font-bold text-accent"
+                >
+                  {l.label} ↗
+                </a>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex flex-col border-l border-line pl-10">
           <ColLabel>{ui.keyFeatures}</ColLabel>
@@ -564,16 +598,21 @@ function ActivitySlide({ c }: { c: Content }) {
             {showcases.map((s, i) => (
               <div
                 key={s.name}
-                className={`flex items-baseline gap-3 py-2 ${
-                  i > 0 ? "border-t border-line" : ""
-                }`}
+                className={`py-1.5 ${i > 0 ? "border-t border-line" : ""}`}
               >
-                <span className="text-[11px] font-bold">{s.name}</span>
-                <span className="text-[9.5px] text-muted">{s.role}</span>
-                <span className="ml-auto text-[9px] text-dim">
-                  {s.date}
-                  {s.place ? ` · ${s.place}` : ""}
-                </span>
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[11px] font-bold">{s.name}</span>
+                  <span className="text-[9.5px] text-muted">{s.role}</span>
+                  <span className="ml-auto text-[9px] text-dim">
+                    {s.date}
+                    {s.place ? ` · ${s.place}` : ""}
+                  </span>
+                </div>
+                {s.desc ? (
+                  <p className="mt-0.5 text-[8.5px] leading-[1.45] text-muted">
+                    {s.desc}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>

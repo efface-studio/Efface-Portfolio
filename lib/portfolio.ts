@@ -467,9 +467,9 @@ const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`
     problem:
       "CloudWatch 로그 그룹 6개가 Never expire 기본값으로 무한 누적 중이었고, 클라이언트 SSE fallback 폴링이 hidden 탭에서도 계속 돌아 Fargate task가 idle에 못 들어갔습니다.",
     solution:
-      "GitHub Actions OIDC + 주간 cron으로 로그 retention(일반 30일·일회성 7일)을 자동 표준화하고, 헬스체크·SSE 핸드셰이크의 access log를 핫패스에서 스킵했습니다. 클라이언트 폴링 4곳은 document.visibilityState로 게이팅해 hidden 탭에서 정지시켰습니다. 후속 PR #139로 Fargate 진단·다운사이즈(health 체크 + 자동 롤백) / ECR 라이프사이클 / VPC 비용 감사 워크플로우 4개를 추가해 운영을 도구화했습니다.",
+      "GitHub Actions OIDC + 주간 cron으로 로그 retention(일반 30일·일회성 7일)을 자동 표준화하고, 헬스체크·SSE 핸드셰이크의 access log를 핫패스에서 스킵했습니다. 클라이언트 폴링 4곳은 document.visibilityState로 게이팅해 hidden 탭에서 정지시켰습니다. 후속 PR #139로 Fargate 진단·다운사이즈(health 체크 + 자동 롤백) / ECR 라이프사이클 / VPC 비용 감사 워크플로우 4개를 추가해 운영을 도구화했습니다. 또한 Fargate 이전 후 불필요해진 keepalive 워크플로우(10분 주기 ping)의 스케줄을 제거해 GitHub Actions를 월 ~4,300분 절약했고(AWS가 아닌 CI 비용 · PR #152), @types/* 의존성을 devDependencies로 옮겨 프로덕션 이미지에서 타입 전용 패키지를 제거했습니다(ECR 저장·Fargate pull 시간 절감 · PR #156).",
     result:
-      "RDS가 청구의 압도적 비중이라 HiNest 단독 절대 금액 대신 메커니즘별로 측정했습니다. 핫 엔드포인트 폴링 RPS가 탭당 40~75% 감소하고 백그라운드 탭은 0으로 떨어졌으며, 인메모리 로그 버퍼 −80%로 Fargate 다운사이즈(0.5→0.25 vCPU)의 메모리 헤드룸을 확보했습니다. 변경 워크플로우는 health 체크 + 자동 롤백, 진단 워크플로우는 read-only 권한으로 안전성을 보강했습니다.",
+      "RDS가 청구의 압도적 비중이라 HiNest 단독 절대 금액 대신 메커니즘별로 측정했습니다. 핫 엔드포인트 폴링 RPS가 탭당 40~75% 감소하고 백그라운드 탭은 0으로 떨어졌으며, 인메모리 로그 버퍼 −90%로 Fargate 다운사이즈(0.5→0.25 vCPU)의 메모리 헤드룸을 확보했습니다. 변경 워크플로우는 health 체크 + 자동 롤백, 진단 워크플로우는 read-only 권한으로 안전성을 보강했습니다.",
     code: [
       {
         lang: "ts",
