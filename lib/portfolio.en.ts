@@ -541,7 +541,7 @@ export const showcases: Showcase[] = [
     name: "Cyber Guardians",
     role: "Completed an information-security education program",
     date: "2023",
-    place: "",
+    place: "Korea Internet & Security Agency (KISA)",
     desc: "Completed an information-security program hosted by the Korea Internet & Security Agency (KISA), spanning fundamentals to network security, vulnerability analysis, and penetration testing.",
   },
 ];
