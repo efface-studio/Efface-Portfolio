@@ -91,10 +91,21 @@ function tokenizeCode(line: string, lang: string): CodeTok[] {
   return out;
 }
 
-export function CodeBlock({ snippet }: { snippet: CodeSnippet }) {
+export function CodeBlock({
+  snippet,
+  fit,
+}: {
+  snippet: CodeSnippet;
+  /** Shrink the block to its content width (instead of filling the parent). */
+  fit?: boolean;
+}) {
   const lines = snippet.lines.split("\n");
   return (
-    <figure className="overflow-hidden rounded-lg border border-[#272a3d] shadow-[0_8px_22px_-14px_rgba(16,16,24,0.45)]">
+    <figure
+      className={`overflow-hidden rounded-lg border border-[#272a3d] shadow-[0_8px_22px_-14px_rgba(16,16,24,0.45)]${
+        fit ? " w-fit max-w-full" : ""
+      }`}
+    >
       <figcaption className="flex items-center gap-2 bg-[#15161f] px-3 py-[5.5px]">
         <span className="rounded-[3px] bg-accent px-1.5 py-px text-[6.5px] font-bold uppercase tracking-[0.12em] text-white">
           {snippet.lang}
@@ -103,7 +114,11 @@ export function CodeBlock({ snippet }: { snippet: CodeSnippet }) {
           {snippet.caption}
         </span>
       </figcaption>
-      <div className="bg-[#1a1b26] px-3 py-2 font-mono text-[8px] leading-[1.72]">
+      <div
+        className={`bg-[#1a1b26] px-3 font-mono text-[8px] ${
+          fit ? "py-1.5 leading-[1.55]" : "py-2 leading-[1.72]"
+        }`}
+      >
         {lines.map((line, i) => {
           const toks = tokenizeCode(line, snippet.lang);
           return (
