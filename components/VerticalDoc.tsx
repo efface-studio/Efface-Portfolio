@@ -166,7 +166,7 @@ function CaseRow({
         {label}
       </span>
       <p
-        className={`text-[9px] leading-[1.55] ${
+        className={`text-[9px] leading-[1.5] ${
           accent ? "font-semibold text-fg" : "text-muted"
         }`}
       >
@@ -212,7 +212,7 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
         <CaseRow label={c.ui.result} text={tc.result} accent />
       </div>
 
-      <div className="mt-2.5 space-y-2">
+      <div className="mt-2 space-y-1.5">
         {tc.code.map((s) => (
           <CodeBlock key={s.caption} snippet={s} />
         ))}
@@ -309,7 +309,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </header>
 
-      <section className="mt-5">
+      <section className="mt-4">
         <SectionHead title={ui.careerTitle} label="Career" />
         <div className="space-y-2">
           {career.map((ci) => (
@@ -328,7 +328,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-5">
+      <section className="mt-4">
         <SectionHead title={ui.stackTitle} label="Stack" />
         <div className="space-y-2">
           {skillGroups.map((g) => (
@@ -346,7 +346,7 @@ function CoverPage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <section className="mt-5">
+      <section className="mt-4">
         <SectionHead title={ui.awardsTitle} label="Awards" />
         <div className="space-y-1.5">
           {awards.map((a) => (
@@ -383,7 +383,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
         <div>
           <ProjectHead project={goms} kind="Project — iOS App" />
 
-          <p className="mt-5 text-[11px] leading-[1.8]">{goms.summary}</p>
+          <p className="mt-4 text-[11px] leading-[1.65]">{goms.summary}</p>
 
           <div className="mt-4">
             {[
@@ -441,7 +441,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
             <ImageZoom
               key={src}
               src={src}
-              className="h-[56mm] w-auto rounded-lg border border-line shadow-[0_12px_30px_-16px_rgba(16,16,24,0.34)]"
+              className="h-[48mm] w-auto rounded-lg border border-line shadow-[0_12px_30px_-16px_rgba(16,16,24,0.34)]"
             />
           ))}
         </div>
@@ -479,7 +479,7 @@ function GomsOverviewPage({ c }: { c: Content }) {
             {goms.contributions.map((co) => (
               <div key={co} className="flex gap-2.5">
                 <span className="mt-[7px] h-px w-2.5 shrink-0 bg-accent" />
-                <span className="text-[10.5px] leading-[1.6] text-muted">
+                <span className="text-[9.5px] leading-[1.5] text-muted">
                   {co}
                 </span>
               </div>
@@ -512,9 +512,9 @@ function GomsTroublePage({ c }: { c: Content }) {
       </p>
       <div className="mt-3.5">
         <TroubleCaseBlock tc={gomsCases[0]} c={c} />
-        <div className="my-2 border-t border-line-2" />
+        <div className="my-1 border-t border-line-2" />
         <TroubleCaseBlock tc={gomsCases[1]} c={c} />
-        <div className="my-2 border-t border-line-2" />
+        <div className="my-1 border-t border-line-2" />
         <TroubleCaseBlock tc={gomsCases[2]} c={c} />
       </div>
     </DocPage>
@@ -630,7 +630,7 @@ function HiNestTroublePageA({ c }: { c: Content }) {
       </div>
       <div className="mt-3">
         <TroubleCaseBlock tc={hinestCases[0]} c={c} />
-        <div className="my-2.5 border-t border-line-2" />
+        <div className="my-1.5 border-t border-line-2" />
         <TroubleCaseBlock tc={hinestCases[1]} c={c} />
       </div>
     </DocPage>
@@ -698,7 +698,7 @@ function AboutVenturePage({ c }: { c: Content }) {
           ].map((x) => (
             <Entry key={x.tag} meta={x.tag}>
               <h4 className="text-[11px] font-bold">{x.label}</h4>
-              <p className="mt-1 text-[9px] leading-[1.6] text-muted">
+              <p className="mt-1 text-[8.5px] leading-[1.45] text-muted">
                 {x.body}
               </p>
             </Entry>
@@ -726,7 +726,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                 {studio.url} ↗
               </a>
             </div>
-            <p className="mt-1 text-[9px] leading-[1.55] text-muted">
+            <p className="mt-1 text-[8.5px] leading-[1.45] text-muted">
               {studio.desc}
             </p>
           </Entry>
@@ -750,7 +750,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                   </a>
                 ) : null}
               </div>
-              <p className="mt-1 text-[9px] leading-[1.55] text-muted">
+              <p className="mt-1 text-[8.5px] leading-[1.45] text-muted">
                 {linkifyDesc(act.desc, act.descLinks)}
               </p>
             </Entry>
@@ -771,7 +771,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                 ) : null}
               </div>
               {s.desc ? (
-                <p className="mt-0.5 text-[9px] leading-[1.5] text-muted">
+                <p className="mt-0.5 text-[8.5px] leading-[1.4] text-muted">
                   {s.desc}
                 </p>
               ) : null}
@@ -780,11 +780,11 @@ function AboutVenturePage({ c }: { c: Content }) {
         </div>
       </section>
 
-      <div className="mt-auto pt-3">
-        <p className="text-[19px] font-extrabold leading-[1.5] tracking-tight">
+      <div className="mt-auto pt-2">
+        <p className="text-[16px] font-extrabold leading-[1.4] tracking-tight">
           {ui.closingLine}
         </p>
-        <div className="mt-3 flex items-baseline justify-between border-t border-fg/20 pt-3">
+        <div className="mt-2 flex items-baseline justify-between border-t border-fg/20 pt-2">
           <span className="text-[14px] font-bold text-accent">
             {profile.note}
           </span>
