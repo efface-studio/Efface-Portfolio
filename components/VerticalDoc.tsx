@@ -159,14 +159,14 @@ function CaseRow({
   return (
     <div className="grid grid-cols-[10mm_1fr] gap-3">
       <span
-        className={`pt-[1.5px] text-[9px] font-bold tracking-[0.04em] ${
+        className={`pt-[1.5px] text-[8.5px] font-bold tracking-[0.04em] ${
           accent ? "text-accent" : "text-dim"
         }`}
       >
         {label}
       </span>
       <p
-        className={`text-[9.5px] leading-[1.5] ${
+        className={`text-[8.7px] leading-[1.45] ${
           accent ? "font-semibold text-fg" : "text-muted"
         }`}
       >
@@ -206,17 +206,16 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
         <p className="mt-1 font-mono text-[7.5px] text-dim">{tc.file}</p>
       )}
 
-      <div className="mt-2 grid grid-cols-[minmax(0,1fr)_59%] items-start gap-3.5 border-t border-line pt-2">
-        <div className="space-y-0.5">
-          <CaseRow label={c.ui.problem} text={tc.problem} />
-          <CaseRow label={c.ui.solution} text={tc.solution} />
-          <CaseRow label={c.ui.result} text={tc.result} accent />
-        </div>
-        <div className="flex flex-col gap-2">
-          {tc.code.map((s) => (
-            <CodeBlock key={s.caption} snippet={s} fit />
-          ))}
-        </div>
+      <div className="mt-2 space-y-1 border-t border-line pt-2">
+        <CaseRow label={c.ui.problem} text={tc.problem} />
+        <CaseRow label={c.ui.solution} text={tc.solution} />
+        <CaseRow label={c.ui.result} text={tc.result} accent />
+      </div>
+
+      <div className="mt-2 space-y-1.5">
+        {tc.code.map((s) => (
+          <CodeBlock key={s.caption} snippet={s} />
+        ))}
       </div>
     </article>
   );
