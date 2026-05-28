@@ -90,7 +90,7 @@ function DeckFeature({ f }: { f: FeatureGroup }) {
 /** Wide troubleshooting row — narrative left, code right. */
 function TroubleRow({ tc, c }: { tc: TroubleCase; c: Content }) {
   return (
-    <div className="grid grid-cols-[1fr_1.5fr] items-center gap-6">
+    <div className="grid grid-cols-[1fr_1fr] items-center gap-5">
       <div>
         <div className="flex items-baseline justify-between gap-2">
           <div className="flex items-baseline gap-2">
