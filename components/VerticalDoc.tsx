@@ -650,13 +650,11 @@ function HiNestTroublePageB({ c }: { c: Content }) {
           {ui.troubleshooting}
         </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
-          Case 03 — 04
+          Case 03
         </span>
       </div>
       <div className="mt-4">
         <TroubleCaseBlock tc={hinestCases[2]} c={c} />
-        <div className="my-4 border-t border-line-2" />
-        <TroubleCaseBlock tc={hinestCases[3]} c={c} />
       </div>
     </DocPage>
   );
@@ -674,11 +672,11 @@ function HiNestTroublePageC({ c }: { c: Content }) {
           {ui.troubleshooting}
         </h2>
         <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-dim">
-          Case 05
+          Case 04
         </span>
       </div>
       <div className="mt-4">
-        <TroubleCaseBlock tc={hinestCases[4]} c={c} />
+        <TroubleCaseBlock tc={hinestCases[3]} c={c} />
       </div>
     </DocPage>
   );

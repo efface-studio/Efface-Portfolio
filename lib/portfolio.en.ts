@@ -350,71 +350,6 @@ setMessages((prev) => {
   },
   {
     no: "03",
-    category: "Frontend Security",
-    title: "Plugging a network leak in preview mode",
-    ref: {
-      label: "PR #134",
-      url: "https://github.com/efface-studio/HiNest-Client/pull/134",
-    },
-    file: "client/src/lib/previewMock.ts",
-    problem:
-      "Preview mode only intercepted calls through the shared api() wrapper, so code using fetch or EventSource directly leaked requests to the real server.",
-    solution:
-      "On entering preview mode, patched window.fetch and EventSource so /api/* requests short-circuit to mocks and only external URLs such as images pass through.",
-    result:
-      "Blocked every /api call headed to the real server right at the network boundary in the demo environment.",
-    code: [
-      {
-        lang: "ts",
-        caption: "Patching fetch · EventSource to stop /api egress",
-        lines: `function installNetworkPatches() {
-  if (_origFetch) return;
-  _origFetch = window.fetch.bind(window);
-  window.fetch = ((input, init) => {
-    const url = typeof input === "string" ? input : input.url;
-    // /api/* short-circuits to a mock; external URLs (images, etc.) pass through
-    if (url.startsWith("/api/")) return previewMockFetch(url, init);
-    return _origFetch!(input, init);
-  }) as typeof fetch;
-  // EventSource too — /api/* SSE is replaced with a CLOSED dummy
-}`,
-      },
-    ],
-  },
-  {
-    no: "04",
-    category: "Data Integrity",
-    title: "An over-counted notification badge in multi-step approvals",
-    ref: {
-      label: "commit 98a006d",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
-    },
-    file: "server/src/routes/approval.ts",
-    problem:
-      "In multi-step approvals, an approval was counted in the badge even when a reviewer ahead of me had not acted yet, so the ‘my turn’ screen showed 0 while the sidebar showed a red number.",
-    solution:
-      "Fetched PENDING steps in ascending order and counted only approvals whose first step (= the current turn) has me as the reviewer.",
-    result:
-      "Aligned the badge number exactly with the screen’s ‘my turn’ criterion, removing the count mismatch.",
-    code: [
-      {
-        lang: "ts",
-        caption: "Count only approvals on the current turn — matching the screen",
-        lines: `// Only the first PENDING step of each candidate — order ASC gives the one 'current turn'
-const candidates = await prisma.approval.findMany({
-  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
-  select: { steps: {
-    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
-    select: { reviewerId: true },
-  } },
-});
-// Only ones where I am the first-step reviewer = same criterion as the screen's 'my turn'
-const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
-      },
-    ],
-  },
-  {
-    no: "05",
     category: "Operations · Cost",
     title: "An AWS bill that grew faster than the user count",
     ref: {
@@ -453,6 +388,38 @@ res.on("finish", () => {
   if (SKIP.has(req.path) && res.statusCode < 400) return;
   pushHttpLog(\`\${req.method} \${scrubUrl(url)} \${res.statusCode} \${dur}ms\`);
 });`,
+      },
+    ],
+  },
+  {
+    no: "04",
+    category: "Data Integrity",
+    title: "An over-counted notification badge in multi-step approvals",
+    ref: {
+      label: "commit 98a006d",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
+    },
+    file: "server/src/routes/approval.ts",
+    problem:
+      "In multi-step approvals, an approval was counted in the badge even when a reviewer ahead of me had not acted yet, so the ‘my turn’ screen showed 0 while the sidebar showed a red number.",
+    solution:
+      "Fetched PENDING steps in ascending order and counted only approvals whose first step (= the current turn) has me as the reviewer.",
+    result:
+      "Aligned the badge number exactly with the screen’s ‘my turn’ criterion, removing the count mismatch.",
+    code: [
+      {
+        lang: "ts",
+        caption: "Count only approvals on the current turn — matching the screen",
+        lines: `// Only the first PENDING step of each candidate — order ASC gives the one 'current turn'
+const candidates = await prisma.approval.findMany({
+  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
+  select: { steps: {
+    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
+    select: { reviewerId: true },
+  } },
+});
+// Only ones where I am the first-step reviewer = same criterion as the screen's 'my turn'
+const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
       },
     ],
   },
