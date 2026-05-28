@@ -206,7 +206,7 @@ function TroubleCaseBlock({ tc, c }: { tc: TroubleCase; c: Content }) {
         <p className="mt-1 font-mono text-[7.5px] text-dim">{tc.file}</p>
       )}
 
-      <div className="mt-2 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3.5 border-t border-line pt-2">
+      <div className="mt-2 grid grid-cols-[minmax(0,1fr)_59%] items-start gap-3.5 border-t border-line pt-2">
         <div className="space-y-0.5">
           <CaseRow label={c.ui.problem} text={tc.problem} />
           <CaseRow label={c.ui.solution} text={tc.solution} />
@@ -664,8 +664,10 @@ function HiNestTroublePageB({ c }: { c: Content }) {
 }
 
 /* --- about + venture (final page) --- */
-function AboutVenturePage({ c }: { c: Content }) {
+function AboutVenturePage({ c, lang }: { c: Content; lang: Lang }) {
   const { aboutMe, activities, showcases, studio, profile, ui } = c;
+  // English runs much longer here, so keep it compact; Korean has room to breathe.
+  const body = lang === "en" ? "text-[8.5px]" : "text-[9.5px]";
   return (
     <DocPage n={7} c={c}>
       <section>
@@ -677,7 +679,7 @@ function AboutVenturePage({ c }: { c: Content }) {
           ].map((x) => (
             <Entry key={x.tag} meta={x.tag}>
               <h4 className="text-[11px] font-bold">{x.label}</h4>
-              <p className="mt-1 text-[8.5px] leading-[1.45] text-muted">
+              <p className={`mt-1 ${body} leading-[1.45] text-muted`}>
                 {x.body}
               </p>
             </Entry>
@@ -705,7 +707,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                 {studio.url} ↗
               </a>
             </div>
-            <p className="mt-1 text-[8.5px] leading-[1.45] text-muted">
+            <p className={`mt-1 ${body} leading-[1.45] text-muted`}>
               {studio.desc}
             </p>
           </Entry>
@@ -729,7 +731,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                   </a>
                 ) : null}
               </div>
-              <p className="mt-1 text-[8.5px] leading-[1.45] text-muted">
+              <p className={`mt-1 ${body} leading-[1.45] text-muted`}>
                 {linkifyDesc(act.desc, act.descLinks)}
               </p>
             </Entry>
@@ -750,7 +752,7 @@ function AboutVenturePage({ c }: { c: Content }) {
                 ) : null}
               </div>
               {s.desc ? (
-                <p className="mt-0.5 text-[8.5px] leading-[1.4] text-muted">
+                <p className={`mt-0.5 ${body} leading-[1.4] text-muted`}>
                   {s.desc}
                 </p>
               ) : null}
@@ -789,7 +791,7 @@ export default function VerticalDoc({ lang }: { lang: Lang }) {
       <HiNestTroublePageB c={c} />
       <GomsOverviewPage c={c} />
       <GomsTroublePage c={c} />
-      <AboutVenturePage c={c} />
+      <AboutVenturePage c={c} lang={lang} />
     </div>
   );
 }

@@ -101,11 +101,7 @@ export function CodeBlock({
 }) {
   const lines = snippet.lines.split("\n");
   return (
-    <figure
-      className={`overflow-hidden rounded-lg border border-[#272a3d] shadow-[0_8px_22px_-14px_rgba(16,16,24,0.45)]${
-        fit ? " w-fit max-w-full" : ""
-      }`}
-    >
+    <figure className="overflow-hidden rounded-lg border border-[#272a3d] shadow-[0_8px_22px_-14px_rgba(16,16,24,0.45)]">
       <figcaption className="flex items-center gap-2 bg-[#15161f] px-3 py-[5.5px]">
         <span className="rounded-[3px] bg-accent px-1.5 py-px text-[6.5px] font-bold uppercase tracking-[0.12em] text-white">
           {snippet.lang}
