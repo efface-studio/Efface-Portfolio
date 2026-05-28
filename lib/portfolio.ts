@@ -392,71 +392,6 @@ setMessages((prev) => {
   },
   {
     no: "03",
-    category: "프론트엔드 보안",
-    title: "미리보기 모드의 네트워크 누수 차단",
-    ref: {
-      label: "PR #134",
-      url: "https://github.com/efface-studio/HiNest-Client/pull/134",
-    },
-    file: "client/src/lib/previewMock.ts",
-    problem:
-      "미리보기 모드가 공용 래퍼 api() 호출만 가로채, fetch·EventSource를 직접 쓰는 코드는 실제 서버로 요청이 새어 나갔습니다.",
-    solution:
-      "미리보기 진입 시 window.fetch와 EventSource를 패치해, /api/* 요청은 mock으로 단락하고 이미지 같은 외부 URL만 통과시켰습니다.",
-    result:
-      "데모 환경에서 실제 서버로 향하는 모든 /api 호출을 네트워크 경계 자체에서 차단했습니다.",
-    code: [
-      {
-        lang: "ts",
-        caption: "fetch · EventSource를 패치해 /api 진출 차단",
-        lines: `function installNetworkPatches() {
-  if (_origFetch) return;
-  _origFetch = window.fetch.bind(window);
-  window.fetch = ((input, init) => {
-    const url = typeof input === "string" ? input : input.url;
-    // /api/* 는 mock으로 단락, 외부 URL(이미지 등)은 그대로 통과
-    if (url.startsWith("/api/")) return previewMockFetch(url, init);
-    return _origFetch!(input, init);
-  }) as typeof fetch;
-  // EventSource도 동일 — /api/* SSE는 CLOSED 더미로 대체
-}`,
-      },
-    ],
-  },
-  {
-    no: "04",
-    category: "데이터 정합성",
-    title: "다단계 결재의 알림 배지 과다 카운트",
-    ref: {
-      label: "commit 98a006d",
-      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
-    },
-    file: "server/src/routes/approval.ts",
-    problem:
-      "다단계 결재에서 내 앞 순번 리뷰어가 결재 전이어도 배지에 집계돼, ‘내 차례’ 화면은 0건인데 사이드바에는 빨간 숫자가 떴습니다.",
-    solution:
-      "PENDING 스텝을 order 오름차순으로 가져와, 첫 스텝(= 현재 차례)의 리뷰어가 나인 결재만 카운트하도록 바꿨습니다.",
-    result:
-      "배지 숫자를 화면의 ‘내 차례’ 기준과 정확히 일치시켜 카운트 불일치를 제거했습니다.",
-    code: [
-      {
-        lang: "ts",
-        caption: "현재 차례인 결재만 집계 — 화면 기준과 일치",
-        lines: `// 후보 결재의 첫 PENDING 스텝만 — order ASC로 '현재 차례' 한 건
-const candidates = await prisma.approval.findMany({
-  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
-  select: { steps: {
-    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
-    select: { reviewerId: true },
-  } },
-});
-// 첫 스텝 리뷰어가 나인 건만 = 화면의 '내 차례'와 동일 기준
-const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
-      },
-    ],
-  },
-  {
-    no: "05",
     category: "운영 · 비용",
     title: "사용자 수에 비해 비대했던 AWS 청구서",
     ref: {
@@ -495,6 +430,38 @@ res.on("finish", () => {
   if (SKIP.has(req.path) && res.statusCode < 400) return;
   pushHttpLog(\`\${req.method} \${scrubUrl(url)} \${res.statusCode} \${dur}ms\`);
 });`,
+      },
+    ],
+  },
+  {
+    no: "04",
+    category: "데이터 정합성",
+    title: "다단계 결재의 알림 배지 과다 카운트",
+    ref: {
+      label: "commit 98a006d",
+      url: "https://github.com/efface-studio/HiNest-Client/commit/98a006d",
+    },
+    file: "server/src/routes/approval.ts",
+    problem:
+      "다단계 결재에서 내 앞 순번 리뷰어가 결재 전이어도 배지에 집계돼, ‘내 차례’ 화면은 0건인데 사이드바에는 빨간 숫자가 떴습니다.",
+    solution:
+      "PENDING 스텝을 order 오름차순으로 가져와, 첫 스텝(= 현재 차례)의 리뷰어가 나인 결재만 카운트하도록 바꿨습니다.",
+    result:
+      "배지 숫자를 화면의 ‘내 차례’ 기준과 정확히 일치시켜 카운트 불일치를 제거했습니다.",
+    code: [
+      {
+        lang: "ts",
+        caption: "현재 차례인 결재만 집계 — 화면 기준과 일치",
+        lines: `// 후보 결재의 첫 PENDING 스텝만 — order ASC로 '현재 차례' 한 건
+const candidates = await prisma.approval.findMany({
+  where: { status: "PENDING", steps: { some: { reviewerId: me } } },
+  select: { steps: {
+    where: { status: "PENDING" }, orderBy: { order: "asc" }, take: 1,
+    select: { reviewerId: true },
+  } },
+});
+// 첫 스텝 리뷰어가 나인 건만 = 화면의 '내 차례'와 동일 기준
+const pending = candidates.filter((a) => a.steps[0]?.reviewerId === me).length;`,
       },
     ],
   },
