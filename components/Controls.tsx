@@ -63,12 +63,19 @@ export default function Controls({ lang }: { lang: Lang }) {
   const pathname = usePathname() ?? "/";
   const isDeck = pathname.startsWith("/deck");
   const isPlan = pathname.startsWith("/business-plan");
+  const isPortfolio = pathname.startsWith("/portfolio");
   const t = ui[lang];
 
   // The view toggle preserves the current language; the language toggle
   // preserves the current view.
   const langQuery = lang === "en" ? "?lang=en" : "";
-  const view = isPlan ? "/business-plan" : isDeck ? "/deck" : "/";
+  const view = isPlan
+    ? "/business-plan"
+    : isPortfolio
+      ? "/portfolio"
+      : isDeck
+        ? "/deck"
+        : "/";
 
   // Hide the bar while a lightbox is open — the lightboxes mark this by
   // adding a `lightbox-open` class to <html>.
@@ -93,7 +100,7 @@ export default function Controls({ lang }: { lang: Lang }) {
         <div className="flex items-center rounded-full bg-surface-2 p-0.5">
           <SegLink
             href={"/" + langQuery}
-            active={!isDeck && !isPlan}
+            active={!isDeck && !isPlan && !isPortfolio}
             label={t.docLabel}
             sub={t.docSub}
           />
@@ -102,6 +109,12 @@ export default function Controls({ lang }: { lang: Lang }) {
             active={isDeck}
             label={t.deckLabel}
             sub={t.deckSub}
+          />
+          <SegLink
+            href={"/portfolio" + langQuery}
+            active={isPortfolio}
+            label={t.portfolioLabel}
+            sub={t.portfolioSub}
           />
           <SegLink
             href={"/business-plan" + langQuery}

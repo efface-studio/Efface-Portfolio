@@ -91,19 +91,38 @@ function tokenizeCode(line: string, lang: string): CodeTok[] {
   return out;
 }
 
-export function CodeBlock({ snippet }: { snippet: CodeSnippet }) {
+export function CodeBlock({
+  snippet,
+  size = "sm",
+}: {
+  snippet: CodeSnippet;
+  size?: "sm" | "md";
+}) {
   const lines = snippet.lines.split("\n");
+  const md = size === "md";
   return (
     <figure className="overflow-hidden rounded-lg border border-[#272a3d] shadow-[0_8px_22px_-14px_rgba(16,16,24,0.45)]">
       <figcaption className="flex items-center gap-2 bg-[#15161f] px-3 py-[5.5px]">
-        <span className="rounded-[3px] bg-accent px-1.5 py-px text-[6.5px] font-bold uppercase tracking-[0.12em] text-white">
+        <span
+          className={`rounded-[3px] bg-accent px-1.5 py-px font-bold uppercase tracking-[0.12em] text-white ${
+            md ? "text-[7.5px]" : "text-[6.5px]"
+          }`}
+        >
           {snippet.lang}
         </span>
-        <span className="text-[8.5px] font-medium text-[#8b91ab]">
+        <span
+          className={`font-medium text-[#8b91ab] ${
+            md ? "text-[9.5px]" : "text-[8.5px]"
+          }`}
+        >
           {snippet.caption}
         </span>
       </figcaption>
-      <div className="bg-[#1a1b26] px-3 py-2 font-mono text-[8px] leading-[1.72]">
+      <div
+        className={`bg-[#1a1b26] px-3 font-mono leading-[1.72] ${
+          md ? "py-2.5 text-[9.2px]" : "py-2 text-[8px]"
+        }`}
+      >
         {lines.map((line, i) => {
           const toks = tokenizeCode(line, snippet.lang);
           return (

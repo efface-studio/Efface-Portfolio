@@ -61,6 +61,16 @@ export type UiStrings = {
   planLabel: string;
   planTitle: string;
   planNote: string;
+  // portfolio deck
+  portfolioLabel: string;
+  portfolioSub: string;
+  pfCoverNote: string;
+  pfIndexTitle: string;
+  pfOverview: string;
+  pfFeature: string;
+  pfScreens: string;
+  pfScreensTitle: string;
+  pfLinks: string;
 };
 
 export const ui: Record<Lang, UiStrings> = {
@@ -114,6 +124,15 @@ export const ui: Record<Lang, UiStrings> = {
     planLabel: "계획서",
     planTitle: "사업 계획서",
     planNote: "현재 준비 중인 사업의 계획서입니다.",
+    portfolioLabel: "포트폴리오",
+    portfolioSub: "프로젝트",
+    pfCoverNote: "프로젝트별 핵심 기능 · 트러블슈팅 심층 소개",
+    pfIndexTitle: "프로젝트",
+    pfOverview: "개요",
+    pfFeature: "핵심 기능",
+    pfScreens: "화면",
+    pfScreensTitle: "주요 화면과 기여",
+    pfLinks: "링크",
   },
   en: {
     docLabel: "Doc",
@@ -165,5 +184,14 @@ export const ui: Record<Lang, UiStrings> = {
     planLabel: "Plan",
     planTitle: "Pitch Deck",
     planNote: "The plan for a business I’m currently preparing.",
+    portfolioLabel: "Portfolio",
+    portfolioSub: "Projects",
+    pfCoverNote: "An in-depth look at each project’s key features and troubleshooting",
+    pfIndexTitle: "Projects",
+    pfOverview: "Overview",
+    pfFeature: "Key Feature",
+    pfScreens: "Screens",
+    pfScreensTitle: "Screens & Contributions",
+    pfLinks: "Links",
   },
 };
