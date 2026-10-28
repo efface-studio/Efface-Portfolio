@@ -107,8 +107,9 @@ export const featuredProjects: Project[] = [
     ],
     links: [
       { label: "App Store", url: "https://apps.apple.com/kr/app/goms/id6502936560" },
+      { label: "Google Play", url: "https://play.google.com/store/apps/details?id=com.goms.goms_android_v2" },
       { label: "GitHub", url: "https://github.com/team-haribo/GOMS-iOS-V2" },
-      { label: "Team Haribo", url: "http://team-haribo.vercel.app/" },
+      { label: "Team Haribo", url: "https://team-haribo.vercel.app/" },
     ],
     metrics: [
       { value: "400+", label: "Weekly users" },
@@ -142,6 +143,7 @@ export const featuredProjects: Project[] = [
     banner: "/hinest/banner.webp",
     stack: ["React", "Vite", "TypeScript", "Express", "Prisma", "SQLite"],
     links: [
+      { label: "App Store", url: "https://apps.apple.com/kr/app/hinest/id6775715605" },
       { label: "GitHub", url: "https://github.com/efface-studio/HiNest-Client" },
       { label: "Service", url: "https://nest.hi-vits.com/" },
       { label: "Download", url: "https://nest.hi-vits.com/download" },
